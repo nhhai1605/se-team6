@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}
+Register Page
+{% endblock %}
+
+{% block content %}    
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+        <p class="notification">{{msg}}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<form id="inputform" action = "#" method="POST" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <th>First Name: </th>
+            <th><input type = "text" name = "firstname" placeholder="First Name" minlength="2" maxlength="30" required/></th>
+        </tr>
+        <tr>
+            <th>Last Name:</th>
+            <th><input type = "text" name = "lastname" placeholder="Last Name" minlength="2" maxlength="30" required/></th>
+        </tr>
+        <tr>
+            <th>Email: </th>
+            <th><input type = "text" name = "email" placeholder="Email" minlength="5" maxlength="30" required/></th>
+        </tr>
+        <tr>
+            <th>Password: </th>
+            <th><input type = "password" name = "password" placeholder="Password" minlength="5" maxlength="30" required/></th>
+        </tr>
+        <tr>
+            <th>Repeat Password: </th>
+            <th><input type = "password" name = "repeatpassword" placeholder="Repeat Password"  minlength="5" maxlength="30" required/></th>
+        </tr>
+        <tr>
+            <th>
+            <label for="usertype">Who are you:</label>
+            <select name="usertype" id="usertype">
+                <option value="Normal">Normal</option>
+                <option value="Publisher">Publisher</option>
+                <option value="Shop Owner">Shop Owner</option>
+            </select>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type = "submit" id = "normalwhitebutton" name = "submit" value = "Register"/>
+            </th>
+            <th style = "text-align:center">
+                If already a member, <a href="/login" style="text-decoration:underline;color:#29e004;">log-in</a> now!
+            </th>
+        </tr>
+    </table>
+</form>
+{% endblock %}
