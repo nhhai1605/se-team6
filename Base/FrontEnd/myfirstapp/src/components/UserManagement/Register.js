@@ -92,6 +92,7 @@ class Register extends Component {
                     name="password2"
                   />
                 </div>
+                If you already have an account, please <a href = "/login">login</a> here!
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
