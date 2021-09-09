@@ -19,7 +19,7 @@ public class User implements UserDetails {
 
     @Email(message = "Username needs to be an email")
     @NotBlank(message = "username is required")
-    @Column(unique = true)
+    @Column( unique=true)
     private String username;
     @NotBlank(message = "Please enter your full name")
     private String fullName;
@@ -32,7 +32,8 @@ public class User implements UserDetails {
 
     //OneToMany with Project
 
-    public User() {
+    public User() 
+    {
     }
 
     public Long getId() {
