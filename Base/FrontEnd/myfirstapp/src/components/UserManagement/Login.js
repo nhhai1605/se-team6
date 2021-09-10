@@ -26,7 +26,8 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.security.validToken) {
-      this.props.history.push("/");
+        //this.props.history.push("/");
+        window.location.reload(false);
     }
 
     if (nextProps.errors) {

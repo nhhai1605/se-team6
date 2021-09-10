@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
-import { logout } from "../../actions/securityActions";
+import setJWTToken from "../../securityUtils/setJWTToken";
+
  class Header extends Component {
-    constructor() {
-        super();
-        this.state = {
-            username: localStorage.getItem("currUsername"),
-            logout: false
-        }
-      }
-      onLogout = () => {
-        this.setState({
-          logout: !this.state.logout,
-          username: null
-        });
-      };
+    onLogout()
+    {
+        localStorage.removeItem("jwtToken");
+        console.log("Logout");
+        setJWTToken(false);
+    }
     render() {
         return (
             <div>

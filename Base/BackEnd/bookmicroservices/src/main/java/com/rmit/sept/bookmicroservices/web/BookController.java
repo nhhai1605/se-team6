@@ -45,4 +45,11 @@ public class BookController {
         author = author.toLowerCase();
         return bookService.searchBooksByAuthor(author);
     }
+    @PostMapping("/create")
+    public ResponseEntity<?> createBook(@RequestBody Book book)
+    {
+        Book newBook = bookService.createBook(book);
+        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+    }
+
 }

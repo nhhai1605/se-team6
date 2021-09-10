@@ -32,4 +32,9 @@ public class BookService
     {
         return bookRepository.searchBooksByAuthor(author);
     }
+
+    public Book createBook(Book newBook)
+    {
+        return bookRepository.save(newBook);
+    }
 }
