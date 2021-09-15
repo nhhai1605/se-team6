@@ -27,9 +27,11 @@ public class BookController {
     @Autowired
     private BookService bookService;
     @GetMapping("/all")
-    public Collection<Book> getAllBooks()
+    public @ResponseBody Collection<Book> getAllBooks()
     {
-        return bookService.getAllBooks();
+        Collection<Book> books = bookService.getAllBooks();
+        System.out.println(books.size());
+        return books;
     }
 
     @GetMapping("/search")

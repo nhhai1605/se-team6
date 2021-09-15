@@ -26,8 +26,9 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.security.validToken) {
-        //this.props.history.push("/");
-        window.location.reload(false);
+        window.location.href="/";
+        this.props.history.push("/");
+        //window.location.reload(false);
     }
 
     if (nextProps.errors) {
@@ -41,7 +42,6 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     };
-
     this.props.login(LoginRequest);
   }
 

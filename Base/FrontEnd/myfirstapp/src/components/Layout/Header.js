@@ -1,14 +1,38 @@
-import React, { Component } from 'react'
+import React, { Component, Link, useContext } from 'react'
 import setJWTToken from "../../securityUtils/setJWTToken";
+import styles from './Header.module.css';
+import { CartContext } from '../Store/Context/CartContext';
+import {CartIcon} from '../icons';
 
- class Header extends Component {
+const ItemCount = () => {
+    const {itemCount} = useContext(CartContext);
+    return itemCount;
+}
+
+class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          itemCount: 0,
+          errors: {},
+        };
+        this.onChange = this.onChange.bind(this);
+      }
+    
+    onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+    }
+    
     onLogout()
     {
         localStorage.removeItem("jwtToken");
-        console.log("Logout");
+        localStorage.removeItem("currentUsername");
+        localStorage.removeItem("currentDisplayName");
         setJWTToken(false);
     }
+
     render() {
+        const itemCount = this.state.itemCount;
         return (
             <div>
             <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
@@ -19,23 +43,15 @@ import setJWTToken from "../../securityUtils/setJWTToken";
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
                     <span className="navbar-toggler-icon" />
                 </button>
-                <form action="/" method="get">
-                    <input
-                        type="text"
-                        id="header-search"
-                        placeholder="Search"
-                        name="s" 
-                    />
-                    <button type="submit">Search</button>
-                </form>
+                <header className={styles.header}>
                 <div className="collapse navbar-collapse" id="mobile-nav">
                     <ul className="navbar-nav ml-auto">
                         {
                             localStorage.jwtToken ?
                             <>
                                 <li className="nav-item">
-                                    <a className="nav-link">
-                                    {localStorage.getItem('currUsername')}
+                                    <a className="nav-link" href={"/user/" + localStorage.getItem("currentUsername")}>
+                                        {localStorage.getItem('currentDisplayName')}
                                     </a>
                                 </li>
                                 <li className="nav-item">
@@ -45,7 +61,13 @@ import setJWTToken from "../../securityUtils/setJWTToken";
                                 </li>
                             </>
                             :
-                            <>
+                            <> 
+                                <li className="nav-item">
+                                    <a className="nav-link " href="/cart">
+                                        <CartIcon/>
+                                        Cart ({<ItemCount/>} items)
+                                    </a>
+                                </li>
                                 <li className="nav-item">
                                     <a className="nav-link " href="/register">
                                         Register
@@ -60,6 +82,8 @@ import setJWTToken from "../../securityUtils/setJWTToken";
                         }
                     </ul>
                 </div>
+                </header>
+                
             </div>
         </nav>
             </div>
