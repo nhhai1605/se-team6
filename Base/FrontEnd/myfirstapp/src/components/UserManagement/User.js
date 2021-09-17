@@ -56,8 +56,9 @@ class User extends Component {
         this.setState({seenPassword:false});
     };
 
-    onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    onChange(e) 
+    {
+        this.setState({ [e.target.name]: e.target.value });
     };
 
     componentDidMount()
@@ -101,7 +102,7 @@ class User extends Component {
                 {
                     this.state.seenDetail ?
                     <>
-                        <PopUpDetail toggle={this.togglePopUpDetail} onSubmit={this.onFormSubmit}/>
+                        <PopUpDetail toggle={this.togglePopUpDetail}/>
                     </>
                     : null
                 }

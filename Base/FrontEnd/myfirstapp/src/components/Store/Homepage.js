@@ -12,6 +12,7 @@ class Homepage extends Component {
     this.state = {
       books : [],
       searchString: '',
+      searchType: 'Title',
       errors: {},
     };
     this.onChange = this.onChange.bind(this);
@@ -34,11 +35,22 @@ class Homepage extends Component {
   onSubmit(e) 
   {
     e.preventDefault();
-    axios.get("http://localhost:8080/api/books/search", {params : {searchString : this.state.searchString}})
+    if(this.state.searchType == "Title")
+    {
+      axios.get("http://localhost:8080/api/books/search", {params : {searchString : this.state.searchString}})
+        .then(res => {
+          const books = res.data;
+          this.setState({books : books});
+      }).catch(err=>console.log(err))
+    }
+    else if(this.state.searchType == "Author")
+    {
+      axios.get("http://localhost:8080/api/books/searchByAuthor", {params : {searchString : this.state.searchString}})
       .then(res => {
         const books = res.data;
         this.setState({books : books});
-    }).catch(err=>console.log(err))
+      }).catch(err=>console.log(err))
+    }
   }
 
   render() 
@@ -48,6 +60,10 @@ class Homepage extends Component {
       <div>
         <div className={styles.searchDiv}>
         <form onSubmit={this.onSubmit} className="form-inline">
+        <select className="btn btn-light dropdown-toggle" name="searchType" onChange={this.onChange}>
+          <option value="Title">Title</option>
+          <option value="Author">Author</option>
+        </select>
         <input
             type="text"
             className="form-control m-3"
@@ -58,7 +74,9 @@ class Homepage extends Component {
             value={this.state.searchString}
             onChange={this.onChange}
         />
-        <button className="btn btn-primary" type="submit">Search</button>
+          <button type="button" className="btn btn-primary"  type="submit">
+            <i className="fas fa-search"></i>
+          </button>
         </form>
         </div>
         <div className={styles.p__grid}>

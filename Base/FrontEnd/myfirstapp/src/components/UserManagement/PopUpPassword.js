@@ -34,8 +34,7 @@ class PopUpPassword extends Component {
             confirmPassword: this.state.confirmPassword
         }; 
         axios.post("http://localhost:8080/api/users/changePassword", changePasswordRequest)
-        .then(res => {},
-            window.location.href="/user/" + localStorage.getItem("currentUsername")).catch(err=>this.setState({errors : err.response.data}));
+        .then(res => {window.location.href="/user/" + localStorage.getItem("currentUsername")}).catch(err=>this.setState({errors : err.response.data}));
     }
 
     onChange(e) 

@@ -30,7 +30,6 @@ public class BookController {
     public @ResponseBody Collection<Book> getAllBooks()
     {
         Collection<Book> books = bookService.getAllBooks();
-        System.out.println(books.size());
         return books;
     }
 
@@ -42,10 +41,10 @@ public class BookController {
     }
 
     @GetMapping("/searchByAuthor")
-    public @ResponseBody Collection<Book> searchBooksByAuthor(@RequestParam("author") String author)
+    public @ResponseBody Collection<Book> searchBooksByAuthor(@RequestParam("searchString") String searchString)
     {
-        author = author.toLowerCase();
-        return bookService.searchBooksByAuthor(author);
+        searchString = searchString.toLowerCase();
+        return bookService.searchBooksByAuthor(searchString);
     }
     @PostMapping("/create")
     public ResponseEntity<?> createBook(@RequestBody Book book)
