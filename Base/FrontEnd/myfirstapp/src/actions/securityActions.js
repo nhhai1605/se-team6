@@ -19,7 +19,6 @@ export const createNewUser = (newUser, history) => async dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         });
-
     }
 
 };

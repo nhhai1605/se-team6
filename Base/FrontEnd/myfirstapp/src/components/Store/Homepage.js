@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import React, {useEffect, useState, Component} from 'react';
-import styles from './BookGrid.module.css';
+import styles from '../styles/BookGrid.module.css';
 
 import BookItem from './BookItem';
 
@@ -28,7 +28,7 @@ class Homepage extends Component {
       .then(res => {
         const books = res.data;
         this.setState({books : books});
-      })
+      }).catch(err=>console.log(err))
   }
   
   onSubmit(e) 
@@ -38,7 +38,7 @@ class Homepage extends Component {
       .then(res => {
         const books = res.data;
         this.setState({books : books});
-    })
+    }).catch(err=>console.log(err))
   }
 
   render() 
@@ -47,7 +47,7 @@ class Homepage extends Component {
     return (
       <div>
         <div className={styles.searchDiv}>
-        <form onSubmit={this.onSubmit} class="form-inline">
+        <form onSubmit={this.onSubmit} className="form-inline">
         <input
             type="text"
             className="form-control m-3"

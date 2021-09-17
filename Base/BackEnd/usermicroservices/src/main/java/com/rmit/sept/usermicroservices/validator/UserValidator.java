@@ -1,6 +1,7 @@
 package com.rmit.sept.usermicroservices.validator;
 
 import com.rmit.sept.usermicroservices.model.User;
+import com.rmit.sept.usermicroservices.payload.ChangePasswordRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -24,12 +25,18 @@ public class UserValidator implements Validator {
 
         if(!user.getPassword().equals(user.getConfirmPassword())){
             errors.rejectValue("confirmPassword","Match", "Passwords must match");
-
         }
+    }
 
-        //confirmPassword
-
-
-
+    public void changePasswordValidate(ChangePasswordRequest request, Errors errors) {
+        if (request.getNewPassword().length() < 6) {
+            errors.rejectValue("newPassword", "Length", "Password must be at least 6 characters");
+        }
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            errors.rejectValue("confirmPassword", "Match", "Passwords must match");
+        }
+        if (request.getNewPassword().equals(request.getPassword())) {
+            errors.rejectValue("newPassword", "Match", "New and Old passwords should be different");
+        }
     }
 }

@@ -47,4 +47,8 @@ public class UserService {
     {
         return userRepository.getUser(username);
     }
+    public void changePassword(String username, String password)
+    {
+        userRepository.changePassword(username, bCryptPasswordEncoder.encode(password));
+    }
 }

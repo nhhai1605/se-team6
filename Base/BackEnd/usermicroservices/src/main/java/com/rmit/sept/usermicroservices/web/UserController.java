@@ -2,6 +2,7 @@ package com.rmit.sept.usermicroservices.web;
 
 
 import com.rmit.sept.usermicroservices.model.User;
+import com.rmit.sept.usermicroservices.payload.ChangePasswordRequest;
 import com.rmit.sept.usermicroservices.payload.JWTLoginSucessReponse;
 import com.rmit.sept.usermicroservices.payload.LoginRequest;
 import com.rmit.sept.usermicroservices.security.JwtTokenProvider;
@@ -16,7 +17,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,8 +48,25 @@ public class UserController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null)return errorMap;
         User newUser = userService.saveUser(user);
-
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+    }
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest request, BindingResult result)
+    {
+        userValidator.changePasswordValidate(request,result);
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null)
+        {
+            return errorMap;
+        }
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                    request.getUsername(),
+                    request.getPassword()
+            )
+        );
+        userService.changePassword(request.getUsername(), request.getNewPassword());
+        return ResponseEntity.ok("Change Password Successfully!");
     }
 
     @Autowired
@@ -62,14 +79,12 @@ public class UserController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null) return errorMap;
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
                         loginRequest.getPassword()
                 )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
         User loginUser = userService.getUser(loginRequest.getUsername());
@@ -81,8 +96,6 @@ public class UserController {
 
     @GetMapping("/getUser")
     public ResponseEntity<?> getUser(@RequestParam("username") String username){
-        System.out.println(username);
-        System.out.println("pass");
         User newUser = userService.getUser(username);
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
