@@ -18,22 +18,17 @@ public class User implements UserDetails {
     private Long id;
 
     @Email(message = "Username needs to be an email")
-    @NotBlank(message = "Username is required")
-    @Column(name="USERNAME", unique=true)
+    @Column(unique=true)
     private String username;
-    @NotBlank(message = "Please enter your full name")
-    @Column(name="FULL_NAME")
     private String fullName;
-    @NotBlank(message = "Password field is required")
-    @Column(name="PASSWORD")
     private String password;
+    private String displayName;
+
     @Transient
     private String confirmPassword;
     private Date create_At;
     private Date update_At;
 
-    @Column(name="DISPLAY_NAME")
-    private String displayName;
 
     public String getDisplayName() {
         return displayName;
