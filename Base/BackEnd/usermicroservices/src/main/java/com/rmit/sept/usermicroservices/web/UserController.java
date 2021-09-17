@@ -5,6 +5,7 @@ import com.rmit.sept.usermicroservices.model.User;
 import com.rmit.sept.usermicroservices.payload.ChangePasswordRequest;
 import com.rmit.sept.usermicroservices.payload.JWTLoginSucessReponse;
 import com.rmit.sept.usermicroservices.payload.LoginRequest;
+import com.rmit.sept.usermicroservices.payload.UserTypeRequest;
 import com.rmit.sept.usermicroservices.security.JwtTokenProvider;
 import com.rmit.sept.usermicroservices.services.CustomUserDetailsService;
 import com.rmit.sept.usermicroservices.services.MapValidationErrorService;
@@ -21,6 +22,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.Collection;
 
 import static com.rmit.sept.usermicroservices.security.SecurityConstant.TOKEN_PREFIX;
 
@@ -87,11 +90,7 @@ public class UserController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
-        User loginUser = userService.getUser(loginRequest.getUsername());
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setDisplayname(loginUser.getDisplayName());
-        loginResponse.setJWTLoginSucessReponse(new JWTLoginSucessReponse(true, jwt));
-        return ResponseEntity.ok(loginResponse);
+        return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
     }
 
     @GetMapping("/getUser")
@@ -100,26 +99,23 @@ public class UserController {
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
-
-    class LoginResponse
+    @GetMapping("/all")
+    public @ResponseBody Collection<User> getAllUsers()
     {
-        private String displayname;
-        private JWTLoginSucessReponse response;
-        public String getDisplayname()
+        Collection<User> users = userService.getAllUsers();
+        return users;
+    }
+
+    @PostMapping("/changeUserType")
+    public ResponseEntity<?> changeUserType(@Valid @RequestBody UserTypeRequest typeRequest){
+        if(typeRequest.getStatus().equals("Approve"))
         {
-            return displayname;
+            userService.changeUserType(typeRequest.getUsername(), typeRequest.getUserTypeRequest());
         }
-        public JWTLoginSucessReponse getResponse()
+        else //Reject
         {
-            return response;
+            userService.changeUserType(typeRequest.getUsername(), typeRequest.getUserType());
         }
-        public void setDisplayname(String newDisplayname)
-        {
-            displayname = newDisplayname;
-        }
-        public void setJWTLoginSucessReponse (JWTLoginSucessReponse newResponse)
-        {
-            response = newResponse;
-        }
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

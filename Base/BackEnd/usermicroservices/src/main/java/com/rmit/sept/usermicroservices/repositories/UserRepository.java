@@ -1,4 +1,4 @@
-package com.rmit.sept.usermicroservices.Repositories;
+package com.rmit.sept.usermicroservices.repositories;
 
 import com.rmit.sept.usermicroservices.model.User;
 
@@ -22,4 +22,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Transactional
     @Query(value="UPDATE USER SET PASSWORD=?2 WHERE USERNAME=?1", nativeQuery = true)
     void changePassword(String username, String password);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE USER SET USER_TYPE=?2, USER_TYPE_REQUEST='' WHERE USERNAME=?1", nativeQuery = true)
+    void changeUserType(String username, String newUserType);
 }

@@ -26,9 +26,28 @@ public class User implements UserDetails {
 
     @Transient
     private String confirmPassword;
+
     private Date create_At;
     private Date update_At;
 
+    private String userType;
+    private String userTypeRequest;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserTypeRequest() {
+        return userTypeRequest;
+    }
+
+    public void setUserTypeRequest(String userTypeRequest) {
+        this.userTypeRequest = userTypeRequest;
+    }
 
     public String getDisplayName() {
         return displayName;

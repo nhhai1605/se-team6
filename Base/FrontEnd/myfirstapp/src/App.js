@@ -11,6 +11,7 @@ import Homepage from "./components/Store/Homepage";
 import Register from "./components/UserManagement/Register";
 import Login from "./components/UserManagement/Login";
 import User from "./components/UserManagement/User";
+import UserManagement from "./components/UserManagement/UserManagement";
 
 import setJWTToken from "./securityUtils/setJWTToken";
 import { SET_CURRENT_USER } from "./actions/types";
@@ -56,7 +57,7 @@ class App extends Component {
                 {
                 user ? 
                 <>
-                
+                  <Route exact path="/userManagement" component={UserManagement} />
                 </>
                 :
                 <>

@@ -3,8 +3,6 @@ import axios from "axios";
 import DefaultUserPic from "../../uploads/team-male.jpg";
 import PopUpDetail from "./PopUpDetail";
 import PopUpPassword from "./PopUpPassword";
-import styles from "../styles/Header.module.css"
-
 
 class User extends Component {
     constructor(props){
@@ -12,9 +10,11 @@ class User extends Component {
         this.state = 
         {
         username: this.props.username,
-        displayName: this.props.displayName,
-        fullName: this.props.fullName,
-        profileImage: this.props.profileImage,
+        displayName: "",
+        fullName: "",
+        profileImage: "",
+        userType: "",
+        userTypeRequest: "",
         userExist : true,
         seenPassword : false,
         seenDetail: false,
@@ -35,7 +35,7 @@ class User extends Component {
             {
                 this.setState({userExist : true});
             }
-            this.setState({username : user.username, displayName : user.displayName, fullName : user.fullName});
+            this.setState({username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
         })
         .catch(err=>console.log(err))
     }
@@ -76,6 +76,13 @@ class User extends Component {
                 <h3>Email/Username: {this.state.username}</h3>
                 <h3>Display Name: {this.state.displayName}</h3>
                 <h3>Full Name: {this.state.fullName}</h3>
+                <h3>Current User Type: {this.state.userType}</h3>
+                {
+                    this.state.userTypeRequest !== "" ?
+                    <>
+                    <h3>Pending User Type: {this.state.userTypeRequest}</h3>
+                    </> : null
+                }
                 {
                     this.state.username === localStorage.getItem("currentUsername") ?
                     <>

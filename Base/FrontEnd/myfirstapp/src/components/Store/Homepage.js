@@ -35,7 +35,7 @@ class Homepage extends Component {
   onSubmit(e) 
   {
     e.preventDefault();
-    if(this.state.searchType == "Title")
+    if(this.state.searchType === "Title")
     {
       axios.get("http://localhost:8080/api/books/search", {params : {searchString : this.state.searchString}})
         .then(res => {
@@ -43,7 +43,7 @@ class Homepage extends Component {
           this.setState({books : books});
       }).catch(err=>console.log(err))
     }
-    else if(this.state.searchType == "Author")
+    else if(this.state.searchType === "Author")
     {
       axios.get("http://localhost:8080/api/books/searchByAuthor", {params : {searchString : this.state.searchString}})
       .then(res => {
@@ -60,10 +60,11 @@ class Homepage extends Component {
       <div>
         <div className={styles.searchDiv}>
         <form onSubmit={this.onSubmit} className="form-inline">
-        <select className="btn btn-light dropdown-toggle" name="searchType" onChange={this.onChange}>
+        <select className="btn btn-outline-primary dropdown-toggle" name="searchType" onChange={this.onChange}>
           <option value="Title">Title</option>
           <option value="Author">Author</option>
         </select>
+        
         <input
             type="text"
             className="form-control m-3"

@@ -3,13 +3,15 @@ package com.rmit.sept.usermicroservices.services;
 
 
 
-import com.rmit.sept.usermicroservices.Repositories.UserRepository;
+import com.rmit.sept.usermicroservices.repositories.UserRepository;
 import com.rmit.sept.usermicroservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.usermicroservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Collection;
 
 @Service
 public class UserService {
@@ -50,5 +52,16 @@ public class UserService {
     public void changePassword(String username, String password)
     {
         userRepository.changePassword(username, bCryptPasswordEncoder.encode(password));
+    }
+
+
+    public Collection<User> getAllUsers()
+    {
+        return (Collection<User>)userRepository.findAll();
+    }
+
+    public void changeUserType(String username, String userTypeRequest)
+    {
+        userRepository.changeUserType(username, userTypeRequest);
     }
 }

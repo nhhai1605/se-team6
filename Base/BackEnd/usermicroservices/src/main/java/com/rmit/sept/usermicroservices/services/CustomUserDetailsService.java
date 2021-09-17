@@ -1,6 +1,6 @@
 package com.rmit.sept.usermicroservices.services;
 
-import com.rmit.sept.usermicroservices.Repositories.UserRepository;
+import com.rmit.sept.usermicroservices.repositories.UserRepository;
 import com.rmit.sept.usermicroservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

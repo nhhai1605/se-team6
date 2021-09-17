@@ -3,7 +3,12 @@ import setJWTToken from "../../securityUtils/setJWTToken";
 import styles from '../styles/Header.module.css';
 import { CartContext } from '../Store/Context/CartContext';
 import {CartIcon} from '../icons';
-
+import axios from "axios";
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import $ from 'jquery';
+import Popper from 'popper.js';
 const ItemCount = () => {
     const {itemCount} = useContext(CartContext);
     return itemCount;
@@ -13,8 +18,12 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          itemCount: 0,
-          errors: {},
+            username: localStorage.getItem("currentUsername") !== null ?  localStorage.getItem("currentUsername") : "",
+            displayName: "",
+            userType: "",
+            userTypeRequest: "",
+            itemCount: 0,
+            errors: {},
         };
         this.onChange = this.onChange.bind(this);
       }
@@ -27,10 +36,22 @@ class Header extends Component {
     {
         localStorage.removeItem("jwtToken");
         localStorage.removeItem("currentUsername");
-        localStorage.removeItem("currentDisplayName");
         setJWTToken(false);
     }
 
+    getUserDetails=(username)=>{
+        axios.get("http://localhost:8080/api/users/getUser", {params : {username : this.state.username}})
+            .then(res => {
+            const user = res.data;
+            this.setState({username : user.username, displayName : user.displayName, userType:user.userType, userTypeRequest:user.userTypeRequest});
+        })
+        .catch(err=>console.log(err))
+    }
+    componentDidMount() 
+    {
+        this.getUserDetails(this.state.username);
+    }
+  
     render() {
         const itemCount = this.state.itemCount;
         return (
@@ -46,40 +67,49 @@ class Header extends Component {
                     </button>
                     <div className={styles.header} id="mobile-nav">
                         <ul className="nav navbar-nav" style={{float:'right'}}>
+                            {
+                                localStorage.jwtToken ?
+                                <>
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Account
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a className="dropdown-item"  href={"/user/" + this.state.username}>{this.state.displayName}'s Page</a>
+                                        {
+                                            this.state.userType==="Admin" ?
+                                            <>
+                                             <a className="dropdown-item"  href={"/userManagement"}>User Management</a>
+                                            </>:null
+                                        }
+                                        <div className="dropdown-divider"></div>
+                                        <a className="dropdown-item" onClick={this.onLogout} href="/">Logout</a>
+                                        </div>
+                                    </li>
+                                </>
+                                :
+                                <> 
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Account
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a className="dropdown-item" href="/login">
+                                            Login
+                                        </a>
+                                        <a className="dropdown-item" href="/register">
+                                            Register
+                                        </a>
+                                        </div>
+                                    </li>
+                                </>
+                            }
                             <li className="nav-item">
                                 <a className="nav-link" href="/cart">
                                     <CartIcon/>
                                     Cart ({<ItemCount/>} items)
                                 </a>
                             </li>
-                            {
-                                localStorage.jwtToken ?
-                                <>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href={"/user/" + localStorage.getItem("currentUsername")}>
-                                            {localStorage.getItem('currentDisplayName')}
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" onClick={this.onLogout} href="/">
-                                            Logout
-                                        </a>
-                                    </li>
-                                </>
-                                :
-                                <> 
-                                    <li className="nav-item">
-                                        <a className="nav-link " href="/register">
-                                            Register
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="/login">
-                                            Login
-                                        </a>
-                                    </li>
-                                </>
-                            }
                         </ul>
                     </div>
                 </nav>
