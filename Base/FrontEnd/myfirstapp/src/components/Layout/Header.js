@@ -70,6 +70,11 @@ class Header extends Component {
                             {
                                 localStorage.jwtToken ?
                                 <>
+                                    <li className="nav-item">
+                                        <a className="nav-link " href="/post">
+                                            Post
+                                        </a>
+                                    </li>
                                     <li className="nav-item dropdown">
                                         <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Account
