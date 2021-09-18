@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BackEnd",
+    "\\BackEnd\\loginmicroservices",
+    "\\BackEnd\\loginmicroservices\\src",
+    "\\BackEnd\\loginmicroservices\\src\\main",
+    "\\BackEnd\\loginmicroservices\\src\\main\\java",
+    "\\BackEnd\\loginmicroservices\\src\\main\\java\\com",
+    "\\BackEnd\\loginmicroservices\\src\\main\\java\\com\\rmit",
+    "\\BackEnd\\loginmicroservices\\src\\main\\java\\com\\rmit\\sept",
+    "\\BackEnd\\loginmicroservices\\src\\main\\java\\com\\rmit\\sept\\bk_loginservices"
+  ],
+  "SelectedNode": "\\BackEnd\\loginmicroservices\\src\\main\\java\\com\\rmit\\sept\\bk_loginservices\\ms_login.java",
+  "PreviewInSolutionExplorer": false
+}

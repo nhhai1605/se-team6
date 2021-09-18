@@ -1,0 +1,19 @@
+version: 2.1
+jobs:
+  build-docker-compose:
+    docker: # run the steps with Docker
+      - image: cimg/openjdk:16.0.0
+    steps: # a collection of executable commands 
+      - checkout 
+      - setup_remote_docker
+      - run:
+          command: docker-compose up --no-start
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./docker-compose.yml
+            
+workflows:
+  build:
+    jobs:
+      - build-docker-compose

@@ -1,0 +1,14 @@
+.p__grid {
+    margin: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-gap: 15px;
+    /* background: rgb(27, 116, 250); */
+}
+
+.searchDiv
+{
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}

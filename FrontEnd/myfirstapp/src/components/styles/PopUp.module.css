@@ -1,0 +1,44 @@
+
+  .modal_content_password {
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -350px;
+    width: 700px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid black;
+  }
+  
+  .modal_content_detail {
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -350px;
+    width: 700px;
+    height: 500px;
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid black;
+  }
+
+  .close {
+    color: Black;
+    font-size: 25px;
+    background-color:white;
+    float: right;
+    border:none;
+  }
+  
+  .close:hover {
+    cursor: pointer;
+  }
+
+  .close:active {
+    outline: none;
+  }
