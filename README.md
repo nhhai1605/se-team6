@@ -1,24 +1,18 @@
 # RMIT SEPT 2021 Major Project
 
-# Group Day-Time
+# Team 6 - Dipto Thursday 19h30
 
 ## Members
-* xxxxx
-* xxxxx
-* xxxxx
-* xxxxx
+* Hai Nguyen - s3822918
+* Huanan Lin - s3691176
+* Hin Yap Lee - s3801049
+* Quoc Tu Pham - s3783358
 
 ## Records
 
-* Github repository :https://github.com/xxx
-* jira Board : https://xxxx
-* Google Docs : https://drive.google.com/xxxx
-
-	
-## Code documentation - Release 0.1.0 - date
-* feature 1
-* feature 2
-* feature 3
+* Github repository :https://github.com/nhhai1605/se-team6/
+* jira Board : https://se-team6.atlassian.net/
+* Google Docs : Docs file included in Jira board.
   
 
 To run the application locally : 
