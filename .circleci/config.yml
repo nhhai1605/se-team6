@@ -7,7 +7,7 @@ jobs:
       - checkout 
       - setup_remote_docker
       - run:
-          command: docker-compose up
+          command: docker-compose up --timeout 30
       - persist_to_workspace:
           root: .
           paths:
