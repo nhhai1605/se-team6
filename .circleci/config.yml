@@ -9,11 +9,11 @@ jobs:
       - run:
           command: docker-compose up
       - persist_to_workspace:
-          root: ./
+          root: .
           paths:
             - ./docker-compose.yml
             
 workflows:
   build:
     jobs:
-      - build--docker-compose
+      - build-docker-compose
