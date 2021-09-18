@@ -1,50 +1,19 @@
-
-version: 2
+version: 2.1
 jobs:
-
-  build-usermicroservices:
-
+  build-docker-compose:
     docker: # run the steps with Docker
-      - image: circleci/openjdk:16-jdk
-    
+      - image: cimg/openjdk:16.0.0
     steps: # a collection of executable commands 
-
-      - checkout # check out source code to working directory
-
-      - attach_workspace:
-          at: dependency
-          
-      - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
-          key: sept-usermicroservices-{{ checksum "BackEnd/usermicroservices/pom.xml" }}
-      
-      - run: ls -R
-      
-      - run: mvn install:install-file -Dfile="dependency/Common/target/common-1.1.7.jar" -DgroupId=sept.major -DartifactId=common -Dversion="1.1.7" -Dpackaging=jar
-      
-      - run: ls ../.m2 -R
-      
-      - run: cd BackEnd/usermicroservices && mvn dependency:go-offline # gets the project dependencies
-      
-      - run: ls ../.m2 -R
-
-      - save_cache: # saves the project dependencies
-          paths:
-            - ~/.m2
-          key: sept-usermicroservices-{{ checksum "BackEnd/usermicroservices/pom.xml" }}
-      
-      - run: cd BackEnd/usermicroservices && mvn package # run the actual tests and package
-      
-      - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard. 
-          path: BackEnd/usermicroservices/target/surefire-reports
-      
-      - store_artifacts: # store the uberjar as an artifact
-          path: BackEnd/usermicroservices/target/usermicroservices-0.0.1.jar
-
-      - run: mv BackEnd/usermicroservices/target/usermicroservices-0.0.1.jar BackEnd/Ususermicroservicesers/target/usermicroservices.jar
-      
+      - checkout 
+      - setup_remote_docker
+      - run:
+          command: docker-compose up
       - persist_to_workspace:
-          root: BackEnd/
+          root: ./
           paths:
-            - usermicroservices/target/usermicroservices.jar
-            - usermicroservices/Dockerfile
-            - usermicroservices/pom.xml
+            - ./docker-compose.yml
+            
+workflows:
+  build:
+    jobs:
+      - build--docker-compose
