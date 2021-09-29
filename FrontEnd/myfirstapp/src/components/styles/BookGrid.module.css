@@ -1,11 +1,17 @@
-.p__grid {
+.bookGrid {
+    margin: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-gap: 15px;
+
+}
+.userGrid{
     margin: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-areas: "userCard userCard" "userCard userCard";
     grid-gap: 15px;
-    /* background: rgb(27, 116, 250); */
 }
-
 .searchDiv
 {
     display: flex;

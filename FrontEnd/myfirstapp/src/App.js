@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 
+import Post from "./components/Store/Post";
 import Homepage from "./components/Store/Homepage";
 import Register from "./components/UserManagement/Register";
 import Login from "./components/UserManagement/Login";
@@ -58,6 +59,7 @@ class App extends Component {
                 user ? 
                 <>
                   <Route exact path="/userManagement" component={UserManagement} />
+                  <Route exact path="/post" component={Post} />
                 </>
                 :
                 <>

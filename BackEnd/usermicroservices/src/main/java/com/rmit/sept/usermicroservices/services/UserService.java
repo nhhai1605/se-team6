@@ -64,4 +64,14 @@ public class UserService {
     {
         userRepository.changeUserType(username, userTypeRequest);
     }
+
+    public void changeDetail(String username, String displayName, String fullName, String userTypeRequest)
+    {
+        userRepository.changeDetail(username, displayName, fullName, userTypeRequest);
+    }
+
+    public void deleteUser(Long id)
+    {
+        userRepository.deleteById(id);
+    }
 }

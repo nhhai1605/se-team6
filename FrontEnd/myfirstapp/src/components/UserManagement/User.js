@@ -72,17 +72,12 @@ class User extends Component {
         {   
             this.state.userExist ?
             <>
-                <img src={DefaultUserPic}/>
+                <img src={DefaultUserPic} alt="User's Avatar"/>
                 <h3>Email/Username: {this.state.username}</h3>
                 <h3>Display Name: {this.state.displayName}</h3>
                 <h3>Full Name: {this.state.fullName}</h3>
                 <h3>Current User Type: {this.state.userType}</h3>
-                {
-                    this.state.userTypeRequest !== "" ?
-                    <>
-                    <h3>Pending User Type: {this.state.userTypeRequest}</h3>
-                    </> : null
-                }
+                <h3>Pending User Type: {this.state.userTypeRequest}</h3>
                 {
                     this.state.username === localStorage.getItem("currentUsername") ?
                     <>
@@ -102,14 +97,14 @@ class User extends Component {
                 {
                     this.state.seenPassword ?
                     <>
-                        <PopUpPassword toggle={this.togglePopUpPassword}/>
+                        <PopUpPassword toggle={this.togglePopUpPassword} username={this.state.username}/>
                     </>
                     : null
                 }
                 {
                     this.state.seenDetail ?
                     <>
-                        <PopUpDetail toggle={this.togglePopUpDetail}/>
+                        <PopUpDetail toggle={this.togglePopUpDetail} username={this.state.username}/>
                     </>
                     : null
                 }

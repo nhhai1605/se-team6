@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Locale;
 
@@ -47,7 +48,7 @@ public class BookController {
         return bookService.searchBooksByAuthor(searchString);
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createBook(@RequestBody Book book)
+    public ResponseEntity<?> createBook(@Valid @RequestBody Book book)
     {
         Book newBook = bookService.createBook(book);
         return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);

@@ -10,14 +10,40 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-    private int quality;
+    private int quantity;
     private int isShareBook;
     private int price;
     private Date postDate;
     private float rate;
+    private String username;
+    private String displayName;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
     public Book()
     {
+    }
+
+    public int getIsShareBook() {
+        return isShareBook;
+    }
+
+    public void setIsShareBook(int isShareBook) {
+        this.isShareBook = isShareBook;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String poster) {
+        this.username = poster;
     }
 
     public void setTitle(String title)
@@ -37,8 +63,8 @@ public class Book {
         return author;
     }
 
-    public int getQuality() {
-        return quality;
+    public int getQuantity() {
+        return quantity;
     }
 
     public int isShareBook() {
@@ -61,8 +87,8 @@ public class Book {
         this.author = author;
     }
 
-    public void setQuality(int quality) {
-        this.quality = quality;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setShareBook(int shareBook) {

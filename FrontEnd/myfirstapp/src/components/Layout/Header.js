@@ -7,8 +7,6 @@ import axios from "axios";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import $ from 'jquery';
-import Popper from 'popper.js';
 const ItemCount = () => {
     const {itemCount} = useContext(CartContext);
     return itemCount;
@@ -22,7 +20,6 @@ class Header extends Component {
             displayName: "",
             userType: "",
             userTypeRequest: "",
-            itemCount: 0,
             errors: {},
         };
         this.onChange = this.onChange.bind(this);

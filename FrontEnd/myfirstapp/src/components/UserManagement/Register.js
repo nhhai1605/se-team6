@@ -59,7 +59,7 @@ class Register extends Component {
                     className= {classnames("form-control form-control-lg", {
                         "is-invalid": errors.fullName
                     }) }
-                    placeholder="Fullname"
+                    placeholder="Full Name"
                     name="fullName"
                     value= {this.state.fullName}
                     onChange = {this.onChange}
@@ -140,6 +140,7 @@ class Register extends Component {
                 <option value="">Normal Customer</option>
                 <option value="Publisher">Publisher</option>
                 <option value="Author">Author</option>
+                <option value="Admin">Admin</option>
                 </select>
                 </div>
                 If you already have an account, please <a href = "/login">login</a> here! Other types of user beside Normal Customer will require admin to approve!

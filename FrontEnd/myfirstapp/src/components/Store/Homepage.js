@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
 import axios from "axios";
-import React, {useEffect, useState, Component} from 'react';
+import React, {Component} from 'react';
 import styles from '../styles/BookGrid.module.css';
 
 import BookItem from './BookItem';
@@ -25,7 +24,7 @@ class Homepage extends Component {
 
   componentDidMount() 
   {
-    axios.get("http://localhost:8080/api/books/all")
+    axios.get("http://localhost:8081/api/books/all")
       .then(res => {
         const books = res.data;
         this.setState({books : books});
@@ -37,7 +36,7 @@ class Homepage extends Component {
     e.preventDefault();
     if(this.state.searchType === "Title")
     {
-      axios.get("http://localhost:8080/api/books/search", {params : {searchString : this.state.searchString}})
+      axios.get("http://localhost:8081/api/books/search", {params : {searchString : this.state.searchString}})
         .then(res => {
           const books = res.data;
           this.setState({books : books});
@@ -45,7 +44,7 @@ class Homepage extends Component {
     }
     else if(this.state.searchType === "Author")
     {
-      axios.get("http://localhost:8080/api/books/searchByAuthor", {params : {searchString : this.state.searchString}})
+      axios.get("http://localhost:8081/api/books/searchByAuthor", {params : {searchString : this.state.searchString}})
       .then(res => {
         const books = res.data;
         this.setState({books : books});
@@ -75,12 +74,12 @@ class Homepage extends Component {
             value={this.state.searchString}
             onChange={this.onChange}
         />
-          <button type="button" className="btn btn-primary"  type="submit">
+          <button className="btn btn-primary"  type="submit">
             <i className="fas fa-search"></i>
           </button>
         </form>
         </div>
-        <div className={styles.p__grid}>
+        <div className={styles.bookGrid}>
             {
               books.map(book => (
                   <BookItem key={book.id} book={book}/>
