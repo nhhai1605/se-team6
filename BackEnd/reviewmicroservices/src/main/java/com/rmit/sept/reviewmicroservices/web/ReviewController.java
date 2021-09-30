@@ -1,7 +1,6 @@
 package com.rmit.sept.reviewmicroservices.web;
 
 import com.rmit.sept.reviewmicroservices.model.Review;
-import com.rmit.sept.reviewmicroservices.payload.ReviewRequest;
 import com.rmit.sept.reviewmicroservices.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,10 +32,10 @@ public class ReviewController {
         return reviewService.getReviewsForBook(bookId);
     }
 
-    @PostMapping("/deleteReview")
-    public ResponseEntity<?> deleteReview(@RequestBody ReviewRequest request)
+    @DeleteMapping("/deleteReview/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long id)
     {
-        reviewService.deleteReview(request.getId());
+        reviewService.deleteReview(id);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

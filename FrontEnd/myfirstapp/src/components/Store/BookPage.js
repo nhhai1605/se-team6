@@ -75,23 +75,16 @@ class BookPage extends Component {
     e.preventDefault();
   }
 
-  onSubmitDelete(e) {
+  onSubmitDelete(e) 
+  {
     e.preventDefault();
-    const bookRequest =
-    {
-      id : this.state.id,
-      title : this.state.title
-    }
-    axios.post("http://localhost:8081/api/books/deleteBook", bookRequest)
+    axios.delete("http://localhost:8081/api/books/deleteBook/" +  this.state.id)
     .then(window.location.href="/").catch(err=>this.setState({errors : err.response.data}));
   }
 
-  onSubmitDeleteReview(e) {
-    const reviewRequest =
-    {
-      id : this.state.deleteReviewId,
-    }
-    axios.post("http://localhost:8082/api/reviews/deleteReview", reviewRequest)
+  onSubmitDeleteReview(e) 
+  {
+    axios.delete("http://localhost:8082/api/reviews/deleteReview/" + this.state.deleteReviewId)
     .then().catch(err=>this.setState({errors : err.response.data}));
     this.setState({deleteReviewId : null});
   }

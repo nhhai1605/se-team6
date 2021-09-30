@@ -135,10 +135,10 @@ public class UserController {
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 
-    @PostMapping("/deleteUser")
-    public ResponseEntity<?> deleteUser(@RequestBody UserRequest request)
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id)
     {
-        userService.deleteUser(request.getId());
+        userService.deleteUser(id);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

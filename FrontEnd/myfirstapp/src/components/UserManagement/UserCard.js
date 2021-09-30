@@ -59,12 +59,7 @@ class UserCard extends Component
         }
         else if(this.state.status === "Delete")
         {
-            const userRequest =
-            {
-                username : this.state.username,
-                id : this.state.id
-            }
-            axios.post("http://localhost:8080/api/users/deleteUser", userRequest)
+            axios.delete("http://localhost:8080/api/users/deleteUser/" + this.state.id)
             .then(window.location.reload(false)).catch(err=>this.setState({errors : err.response.data}));
         }
         else
