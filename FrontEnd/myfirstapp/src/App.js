@@ -9,6 +9,8 @@ import jwt_decode from "jwt-decode";
 
 import Post from "./components/Store/Post";
 import Homepage from "./components/Store/Homepage";
+import Cart from "./components/Store/Cart";
+
 import Register from "./components/UserManagement/Register";
 import Login from "./components/UserManagement/Login";
 import User from "./components/UserManagement/User";
@@ -55,6 +57,7 @@ class App extends Component {
                 <Switch>
                   <Route path={'/user/:usernameString'} children = {<UserPage/>} />
                 </Switch>
+                <Route exact path="/cart" component={Cart} />
                 {
                 user ? 
                 <>

@@ -12,8 +12,7 @@ const Cart = () => {
     return ( 
         <div >
             <div className="text-center mt-5">
-                <h1>Cart</h1>
-                <p>This is the Cart Page.</p>
+                <h1>Your Cart</h1>
             </div>
 
             <div className="row no-gutters justify-content-center">
@@ -21,13 +20,13 @@ const Cart = () => {
                     {
                         cartItems.length > 0 ?
                         <CartProducts/> :
-                        <div className="p-3 text-center text-muted">
+                        <div className="h4 p-3 text-center text-muted">
                             Your cart is empty
                         </div>
                     }
 
                     { checkout && 
-                        <div className="p-3 text-center text-success">
+                        <div className="h4 p-3 text-center text-success">
                             <p>Checkout successfull</p>
                             <Link to="/" className="btn btn-outline-success btn-sm">BUY MORE</Link>
                         </div>
@@ -36,15 +35,15 @@ const Cart = () => {
                 {
                     cartItems.length > 0 && 
                     <div className="col-sm-3 p-3">
-                        <div className="card card-body">
+                        <div className="card card-body border border-dark rounded">
                             <p className="mb-1">Total Items</p>
                             <h4 className=" mb-3 txt-right">{itemCount}</h4>
                             <p className="mb-1">Total Payment</p>
                             <h3 className="m-0 txt-right">{formatNumber(total)}</h3>
                             <hr className="my-4"/>
                             <div className="text-center">
-                                <button type="button" className="btn btn-primary mb-2" onClick={handleCheckout}>CHECKOUT</button>
-                                <button type="button" className="btn btn-outlineprimary btn-sm" onClick={clearCart}>CLEAR</button>
+                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={handleCheckout}>CHECKOUT</button>
+                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={clearCart}>CLEAR</button>
                             </div>
 
                         </div>

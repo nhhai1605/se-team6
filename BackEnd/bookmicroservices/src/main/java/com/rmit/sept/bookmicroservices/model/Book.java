@@ -18,6 +18,9 @@ public class Book {
     private String username;
     private String displayName;
 
+    public Book()
+    {
+    }
     public String getDisplayName() {
         return displayName;
     }
@@ -25,11 +28,6 @@ public class Book {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-
-    public Book()
-    {
-    }
-
     public int getIsShareBook() {
         return isShareBook;
     }
