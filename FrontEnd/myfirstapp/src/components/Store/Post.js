@@ -13,9 +13,11 @@ class Post extends Component {
       author: "",
       quantity: 100,
       price: 100,
+      postImage : "",
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -30,7 +32,7 @@ class Post extends Component {
       price: this.state.price,
     };
     axios.post("http://localhost:8081/api/books/create", newBook)
-        .then(res => {window.location.href="/"}).catch(err=>this.setState({errors : err.response.data}));
+        .then(res => (console.log(res.data.id), window.location.href="/")).catch(err=>this.setState({errors : err.response.data}));
   }
 
   componentDidMount() 
@@ -51,6 +53,13 @@ class Post extends Component {
     this.setState({ [e.target.name]: e.target.value });
     }
 
+  onFileChange = (event) => {
+    this.setState({
+      postImage: event.target.files[0]
+    });
+  }
+
+
   render() {
       const { errors } = this.state;
     return (
@@ -70,7 +79,7 @@ class Post extends Component {
                     name="title"
                     value= {this.state.title}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="100"
+                    minLength="6" maxLength="60"
                     required
                   />
                   {errors.title && (
@@ -87,7 +96,7 @@ class Post extends Component {
                     name="author"
                     value= {this.state.author}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="100"
+                    minLength="6" maxLength="60"
                     required
                   />
                   {errors.author && (
@@ -104,7 +113,7 @@ class Post extends Component {
                     name="quantity"
                     value= {this.state.quantity}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="100" required
+                    minLength="6" maxLength="60" required
                   />
                   {errors.quantity && (
                       <div className= "invalid-feedback">{errors.quantity}</div>
@@ -120,12 +129,18 @@ class Post extends Component {
                     name="price"
                     value= {this.state.price}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="100" required
+                    minLength="6" maxLength="60" required
                   />
                   {errors.price && (
                       <div className= "invalid-feedback">{errors.price}</div>
                   )}
                 </div>
+                <div className="input-group my-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Upload</span>
+                  <input type="file" accept="image/*" name="postImage" onChange = {this.onFileChange}/>
+                </div>
+              </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>

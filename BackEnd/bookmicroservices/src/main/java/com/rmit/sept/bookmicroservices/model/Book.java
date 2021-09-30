@@ -17,6 +17,15 @@ public class Book {
     private float rate;
     private String username;
     private String displayName;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Book()
     {

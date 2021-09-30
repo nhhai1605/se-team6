@@ -20,6 +20,28 @@ public class UserValidator implements Validator {
 
         User user = (User) object;
 
+        if(user.getUsername().length() <6){
+            errors.rejectValue("username","Length", "Must be at least 6 characters");
+        }
+        if(user.getUsername().length() > 60){
+            errors.rejectValue("username","Length", "Too many characters");
+        }
+
+        if(user.getDisplayName().length() <6){
+            errors.rejectValue("displayName","Length", "Must be at least 6 characters");
+        }
+        if(user.getDisplayName().length() > 60){
+            errors.rejectValue("displayName","Length", "Too many characters");
+        }
+
+        if(user.getFullName().length() <6){
+            errors.rejectValue("fullName","Length", "Must be at least 6 characters");
+        }
+        if(user.getFullName().length() > 60){
+            errors.rejectValue("fullName","Length", "Too many characters");
+        }
+
+
         if(user.getPassword().length() <6){
             errors.rejectValue("password","Length", "Must be at least 6 characters");
         }

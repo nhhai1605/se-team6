@@ -88,17 +88,19 @@ class UserCard extends Component
                         
                         this.state.userTypeRequest !== "None" ?
                         <>
-                            <button className="btn" onClick={() => this.setState({ status: "Approve" })}  style={{margin:10, backgroundColor:"green", outlineColor:"green",color:'white'}}>Approve</button>
-                            <button className="btn" onClick={() => this.setState({ status: "Reject" })} style={{margin:10, backgroundColor:"red", outlineColor:"red",color:'white'}}>Reject</button>
+                            <button className="btn btn-success" onClick={() => this.setState({ status: "Approve" })}  style={{margin:10}}>Approve</button>
+                            <button className="btn btn-danger" onClick={() => this.setState({ status: "Reject"})} style={{margin:10}}>Reject</button>
                         </>
                         : null
                     }
                     {
                         this.state.username !== localStorage.getItem("currentUsername") ? 
-                        <button className="btn" onClick={() => this.setState({ status: "Delete" })} style={{margin:10, backgroundColor:"grey", outlineColor:"grey",color:'white'}}>Delete User</button>
+                        <>
+                        <button className="btn" onClick={() => this.setState({ status: "Delete" })} style={{margin:10, borderColor:'grey', background:"grey", color:'white'}}>Delete User</button>
+                        </>
                         : null
                     }
-                    <button className="btn" onClick={() => this.setState({ status: "Detail"})} style={{margin:10, backgroundColor:"rgb(51,153,255)", outlineColor:"rgb(51,153,255)",color:'white'}}>User Detail</button>
+                    <button className="btn btn-info" onClick={() => this.setState({ status: "Detail"})} style={{margin:10}}>User Detail</button>
                     </form>
                 </div>
             

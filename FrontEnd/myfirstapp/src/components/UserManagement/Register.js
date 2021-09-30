@@ -63,8 +63,6 @@ class Register extends Component {
                     name="fullName"
                     value= {this.state.fullName}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45"
-                    required
                   />
                   {errors.fullName && (
                       <div className= "invalid-feedback">{errors.fullName}</div>
@@ -80,8 +78,7 @@ class Register extends Component {
                     name="displayName"
                     value= {this.state.displayName}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45"
-                    required
+                    
                   />
                   {errors.displayName && (
                       <div className= "invalid-feedback">{errors.displayName}</div>
@@ -97,7 +94,6 @@ class Register extends Component {
                     name="username"
                     value= {this.state.username}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45" required
                   />
                   {errors.username && (
                       <div className= "invalid-feedback">{errors.username}</div>
@@ -113,7 +109,6 @@ class Register extends Component {
                     name="password"
                     value= {this.state.password}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45" required
                   />
                   {errors.password && (
                       <div className= "invalid-feedback">{errors.password}</div>
@@ -129,7 +124,6 @@ class Register extends Component {
                     name="confirmPassword"
                     value= {this.state.confirmPassword}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45" required
                   />
                   {errors.confirmPassword && (
                       <div className= "invalid-feedback">{errors.confirmPassword}</div>
@@ -144,7 +138,7 @@ class Register extends Component {
                 </select>
                 </div>
                 If you already have an account, please <a href = "/login">login</a> here! Other types of user beside Normal Customer will require admin to approve!
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-primary btn-block mt-4" />
               </form>
             </div>
           </div>

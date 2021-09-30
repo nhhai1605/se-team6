@@ -10,6 +10,7 @@ import jwt_decode from "jwt-decode";
 import Post from "./components/Store/Post";
 import Homepage from "./components/Store/Homepage";
 import Cart from "./components/Store/Cart";
+import BookPage from "./components/Store/BookPage";
 
 import Register from "./components/UserManagement/Register";
 import Login from "./components/UserManagement/Login";
@@ -55,7 +56,10 @@ class App extends Component {
                 }
                 <Route exact path="/" component={Homepage} />
                 <Switch>
-                  <Route path={'/user/:usernameString'} children = {<UserPage/>} />
+                  <Route path={'/user/:usernameString'} children = {<UserPageFunc/>} />
+                </Switch>
+                <Switch>
+                  <Route path={'/book/:bookId'} children = {<BookPageFunc/>} />
                 </Switch>
                 <Route exact path="/cart" component={Cart} />
                 {
@@ -84,11 +88,19 @@ class App extends Component {
 }
 
 
-function UserPage()
+function UserPageFunc()
 {
   let { usernameString } = useParams();
   return (
     <User username={usernameString}/>
   );
 }
+function BookPageFunc()
+{
+  let { bookId } = useParams();
+  return (
+    <BookPage id={bookId}/>
+  );
+}
+
 export default App;

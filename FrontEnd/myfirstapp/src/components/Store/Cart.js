@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import CartProducts from './CartProducts';
 import { useCart } from './useCart';
 import { formatNumber } from './utils';
+import CartItem from './CartItem';
 
 const Cart = () => {
 
@@ -19,7 +19,8 @@ const Cart = () => {
                 <div className="col-sm-9 p-3">
                     {
                         cartItems.length > 0 ?
-                        <CartProducts/> :
+                        cartItems.map(product =>  <div className="card card-body mb-3 border border-dark rounded" ><CartItem key={product.id} product={product}/></div>) 
+                        :
                         <div className="h4 p-3 text-center text-muted">
                             Your cart is empty
                         </div>
@@ -27,8 +28,8 @@ const Cart = () => {
 
                     { checkout && 
                         <div className="h4 p-3 text-center text-success">
-                            <p>Checkout successfull</p>
-                            <Link to="/" className="btn btn-outline-success btn-sm">BUY MORE</Link>
+                            <p>Checkout successfull!</p>
+                            <Link to="/" className="btn btn-outline-success">Buy More</Link>
                         </div>
                     }
                 </div>
@@ -42,8 +43,8 @@ const Cart = () => {
                             <h3 className="m-0 txt-right">{formatNumber(total)}</h3>
                             <hr className="my-4"/>
                             <div className="text-center">
-                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={handleCheckout}>CHECKOUT</button>
-                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={clearCart}>CLEAR</button>
+                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={handleCheckout}>Checkout</button>
+                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={clearCart}>Clear</button>
                             </div>
 
                         </div>

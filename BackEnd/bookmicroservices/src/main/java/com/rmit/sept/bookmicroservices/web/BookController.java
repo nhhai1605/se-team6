@@ -1,11 +1,11 @@
 package com.rmit.sept.bookmicroservices.web;
 
 import com.rmit.sept.bookmicroservices.model.Book;
+import com.rmit.sept.bookmicroservices.payload.idTitleRequest;
 import com.rmit.sept.bookmicroservices.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Locale;
 
 
 @RestController
@@ -52,6 +51,19 @@ public class BookController {
     {
         Book newBook = bookService.createBook(book);
         return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getBook")
+    public @ResponseBody Book getBook(@RequestParam("id") Long id)
+    {
+        return bookService.getBook(id);
+    }
+
+    @PostMapping("/deleteBook")
+    public ResponseEntity<?> deleteBook(@RequestBody idTitleRequest request)
+    {
+        bookService.deleteBook(request.getId());
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 
 }

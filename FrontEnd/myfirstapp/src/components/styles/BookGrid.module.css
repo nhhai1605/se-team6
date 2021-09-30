@@ -9,7 +9,6 @@
     margin: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    grid-template-areas: "userCard userCard" "userCard userCard";
     grid-gap: 15px;
 }
 .searchDiv
