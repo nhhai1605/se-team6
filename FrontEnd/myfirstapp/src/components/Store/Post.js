@@ -30,6 +30,7 @@ class Post extends Component {
       author: this.state.author,
       quantity: this.state.quantity,
       price: this.state.price,
+      error:{}
     };
     axios.post("http://localhost:8081/api/books/create", newBook)
         .then(res => (console.log(res.data.id), window.location.href="/")).catch(err=>this.setState({errors : err.response.data}));
@@ -41,7 +42,7 @@ class Post extends Component {
   }
 
   getUserDetails=(username)=>{
-    axios.get("http://localhost:8080/api/users/getUser", {params : {username : this.state.username}})
+    axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
         .then(res => {
         const user = res.data;
         this.setState({displayName : user.displayName});
@@ -70,6 +71,7 @@ class Post extends Component {
               <h1 className="display-4 text-center">Post new book</h1>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
+                  <h4>Title:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -87,6 +89,7 @@ class Post extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                  <h4>Author:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -103,7 +106,14 @@ class Post extends Component {
                       <div className= "invalid-feedback">{errors.author}</div>
                   )}
                 </div>
+                <div class="form-group">
+                  <h4>Description:</h4>
+                  <textarea className= {classnames("form-control form-control-lg", {"is-invalid": errors.description}) } 
+                  placeholder="Description" name="description" value= {this.state.description} onChange = {this.onChange} 
+                  rows="4" minLength="6" maxLength="60" required></textarea>
+                </div>
                 <div className="form-group">
+                  <h4>Quantity:</h4>
                   <input
                     type="number"
                     className= {classnames("form-control form-control-lg", {
@@ -120,6 +130,7 @@ class Post extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                  <h4>Price: (AU$)</h4>
                   <input
                     type="number"
                     className= {classnames("form-control form-control-lg", {
@@ -135,12 +146,10 @@ class Post extends Component {
                       <div className= "invalid-feedback">{errors.price}</div>
                   )}
                 </div>
-                <div className="input-group my-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Upload</span>
+                <div className="form-group">
+                  <h4>Book Cover:</h4>
                   <input type="file" accept="image/*" name="postImage" onChange = {this.onFileChange}/>
                 </div>
-              </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>

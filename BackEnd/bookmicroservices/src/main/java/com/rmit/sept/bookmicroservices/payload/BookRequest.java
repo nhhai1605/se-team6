@@ -2,7 +2,7 @@ package com.rmit.sept.bookmicroservices.payload;
 
 import javax.validation.constraints.NotBlank;
 
-public class idTitleRequest
+public class BookRequest
 {
     @NotBlank(message = "ID cannot be blank")
     private Long id;

@@ -21,7 +21,7 @@ const BookItem = ({book}) => {
     }
     return ( 
         <div className="card card-body" style={{borderColor:'grey', borderWidth: 2}}>
-            <img style={{display: "block", margin: "0 auto 10px", height: "400px"}} className="img-fluid" src={url} alt={book.id}/><br />
+            <img style={{display: "block", margin: "5% auto 5%", height: "400px",  width: "auto", maxWidth:"300px", wordWrap: "break-word"}} className="img-fluid" src={url} alt={book.id}/><br />
             <h4 className="text-left">ID: {book.id}</h4>
             <h4 className="text-left">Title: {book.title}</h4>
             <h4 className="text-left">Author: {book.author}</h4>

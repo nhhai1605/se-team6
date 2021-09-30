@@ -14,11 +14,6 @@ public class BookService
     @Autowired
     private BookRepository bookRepository;
 
-    public Book addBook(Book newBook)
-    {
-        return null;
-    }
-
     public Collection<Book> searchBooks(String searchString)
     {
         return bookRepository.searchBooks(searchString);

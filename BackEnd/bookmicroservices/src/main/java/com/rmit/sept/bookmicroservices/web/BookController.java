@@ -1,7 +1,7 @@
 package com.rmit.sept.bookmicroservices.web;
 
 import com.rmit.sept.bookmicroservices.model.Book;
-import com.rmit.sept.bookmicroservices.payload.idTitleRequest;
+import com.rmit.sept.bookmicroservices.payload.BookRequest;
 import com.rmit.sept.bookmicroservices.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,7 +60,7 @@ public class BookController {
     }
 
     @PostMapping("/deleteBook")
-    public ResponseEntity<?> deleteBook(@RequestBody idTitleRequest request)
+    public ResponseEntity<?> deleteBook(@RequestBody BookRequest request)
     {
         bookService.deleteBook(request.getId());
         return new ResponseEntity<>("OK", HttpStatus.CREATED);

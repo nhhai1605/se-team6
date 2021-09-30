@@ -58,6 +58,7 @@ class Login extends Component {
               <h1 className="display-4 text-center">Log In</h1>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
+                <h4>Username:</h4>
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg", {
@@ -73,6 +74,7 @@ class Login extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                <h4>Password:</h4>
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {

@@ -24,7 +24,7 @@ class User extends Component {
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : this.state.username}})
+        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
             .then(res => {
             const user = res.data;
             if(user.id == null)

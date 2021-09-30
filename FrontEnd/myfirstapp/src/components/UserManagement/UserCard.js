@@ -24,7 +24,7 @@ class UserCard extends Component
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : this.state.username}})
+        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({id:user.id, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
@@ -59,12 +59,12 @@ class UserCard extends Component
         }
         else if(this.state.status === "Delete")
         {
-            const idUsernameRequest =
+            const userRequest =
             {
                 username : this.state.username,
                 id : this.state.id
             }
-            axios.post("http://localhost:8080/api/users/deleteUser", idUsernameRequest)
+            axios.post("http://localhost:8080/api/users/deleteUser", userRequest)
             .then(window.location.reload(false)).catch(err=>this.setState({errors : err.response.data}));
         }
         else
@@ -75,8 +75,8 @@ class UserCard extends Component
     render()
     {
         return(
-                <div className="card card-body" style={{borderColor:'grey', borderWidth: 2}}>
-                    <img style={{display: "block", margin: "0 auto 10px", maxHeight: "400px"}} className="img-fluid" src={DefaultUserPic} alt=""/><br />
+                <div className="card card-body" style={{borderColor:'grey', borderWidth: 2, wordWrap: "break-word"}}>
+                    <img style={{display: "block", margin: "5% auto 5%", maxHeight: "400px"}} className="img-fluid" src={DefaultUserPic} alt=""/><br />
                     <h5 className="text-left">ID: {this.state.id}</h5>
                     <h5 className="text-left">Username: {this.state.username}</h5>
                     <h5 className="text-left">Display Name: {this.state.displayName}</h5>

@@ -2,7 +2,7 @@ package com.rmit.sept.usermicroservices.payload;
 
 import javax.validation.constraints.NotBlank;
 
-public class idUsernameRequest
+public class UserRequest
 {
     @NotBlank(message = "ID cannot be blank")
     private Long id;

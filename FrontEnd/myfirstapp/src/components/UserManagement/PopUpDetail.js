@@ -16,7 +16,6 @@ class PopUpDetail extends Component {
         userType : "",
         userTypeRequest: "",
         currentOption: "",
-        isDisabled : true,
         errors: {}
         };
         this.onChange = this.onChange.bind(this);
@@ -28,7 +27,7 @@ class PopUpDetail extends Component {
     };
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : this.state.username}})
+        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest, currentOption: user.userTypeRequest});
@@ -132,7 +131,7 @@ class PopUpDetail extends Component {
                     }
                     </select>
                     </div>
-                    <input type="submit" className="btn btn-info btn-block mt-4"/>
+                    <input type="submit" className="btn btn-primary btn-block mt-4"/>
                 </form>
             </div>
         );

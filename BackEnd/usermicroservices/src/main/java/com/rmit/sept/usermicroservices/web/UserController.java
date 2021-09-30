@@ -136,7 +136,7 @@ public class UserController {
     }
 
     @PostMapping("/deleteUser")
-    public ResponseEntity<?> deleteUser(@RequestBody idUsernameRequest request)
+    public ResponseEntity<?> deleteUser(@RequestBody UserRequest request)
     {
         userService.deleteUser(request.getId());
         return new ResponseEntity<>("OK", HttpStatus.CREATED);

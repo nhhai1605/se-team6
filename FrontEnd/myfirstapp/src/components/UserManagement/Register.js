@@ -54,6 +54,7 @@ class Register extends Component {
               <p className="lead text-center">Create your Account</p>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
+                  <h4>Full Name:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -69,6 +70,7 @@ class Register extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                  <h4>Display Name:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -85,6 +87,7 @@ class Register extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                  <h4>Username:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -100,6 +103,7 @@ class Register extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                <h4>Password:</h4>
                   <input
                     type="password"
                     className= {classnames("form-control form-control-lg", {
@@ -115,6 +119,7 @@ class Register extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                <h4>Confirm Password:</h4>
                   <input
                     type="password"
                     className= {classnames("form-control form-control-lg", {
@@ -130,6 +135,7 @@ class Register extends Component {
                   )}
                 </div>
                 <div>
+                <h4>User Type:</h4>
                 <select className="btn btn-outline-primary dropdown-toggle" name="userTypeRequest" style={{marginBottom:10}} onChange={this.onChange}>
                 <option value="">Normal Customer</option>
                 <option value="Publisher">Publisher</option>
