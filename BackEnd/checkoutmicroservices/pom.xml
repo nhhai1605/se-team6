@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.rmit.sept</groupId>
-    <artifactId>reviewmicroservices</artifactId>
+    <artifactId>checkoutmicroservices</artifactId>
     <version>0.0.1</version>
-    <name>reviewmicroservices</name>
-    <description>reviewmicroservices</description>
+    <name>checkoutmicroservices</name>
+    <description>checkoutmicroservices</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -79,10 +79,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>2.0.2</version>
-            <scope>compile</scope>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>rest-api-sdk</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
         </dependency>
     </dependencies>
 

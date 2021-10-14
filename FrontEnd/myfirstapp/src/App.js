@@ -16,14 +16,19 @@ import Register from "./components/UserManagement/Register";
 import Login from "./components/UserManagement/Login";
 import User from "./components/UserManagement/User";
 import UserManagement from "./components/UserManagement/UserManagement";
+import Checkout from "./components/Payment/Checkout";
+import Fail from "./components/Payment/Fail";
+import Success from "./components/Payment/Success";
+import Orders from "./components/Payment/Orders";
 
 import setJWTToken from "./securityUtils/setJWTToken";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 
-import SecuredRoute from "./securityUtils/SecureRoute";
 import ProductsContextProvider from './components/Store/Context/ProductsContext';
 import CartContextProvider from './components/Store/Context/CartContext';
+
+import { useCart } from './components/Store/useCart';
 
 const jwtToken = localStorage.jwtToken;
 if (jwtToken) {
@@ -61,7 +66,11 @@ class App extends Component {
                 <Switch>
                   <Route path={'/book/:bookId'} children = {<BookPageFunc/>} />
                 </Switch>
+                <Route exact path="/checkout" children={<CheckoutFunc/>}/>
+                <Route exact path="/checkout/fail" component={Fail} />
+                <Route exact path="/checkout/success" component={Success} />
                 <Route exact path="/cart" component={Cart} />
+                <Route exact path="/orders" component={Orders} />
                 {
                 user ? 
                 <>
@@ -73,7 +82,7 @@ class App extends Component {
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login}/>
                 </>
-
+                
                 }
                 {
                   //Private Routes
@@ -101,6 +110,15 @@ function BookPageFunc()
   return (
     <BookPage id={bookId}/>
   );
+}
+
+function CheckoutFunc() 
+{
+  const {cartItems} = useCart();
+  return (
+  <Checkout username={user}  cartItems={cartItems} total={localStorage.getItem("total")}/>
+  )
+  
 }
 
 export default App;

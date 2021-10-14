@@ -8,6 +8,7 @@ class UserManagement extends Component {
         super(props);
         this.state = 
         {
+            username: localStorage.getItem("currentUsername"),
             users: [],
             erros: {},
         };
@@ -23,11 +24,18 @@ class UserManagement extends Component {
 
     componentDidMount() 
     {
-        axios.get("http://localhost:8080/api/users/all")
-        .then(res => {
-            const users = res.data;
-            this.setState({users : users});
-        }).catch(err=>console.log(err))
+        if(this.state.username === null || this.state.username === "" || this.state.username === undefined)
+        {
+            window.location.href="/login";
+        }
+        else
+        {
+            axios.get("http://localhost:8080/api/users/all")
+            .then(res => {
+                const users = res.data;
+                this.setState({users : users});
+            }).catch(err=>console.log(err))
+        }
     }
     onSubmit(e)
     {

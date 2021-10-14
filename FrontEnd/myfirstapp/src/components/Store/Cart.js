@@ -19,7 +19,7 @@ const Cart = () => {
                 <div className="col-sm-9 p-3">
                     {
                         cartItems.length > 0 ?
-                        cartItems.map(product =>  <div className="card card-body mb-3 border border-dark rounded" ><CartItem key={product.id} product={product}/></div>) 
+                        cartItems.map(product =>  <div key={product.id} className="card card-body mb-3 border border-dark rounded" ><CartItem key={product.id} product={product}/></div>) 
                         :
                         <div className="h4 p-3 text-center text-muted">
                             Your cart is empty
@@ -41,6 +41,9 @@ const Cart = () => {
                             <h4 className=" mb-3 txt-right">{itemCount}</h4>
                             <p className="mb-1">Total Payment</p>
                             <h3 className="m-0 txt-right">{formatNumber(total)}</h3>
+                            {
+                                localStorage.setItem("total",total)
+                            }
                             <hr className="my-4"/>
                             <div className="text-center">
                                 <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={handleCheckout}>Checkout</button>

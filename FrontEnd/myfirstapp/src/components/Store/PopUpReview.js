@@ -27,6 +27,7 @@ class PopUpReview extends Component {
 
     onSubmit(e) 
     {
+        e.preventDefault();
         if(this.state.rating === 0)
         {
             this.setState({
@@ -46,7 +47,7 @@ class PopUpReview extends Component {
                 content:this.state.content,
             }; 
             axios.post("http://localhost:8082/api/reviews/create", newReview)
-            .then().catch(err=>this.setState({errors : err.response.data}));
+            .then(window.location.href="/book/" + this.state.bookId).catch(err=>this.setState({errors : err.response.data}));
         }
     }
     componentDidMount() 

@@ -78,6 +78,7 @@ class Header extends Component {
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a className="dropdown-item"  href={"/user/" + this.state.username}>{this.state.displayName}'s Page</a>
+                                        <a className="dropdown-item"  href={"/orders"}>Orders</a>
                                         {
                                             this.state.userType==="Admin" ?
                                             <>
