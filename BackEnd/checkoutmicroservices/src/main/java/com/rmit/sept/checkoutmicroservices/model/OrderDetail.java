@@ -1,9 +1,9 @@
 package com.rmit.sept.checkoutmicroservices.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 public class OrderDetail {
@@ -18,6 +18,33 @@ public class OrderDetail {
     private String method;
     private String description;
     private String address;
+    private Date createAt;
+    private String status;
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    private String dateString;
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getAddress() {
         return address;
@@ -59,6 +86,12 @@ public class OrderDetail {
         this.id = id;
     }
 
+    @PrePersist
+    protected void onCreate(){
+        this.createAt = new Date();
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.setDateString(formatter.format(this.createAt));
+    }
 
     public String getCurrency() {
         return currency;

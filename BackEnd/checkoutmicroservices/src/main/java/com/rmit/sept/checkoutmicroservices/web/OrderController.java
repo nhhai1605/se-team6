@@ -69,6 +69,7 @@ public class OrderController
             orderDetail.setCurrency(payment.getTransactions().get(0).getAmount().getCurrency());
             orderDetail.setTotal(Double.parseDouble(payment.getTransactions().get(0).getAmount().getTotal()));
             orderDetail.setMethod("Paypal");
+            orderDetail.setStatus("Pending");
             orderDetail.setDescription(description);
             orderDetail.setAddress(address);
             if (payment.getState().equals("approved"))
@@ -98,9 +99,19 @@ public class OrderController
     }
 
     @GetMapping("/getOrders")
-    public @ResponseBody
-    Collection<OrderDetail> getReviewsForBook(@RequestParam("username") String username)
+    public @ResponseBody Collection<OrderDetail> getOrders(@RequestParam("username") String username)
     {
         return orderService.getOrders(username);
+    }
+    @GetMapping("/all")
+    public @ResponseBody Collection<OrderDetail> getAllOrders()
+    {
+        Collection<OrderDetail> orders = orderService.getAllOrders();
+        return orders;
+    }
+    @PutMapping("/updateStatus/{orderId}/{status}")
+    public void updateStatus(@PathVariable String orderId, @PathVariable String status)
+    {
+        orderService.updateStatus(orderId, status);
     }
 }

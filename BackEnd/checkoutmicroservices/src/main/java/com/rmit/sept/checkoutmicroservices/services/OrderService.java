@@ -74,4 +74,14 @@ public class OrderService {
     public Collection<OrderDetail> getOrders(String username) {
         return orderRepository.getOrders(username);
     }
+
+    public void updateStatus(String orderId, String status)
+    {
+        orderRepository.updateStatus(orderId, status);
+    }
+
+    public Collection<OrderDetail> getAllOrders()
+    {
+        return (Collection<OrderDetail>)orderRepository.findAll();
+    }
 }

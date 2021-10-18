@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Collection;
 
@@ -27,8 +26,7 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
-    private Date create_At;
-    private Date update_At;
+    private Date createAt;
 
     private String userType;
     private String userTypeRequest;
@@ -103,30 +101,17 @@ public class User implements UserDetails {
         this.confirmPassword = confirmPassword;
     }
 
-    public Date getCreate_At() {
-        return create_At;
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setCreate_At(Date create_At) {
-        this.create_At = create_At;
-    }
-
-    public Date getUpdate_At() {
-        return update_At;
-    }
-
-    public void setUpdate_At(Date update_At) {
-        this.update_At = update_At;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     @PrePersist
     protected void onCreate(){
-        this.create_At = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate(){
-        this.update_At = new Date();
+        this.createAt = new Date();
     }
 
     /*

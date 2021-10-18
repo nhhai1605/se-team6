@@ -19,4 +19,9 @@ public interface OrderRepository extends  CrudRepository<OrderDetail, Long>
 
     @Query(value = "SELECT * FROM ORDER_DETAIL WHERE USERNAME = ?1", nativeQuery = true)
     Collection<OrderDetail> getOrders(String username);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE ORDER_DETAIL SET STATUS = ?2 WHERE ID=?1", nativeQuery = true)
+    void updateStatus(String orderId, String status);
 }

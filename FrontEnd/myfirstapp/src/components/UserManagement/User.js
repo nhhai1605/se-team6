@@ -26,16 +26,16 @@ class User extends Component {
     getUserDetails=(username)=>{
         axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
             .then(res => {
-            const user = res.data;
-            if(user.id == null)
-            {
-                this.setState({userExist : false});
-            }
-            else
-            {
-                this.setState({userExist : true});
-            }
-            this.setState({username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
+                const user = res.data;
+                if(user.id == null)
+                {
+                    this.setState({userExist : false});
+                }
+                else
+                {
+                    this.setState({userExist : true});
+                }
+                this.setState({username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
         })
         .catch(err=>console.log(err))
     }

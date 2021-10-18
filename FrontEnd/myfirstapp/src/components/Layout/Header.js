@@ -1,4 +1,5 @@
 import React, { Component, Link, useContext } from 'react'
+import {CSVLink, CSVDownload} from 'react-csv';
 import setJWTToken from "../../securityUtils/setJWTToken";
 import styles from '../styles/Header.module.css';
 import { CartContext } from '../Store/Context/CartContext';
@@ -16,11 +17,14 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: localStorage.getItem("currentUsername") !== null ?  localStorage.getItem("currentUsername") : "",
+            username: localStorage.getItem("currentUsername") !== null ? localStorage.getItem("currentUsername") : "",
             displayName: "",
             userType: "",
             userTypeRequest: "",
             errors: {},
+            userData : [[]],
+            bookData : [[]],
+            orderData : [[]],
         };
         this.onChange = this.onChange.bind(this);
       }
@@ -47,10 +51,24 @@ class Header extends Component {
     componentDidMount() 
     {
         this.getUserDetails(this.state.username);
+        axios.get("http://localhost:8080/api/users/all")
+        .then(res => {
+            const users = res.data;
+            this.setState({userData : users});
+        }).catch(err => console.log(err))
+        axios.get("http://localhost:8081/api/books/all")
+        .then(res => {
+          const books = res.data;
+          this.setState({bookData : books});
+        }).catch(err => console.log(err))
+        axios.get("http://localhost:8083/api/checkout/all")
+        .then(res => {
+          const orders = res.data;
+          this.setState({orderData : orders});
+        }).catch(err=>console.log(err))
     }
   
     render() {
-        const itemCount = this.state.itemCount;
         return (
             <div>
                 <nav className="navbar navbar-expand-sm navbar-dark bg-primary" style={{height:100}}>
@@ -82,7 +100,10 @@ class Header extends Component {
                                         {
                                             this.state.userType==="Admin" ?
                                             <>
-                                             <a className="dropdown-item"  href={"/userManagement"}>User Management</a>
+                                                <a className="dropdown-item" href={"/userManagement"}>User Management</a>
+                                                <CSVLink data={this.state.userData} filename={"UserData.csv"}>UserData</CSVLink>
+                                                <CSVLink data={this.state.bookData} filename={"BookData.csv"} >BookData</CSVLink>
+                                                <CSVLink data={this.state.orderData} filename={"OrderData.csv"}>OrderData</CSVLink>
                                             </>:null
                                         }
                                         <div className="dropdown-divider"></div>

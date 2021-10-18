@@ -46,7 +46,7 @@ class Checkout extends Component {
         total: this.state.total,
         currency : this.state.currency,
         method: this.state.method,
-        description : this.state.itemsString
+        description: this.state.itemsString,
     }
     axios.post("http://localhost:8083/api/checkout/payment", order)
     .then(res=>{window.location.href=res.data}).catch(err=>this.setState({errors : err.response.data}));

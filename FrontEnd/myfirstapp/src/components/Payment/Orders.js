@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 import axios from "axios";
+import { timers } from "jquery";
 
 
 class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: localStorage.getItem("currentUsername"),
-        userId: null,
-        displayName: "",
-        fullName : "",
-        userType: "",
-        orders : [],
-        errors : {},
+      username: localStorage.getItem("currentUsername"),
+      userId: null,
+      displayName: "",
+      fullName : "",
+      userType: "",
+      orders: [],
+      errors: {},
+      orderId: "",
+      currentTime: Date.parse(new Date()),
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,32 +31,33 @@ class Checkout extends Component {
     .catch(err=>console.log(err))
     }
     
-    getOrders=(username)=>
-    {
-        axios.get("http://localhost:8083/api/checkout/getOrders", {params : {username : username}})
-        .then(res => {
-        const orders = res.data;
+  getOrders=(username)=>
+  {
+      axios.get("http://localhost:8083/api/checkout/getOrders", {params : {username : username}})
+      .then(res => {
+      const orders = res.data;
         this.setState({orders:orders});
-        })
-        .catch(err=>console.log(err))
-    }
+      })
+      .catch(err => console.log(err))
+  }
   componentDidMount() 
   {
     if(this.state.username === null || this.state.username === "" || this.state.username === undefined)
     {
-        window.location.href="/login";
+      window.location.href="/login";
     }
     else 
     {
-        this.getUserDetails(this.state.username);
-        this.getOrders(this.state.username);
+      this.getUserDetails(this.state.username);
+      this.getOrders(this.state.username); 
     }
   }  
 
 
-  onSubmit(e) {
-    e.preventDefault();
-    
+  onSubmit(e)
+  {
+    axios.put("http://localhost:8083/api/checkout/updateStatus/" + this.state.orderId + "/Refund")
+    .then().catch(err=>this.setState({errors : err.response.data}));
   }
 
   onChange(e) {
@@ -61,20 +65,31 @@ class Checkout extends Component {
   }
 
   render() {
-    const { errors } = this.state;
-    const orders = this.state.orders;
+    const { errors, orders, bookStrings , currentTime} = this.state;
     return ( 
       <div className="checkout">
-          <h1 className="display-4 text-center mt-4">Order History</h1>
-            {
-                orders.map(order => (
-                  <div key={order.id} style={{border:"solid grey", borderRadius:'10px', height:'25%', width:'96%', padding:"2%",margin:"2%", wordWrap: "break-word", overflow: 'auto'}}>
-                    <h4>Total: {order.total} ${order.currency}</h4>
-                    <h4>Shipping Address: {order.address}</h4>
-                    <h4>Order Description: {order.description}</h4>
-                  </div>
-                ))
-            }
+        <h1 className="display-4 text-center mt-4">Order History</h1>
+        {
+          orders.map((order,index) => (
+            <div key={order.id} style={{ border: "solid grey", borderRadius: '10px', height: '25%', width: '96%', padding: "2%", margin: "2%", wordWrap: "break-word", overflow: 'auto' }}>
+              <h4>Order ID: {order.id}</h4>
+              <h4>Total: {order.total} ${order.currency}</h4>
+              <h4>Shipping Address: {order.address}</h4>
+              <h4>Order Description: {order.description}</h4>
+              <h4>Created at: {order.dateString}</h4>{ }
+              <h4>Status: {order.status}</h4>
+              {
+                currentTime < Date.parse(order.dateString) + 7200000 && order.status !== 'Refund' ?
+                  <>
+                    <form onSubmit={this.onSubmit}>
+                    <button className="btn btn-danger" onClick={() => this.setState({orderId: order.id})} style={{ margin: 10 }}>Refund</button>
+                    </form>
+                  </>
+                :null
+              }
+            </div>
+          ))
+          }
       </div>
     );
   }

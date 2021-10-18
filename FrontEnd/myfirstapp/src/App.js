@@ -39,12 +39,12 @@ if (jwtToken) {
     payload: decoded_jwtToken
   });
 
-  const currentTime = Date.now() / 1000;
-  if (decoded_jwtToken.exp < currentTime) {
-    store.dispatch(logout());
-    localStorage.clear();
-    window.location.href = "/";
-  }
+  // const currentTime = Date.now() / 1000;
+  // if (decoded_jwtToken.exp < currentTime) {
+  //   store.dispatch(logout());
+  //   localStorage.clear();
+  //   window.location.href = "/";
+  // }
 }
 const user = localStorage.getItem("currentUsername");
 class App extends Component {
