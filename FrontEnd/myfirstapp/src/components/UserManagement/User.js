@@ -68,21 +68,31 @@ class User extends Component {
 
     render() {
         return (
-        <div>
+        <div >
         {   
             this.state.userExist ?
             <>
-                <img src={DefaultUserPic} alt="User's Avatar"/>
-                <h3>Email/Username: {this.state.username}</h3>
-                <h3>Display Name: {this.state.displayName}</h3>
-                <h3>Full Name: {this.state.fullName}</h3>
-                <h3>Current User Type: {this.state.userType}</h3>
-                <h3>Pending User Type: {this.state.userTypeRequest}</h3>
-                {
+                <h1 style={{textAlign:'center', margin:"2%"}}>User Page</h1>
+                <div style={{display: 'flex' }} >
+                    <div id ="div1" style={{border:"solid black", backgroundColor : 'rgb(242, 242, 242)', borderRadius:'10px', height: '800px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+                        <h2 style={{textAlign:'center'}}>User Detail</h2>
+                        <div style={{display: 'flex',justifyContent: 'center'}}>
+                        <img src={DefaultUserPic} alt="User's Avatar"/>
+                        </div >
+                        <h3>Email/Username: {this.state.username} </h3>
+                        <h3>Display Name: {this.state.displayName}</h3>
+                        <h3>Full Name: {this.state.fullName}</h3>
+                        <h3>Current User Type: {this.state.userType}</h3>
+                        <h3>Pending User Type: {this.state.userTypeRequest}</h3>
+                        {
                     this.state.username === localStorage.getItem("currentUsername") ?
                     <>
-                        <button className="btn btn-outline-primary" onClick={this.togglePopUpDetail} style={{margin:10}}>Change Details</button>
-                        <button className="btn btn-outline-primary" onClick={this.togglePopUpPassword} style={{margin:10}}>Change Password</button>
+                    <div style={{display: 'flex', justifyContent:'initial'}}>
+
+                        <button className="btn btn-secondary" onClick={this.togglePopUpDetail} style={{margin:'10px', }}>Change Details</button>
+                        <button className="btn btn-outline-secondary" onClick={this.togglePopUpPassword}style={{margin:'10px',}} >Change Password</button>
+                        </div>
+                    
                     </>
                     :
                     <>
@@ -94,6 +104,9 @@ class User extends Component {
                         }
                     </>
                 }
+                    </div>
+                        
+                
                 {
                     this.state.seenPassword ?
                     <>
@@ -108,11 +121,17 @@ class User extends Component {
                     </>
                     : null
                 }
+                <div style={{border:"solid black", borderRadius:'10px', height: '800px', width:'60%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+                    <h2 style={{textAlign:'center'}}>User Post</h2>
+                    </div>
+                </div>
+                
             </>
             :
             <>
                 <h3>404 - Not found!</h3>
             </>
+            
         }
         </div>
         );
