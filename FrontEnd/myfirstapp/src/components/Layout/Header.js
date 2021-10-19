@@ -71,10 +71,11 @@ class Header extends Component {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-sm navbar-dark bg-primary" style={{height:100}}>
+                <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{height:100}}>
                 <div className="navbar-header">
-                    <a className="navbar-brand" style={{fontSize : 30}} href="/">
+                    <a className="navbar-brand" style={{fontSize : 40, fontFamily : 'sans-serif', margin:'10px' }} href="/">
                         Bookeroo
+                        <i class="fas fa-book" style={{marginLeft : '10px'}}></i>
                     </a>
                 </div>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
@@ -87,7 +88,7 @@ class Header extends Component {
                                 <>
                                     <li className="nav-item">
                                         <a className="nav-link " href="/post">
-                                            Post
+                                            Post Books
                                         </a>
                                     </li>
                                     <li className="nav-item dropdown">

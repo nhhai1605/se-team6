@@ -59,7 +59,7 @@ class Homepage extends Component {
       <div>
         <div className={styles.searchDiv}>
         <form onSubmit={this.onSubmit} className="form-inline">
-        <select className="btn btn-outline-primary dropdown-toggle" name="searchType" onChange={this.onChange}>
+        <select className="btn btn-outline-secondary dropdown-toggle"  name="searchType"  onChange={this.onChange}>
           <option value="Title">Title</option>
           <option value="Author">Author</option>
         </select>
