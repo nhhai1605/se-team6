@@ -147,7 +147,7 @@ class BookPage extends Component {
               } 
             </div>
 
-            <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'62%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+            <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'52%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
               <h2 style={{textAlign:'center'}}>Review</h2>
               {
                 reviews.map(review => (

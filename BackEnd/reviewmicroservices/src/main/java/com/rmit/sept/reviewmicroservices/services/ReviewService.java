@@ -28,4 +28,9 @@ public class ReviewService
     {
         reviewRepository.deleteById(id);
     }
+
+    public void changeUserDisplayName(String username, String newName)
+    {
+        reviewRepository.changeUserDisplayName(username, newName);
+    }
 }

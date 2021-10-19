@@ -38,4 +38,11 @@ public class ReviewController {
         reviewService.deleteReview(id);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
+
+    @PutMapping("/changeUserDisplayName/{username}/{newName}")
+    public ResponseEntity<?> changeUserDisplayName(@PathVariable String username, @PathVariable String newName)
+    {
+        reviewService.changeUserDisplayName(username, newName);
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
 }

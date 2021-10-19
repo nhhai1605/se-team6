@@ -150,7 +150,7 @@ class Post extends Component {
                   <h4>Book Cover:</h4>
                   <input type="file" accept="image/*" name="postImage" onChange = {this.onFileChange}/>
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-primary btn-block mt-4" />
               </form>
             </div>
           </div>

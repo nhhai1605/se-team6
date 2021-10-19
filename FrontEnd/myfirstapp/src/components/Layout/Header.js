@@ -75,7 +75,7 @@ class Header extends Component {
                 <div className="navbar-header">
                     <a className="navbar-brand" style={{fontSize : 40, fontFamily : 'sans-serif', margin:'10px' }} href="/">
                         Bookeroo
-                        <i class="fas fa-book" style={{marginLeft : '10px'}}></i>
+                        <i className="fas fa-book" style={{marginLeft : '10px'}}></i>
                     </a>
                 </div>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">

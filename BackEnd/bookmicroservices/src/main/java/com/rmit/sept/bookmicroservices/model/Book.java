@@ -16,8 +16,16 @@ public class Book {
     private Date postDate;
     private float rate;
     private String username;
-    private String displayName;
     private String description;
+    private String displayName;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
     public String getDescription() {
         return description;
@@ -30,13 +38,7 @@ public class Book {
     public Book()
     {
     }
-    public String getDisplayName() {
-        return displayName;
-    }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
     public int getIsShareBook() {
         return isShareBook;
     }
