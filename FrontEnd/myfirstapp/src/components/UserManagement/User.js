@@ -89,7 +89,7 @@ class User extends Component {
                     <>
                     <div style={{display: 'flex', justifyContent:'initial'}}>
 
-                        <button className="btn btn-secondary" onClick={this.togglePopUpDetail} style={{margin:'10px', }}>Change Details</button>
+                        <button className="btn btn-secondary"  onClick={this.togglePopUpDetail} style={{margin:'10px', }} title="Click to change user details">Change Details</button>
                         <button className="btn btn-outline-secondary" onClick={this.togglePopUpPassword}style={{margin:'10px',}} >Change Password</button>
                         </div>
                     

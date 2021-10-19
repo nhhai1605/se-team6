@@ -140,7 +140,7 @@ class BookPage extends Component {
                 }
               {
                 this.state.username === this.state.currentUsername || this.state.currentUserType === "Admin" ?
-                <form onSubmit={this.onSubmitDelete}>
+                <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete?')) {this.onSubmitDelete(e)}} }>
                 <button className="btn btn-danger" style={{margin:10}}>Delete Post</button>
                 </form>
                 :null
