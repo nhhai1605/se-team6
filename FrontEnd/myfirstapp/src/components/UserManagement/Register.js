@@ -54,23 +54,23 @@ class Register extends Component {
               <p className="lead text-center">Create your Account</p>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
+                  <h4>Full Name:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
                         "is-invalid": errors.fullName
                     }) }
-                    placeholder="Fullname"
+                    placeholder="Full Name"
                     name="fullName"
                     value= {this.state.fullName}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45"
-                    required
                   />
                   {errors.fullName && (
                       <div className= "invalid-feedback">{errors.fullName}</div>
                   )}
                 </div>
                 <div className="form-group">
+                  <h4>Display Name:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -80,14 +80,14 @@ class Register extends Component {
                     name="displayName"
                     value= {this.state.displayName}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45"
-                    required
+                    
                   />
                   {errors.displayName && (
                       <div className= "invalid-feedback">{errors.displayName}</div>
                   )}
                 </div>
                 <div className="form-group">
+                  <h4>Username:</h4>
                   <input
                     type="text"
                     className= {classnames("form-control form-control-lg", {
@@ -97,13 +97,13 @@ class Register extends Component {
                     name="username"
                     value= {this.state.username}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45" required
                   />
                   {errors.username && (
                       <div className= "invalid-feedback">{errors.username}</div>
                   )}
                 </div>
                 <div className="form-group">
+                <h4>Password:</h4>
                   <input
                     type="password"
                     className= {classnames("form-control form-control-lg", {
@@ -113,13 +113,13 @@ class Register extends Component {
                     name="password"
                     value= {this.state.password}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45" required
                   />
                   {errors.password && (
                       <div className= "invalid-feedback">{errors.password}</div>
                   )}
                 </div>
                 <div className="form-group">
+                <h4>Confirm Password:</h4>
                   <input
                     type="password"
                     className= {classnames("form-control form-control-lg", {
@@ -129,21 +129,22 @@ class Register extends Component {
                     name="confirmPassword"
                     value= {this.state.confirmPassword}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="45" required
                   />
                   {errors.confirmPassword && (
                       <div className= "invalid-feedback">{errors.confirmPassword}</div>
                   )}
                 </div>
                 <div>
+                <h4>User Type:</h4>
                 <select className="btn btn-outline-primary dropdown-toggle" name="userTypeRequest" style={{marginBottom:10}} onChange={this.onChange}>
                 <option value="">Normal Customer</option>
                 <option value="Publisher">Publisher</option>
                 <option value="Author">Author</option>
+                <option value="Admin">Admin</option>
                 </select>
                 </div>
                 If you already have an account, please <a href = "/login">login</a> here! Other types of user beside Normal Customer will require admin to approve!
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-primary btn-block mt-4" />
               </form>
             </div>
           </div>

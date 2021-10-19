@@ -2,10 +2,7 @@ package com.rmit.sept.usermicroservices.web;
 
 
 import com.rmit.sept.usermicroservices.model.User;
-import com.rmit.sept.usermicroservices.payload.ChangePasswordRequest;
-import com.rmit.sept.usermicroservices.payload.JWTLoginSucessReponse;
-import com.rmit.sept.usermicroservices.payload.LoginRequest;
-import com.rmit.sept.usermicroservices.payload.UserTypeRequest;
+import com.rmit.sept.usermicroservices.payload.*;
 import com.rmit.sept.usermicroservices.security.JwtTokenProvider;
 import com.rmit.sept.usermicroservices.services.CustomUserDetailsService;
 import com.rmit.sept.usermicroservices.services.MapValidationErrorService;
@@ -50,6 +47,13 @@ public class UserController {
         userValidator.validate(user,result);
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null)return errorMap;
+
+        //This will be deleted in the future
+        if(user.getUserTypeRequest().equals("Admin"))
+        {
+            user.setUserType("Admin");
+            user.setUserTypeRequest("");
+        }
         User newUser = userService.saveUser(user);
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
@@ -72,6 +76,18 @@ public class UserController {
         return ResponseEntity.ok("Change Password Successfully!");
     }
 
+    @PostMapping("/changeDetail")
+    public ResponseEntity<?> changeDetail(@Valid @RequestBody ChangeDetailRequest request, BindingResult result)
+    {
+        userValidator.changeDetailValidate(request,result);
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null)
+        {
+            return errorMap;
+        }
+        userService.changeDetail(request.getUsername(), request.getDisplayName(), request.getFullName(), request.getUserTypeRequest());
+        return ResponseEntity.ok("Change Password Successfully!");
+    }
     @Autowired
     private JwtTokenProvider tokenProvider;
 
@@ -116,6 +132,13 @@ public class UserController {
         {
             userService.changeUserType(typeRequest.getUsername(), typeRequest.getUserType());
         }
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id)
+    {
+        userService.deleteUser(id);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

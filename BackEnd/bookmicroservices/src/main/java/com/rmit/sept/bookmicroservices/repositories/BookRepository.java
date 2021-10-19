@@ -15,4 +15,6 @@ public interface BookRepository extends  CrudRepository<Book, Long>
     Collection<Book> getAllBooks();
     @Query(value = "SELECT * FROM BOOK WHERE LOWER(AUTHOR) LIKE %?1%", nativeQuery = true)
     Collection<Book> searchBooksByAuthor(String author);
+    @Query(value = "SELECT * FROM BOOK WHERE ID = ?1", nativeQuery = true)
+    Book getBook(Long id);
 }

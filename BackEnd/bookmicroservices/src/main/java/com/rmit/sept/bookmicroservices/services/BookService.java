@@ -6,17 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class BookService
 {
     @Autowired
     private BookRepository bookRepository;
-
-    public Book addBook(Book newBook)
-    {
-        return null;
-    }
 
     public Collection<Book> searchBooks(String searchString)
     {
@@ -36,5 +32,15 @@ public class BookService
     public Book createBook(Book newBook)
     {
         return bookRepository.save(newBook);
+    }
+
+    public Book getBook(Long id)
+    {
+        return bookRepository.getBook(id);
+    }
+
+    public void deleteBook(Long id)
+    {
+        bookRepository.deleteById(id);
     }
 }

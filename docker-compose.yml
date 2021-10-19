@@ -9,6 +9,15 @@ services:
   bookmicroservices:
     build: ./BackEnd/bookmicroservices
     ports:
-      - "8081:8081"
+      - "8081:8080"
     volumes:
      - .:/code
+  frontend:
+    build: ./FrontEnd/myfirstapp
+    volumes:
+      - './:/app'
+      - '/app/node_modules'
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    command: npm start

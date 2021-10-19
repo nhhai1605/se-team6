@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import { CartReducer, sumItems } from './CartReducer';
+import Checkout from "../../Payment/Checkout";
 
 export const CartContext = createContext()
 
@@ -32,7 +33,7 @@ const CartContextProvider = ({children}) => {
 
     const handleCheckout = () => {
         console.log('CHECKOUT', state);
-        dispatch({type: 'CHECKOUT'})
+        window.location.href = "/checkout";
     }
 
     const contextValues = {

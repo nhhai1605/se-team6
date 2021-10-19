@@ -1,4 +1,5 @@
 import React, { Component, Link, useContext } from 'react'
+import {CSVLink, CSVDownload} from 'react-csv';
 import setJWTToken from "../../securityUtils/setJWTToken";
 import styles from '../styles/Header.module.css';
 import { CartContext } from '../Store/Context/CartContext';
@@ -7,8 +8,6 @@ import axios from "axios";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import $ from 'jquery';
-import Popper from 'popper.js';
 const ItemCount = () => {
     const {itemCount} = useContext(CartContext);
     return itemCount;
@@ -18,12 +17,14 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: localStorage.getItem("currentUsername") !== null ?  localStorage.getItem("currentUsername") : "",
+            username: localStorage.getItem("currentUsername") !== null ? localStorage.getItem("currentUsername") : "",
             displayName: "",
             userType: "",
             userTypeRequest: "",
-            itemCount: 0,
             errors: {},
+            userData : [[]],
+            bookData : [[]],
+            orderData : [[]],
         };
         this.onChange = this.onChange.bind(this);
       }
@@ -40,7 +41,7 @@ class Header extends Component {
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : this.state.username}})
+        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({username : user.username, displayName : user.displayName, userType:user.userType, userTypeRequest:user.userTypeRequest});
@@ -50,16 +51,31 @@ class Header extends Component {
     componentDidMount() 
     {
         this.getUserDetails(this.state.username);
+        axios.get("http://localhost:8080/api/users/all")
+        .then(res => {
+            const users = res.data;
+            this.setState({userData : users});
+        }).catch(err => console.log(err))
+        axios.get("http://localhost:8081/api/books/all")
+        .then(res => {
+          const books = res.data;
+          this.setState({bookData : books});
+        }).catch(err => console.log(err))
+        axios.get("http://localhost:8083/api/checkout/all")
+        .then(res => {
+          const orders = res.data;
+          this.setState({orderData : orders});
+        }).catch(err=>console.log(err))
     }
   
     render() {
-        const itemCount = this.state.itemCount;
         return (
             <div>
-                <nav className="navbar navbar-expand-sm navbar-dark bg-primary" style={{height:100}}>
+                <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{height:100}}>
                 <div className="navbar-header">
-                    <a className="navbar-brand" style={{fontSize : 30}} href="/">
+                    <a className="navbar-brand" style={{fontSize : 40, fontFamily : 'sans-serif', margin:'10px' }} href="/">
                         Bookeroo
+                        <i class="fas fa-book" style={{marginLeft : '10px'}}></i>
                     </a>
                 </div>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
@@ -72,7 +88,7 @@ class Header extends Component {
                                 <>
                                     <li className="nav-item">
                                         <a className="nav-link " href="/post">
-                                            Post
+                                            Post Books
                                         </a>
                                     </li>
                                     <li className="nav-item dropdown">
@@ -81,10 +97,14 @@ class Header extends Component {
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a className="dropdown-item"  href={"/user/" + this.state.username}>{this.state.displayName}'s Page</a>
+                                        <a className="dropdown-item"  href={"/orders"}>Orders</a>
                                         {
                                             this.state.userType==="Admin" ?
                                             <>
-                                             <a className="dropdown-item"  href={"/userManagement"}>User Management</a>
+                                                <a className="dropdown-item" href={"/userManagement"}>User Management</a>
+                                                <CSVLink data={this.state.userData} filename={"UserData.csv"}>UserData</CSVLink>
+                                                <CSVLink data={this.state.bookData} filename={"BookData.csv"} >BookData</CSVLink>
+                                                <CSVLink data={this.state.orderData} filename={"OrderData.csv"}>OrderData</CSVLink>
                                             </>:null
                                         }
                                         <div className="dropdown-divider"></div>

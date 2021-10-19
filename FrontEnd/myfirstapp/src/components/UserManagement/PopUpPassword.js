@@ -10,7 +10,7 @@ class PopUpPassword extends Component {
         super(props);
         this.state = 
         {
-        username : localStorage.getItem("currentUsername"),
+        username : this.props.username,
         password: '',
         newPassword: '',
         confirmPassword: '',
@@ -26,7 +26,6 @@ class PopUpPassword extends Component {
 
     onSubmit(e) 
     {
-        e.preventDefault();
         const changePasswordRequest = {
             username: this.state.username,
             password: this.state.password,
@@ -34,7 +33,7 @@ class PopUpPassword extends Component {
             confirmPassword: this.state.confirmPassword
         }; 
         axios.post("http://localhost:8080/api/users/changePassword", changePasswordRequest)
-        .then(res => {window.location.href="/user/" + localStorage.getItem("currentUsername")}).catch(err=>this.setState({errors : err.response.data}));
+        .then().catch(err=>this.setState({errors : err.response.data}));
     }
 
     onChange(e) 
@@ -62,7 +61,7 @@ class PopUpPassword extends Component {
                         name="password"
                         value= {this.state.password}
                         onChange = {this.onChange}
-                        minLength="6" maxLength="45" required
+                        
 
                     /> 
                     {errors.password && (
@@ -79,8 +78,7 @@ class PopUpPassword extends Component {
                         name="newPassword"
                         value= {this.state.newPassword}
                         onChange = {this.onChange}
-                        minLength="6" maxLength="45" required
-
+                        
                     />
                     {errors.newPassword && (
                     <div className="invalid-feedback">{errors.newPassword}</div>
@@ -96,14 +94,13 @@ class PopUpPassword extends Component {
                         name="confirmPassword"
                         value= {this.state.confirmPassword}
                         onChange = {this.onChange}
-                        minLength="6" maxLength="45" required
-
+                        
                     />
                     {errors.confirmPassword && (
                     <div className="invalid-feedback">{errors.confirmPassword}</div>
                     )}
                     </div>
-                    <input type="submit" className="btn btn-info btn-block mt-4"/>
+                    <input type="submit" className="btn btn-primary btn-block mt-4"/>
                 </form>
             </div>
         );
