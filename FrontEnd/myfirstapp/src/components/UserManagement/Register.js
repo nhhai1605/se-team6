@@ -15,7 +15,7 @@ class Register extends Component {
       password: "",
       confirmPassword: "",
       userType: "Normal Customer",
-      userTypeRequest: "",
+      userTypeRequest: "None",
       errors: {}
     };
     this.onChange = this.onChange.bind(this);

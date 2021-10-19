@@ -13,6 +13,7 @@ class Post extends Component {
       author: "",
       quantity: 100,
       price: 100,
+      description : "",
       postImage : "",
       errors: {}
     };
@@ -30,6 +31,7 @@ class Post extends Component {
       author: this.state.author,
       quantity: this.state.quantity,
       price: this.state.price,
+      description: this.state.description,
       error:{}
     };
     axios.post("http://localhost:8081/api/books/create", newBook)
@@ -150,7 +152,7 @@ class Post extends Component {
                   <h4>Book Cover:</h4>
                   <input type="file" accept="image/*" name="postImage" onChange = {this.onFileChange}/>
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-primary btn-block mt-4" />
               </form>
             </div>
           </div>

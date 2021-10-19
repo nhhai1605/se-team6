@@ -12,7 +12,8 @@ class BookPage extends Component {
       description : "",
       price : "",
       quantity : "",
-      username : "",
+      username: "",
+      displayName : "",
       rate : "",
       deleteReviewId : null,
       reviews : [],
@@ -40,7 +41,7 @@ class BookPage extends Component {
         {
             this.setState({bookExist : true});
         }
-        this.setState({title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate});
+        this.setState({title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate, displayName : book.displayName});
     })
     .catch(err=>console.log(err))
   }
@@ -124,7 +125,7 @@ class BookPage extends Component {
               <h3>BookID: {this.state.id}</h3>
               <h3>Title: {this.state.title}</h3>
               <h3>Author: {this.state.author}</h3>
-              <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.username}</a></h3>
+              <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.displayName}</a></h3>
               <h3>Price: {this.state.price}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
@@ -147,7 +148,7 @@ class BookPage extends Component {
               } 
             </div>
 
-            <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'62%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+            <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'52%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
               <h2 style={{textAlign:'center'}}>Review</h2>
               {
                 reviews.map(review => (

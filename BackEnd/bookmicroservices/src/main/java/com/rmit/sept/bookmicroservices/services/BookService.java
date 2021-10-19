@@ -43,4 +43,14 @@ public class BookService
     {
         bookRepository.deleteById(id);
     }
+
+    public Collection<Book> getBooksByUsername(String username)
+    {
+        return bookRepository.getBooksByUsername(username);
+    }
+
+    public void changeUserDisplayName(String username, String newName)
+    {
+        bookRepository.changeUserDisplayName(username, newName);
+    }
 }

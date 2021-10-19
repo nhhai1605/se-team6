@@ -20,7 +20,7 @@ const BookItem = ({book}) => {
         url = require("../../uploads/noimage.jpg");
     }
     return ( 
-        <div className="card card-body" style={{borderColor:'rgb(0, 15, 41)', borderWidth: 2, backgroundColor : '#f0edf7'}}>
+        <div className="card card-body" style={{borderColor:'black', borderWidth: 2, backgroundColor : 'white'}}>
             <img style={{display: "block", margin: "5% auto 5%", height: "400px",  width: "auto", maxWidth:"300px", wordWrap: "break-word"}} className="img-fluid" src={url} alt={book.id}/><br />
             <h4 className="text-left">ID: {book.id}</h4>
             <h4 className="text-left">Title: {book.title}</h4>

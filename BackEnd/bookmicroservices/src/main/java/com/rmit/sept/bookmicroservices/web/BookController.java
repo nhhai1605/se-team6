@@ -58,4 +58,15 @@ public class BookController {
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 
+    @GetMapping("/getBooksFromUsername")
+    public @ResponseBody Collection<Book> getBooksFromUsername(@RequestParam("username") String username)
+    {
+        return bookService.getBooksByUsername(username);
+    }
+    @PutMapping("/changeUserDisplayName/{username}/{newName}")
+    public ResponseEntity<?> changeUserDisplayName(@PathVariable String username, @PathVariable String newName)
+    {
+        bookService.changeUserDisplayName(username, newName);
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
 }

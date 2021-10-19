@@ -1,8 +1,10 @@
 package com.rmit.sept.bookmicroservices.repositories;
 import com.rmit.sept.bookmicroservices.model.Book;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -17,4 +19,10 @@ public interface BookRepository extends  CrudRepository<Book, Long>
     Collection<Book> searchBooksByAuthor(String author);
     @Query(value = "SELECT * FROM BOOK WHERE ID = ?1", nativeQuery = true)
     Book getBook(Long id);
+    @Query(value = "SELECT * FROM BOOK WHERE USERNAME=?1", nativeQuery = true)
+    Collection<Book> getBooksByUsername(String username);
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE BOOK SET DISPLAY_NAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
+    void changeUserDisplayName(String username, String newName);
 }
