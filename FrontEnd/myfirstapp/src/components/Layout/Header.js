@@ -86,11 +86,22 @@ class Header extends Component {
                             {
                                 localStorage.jwtToken ?
                                 <>
-                                    <li className="nav-item">
-                                        <a className="nav-link " href="/post"  title="Post a new post">
-                                            Post Books
-                                        </a>
-                                    </li>
+                                    {
+                                            this.state.userType !== "Normal Customer" ?
+                                        <>
+                                        <li className="nav-item">
+                                            <a className="nav-link " href="/post"  title="Post a new post">
+                                                Post Books
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a className="nav-link " href="/orderManagement"  title="Go to Order Management Page">
+                                                Order Management
+                                            </a>     
+                                        </li>     
+                                        </>   
+                                        : null
+                                    }
                                     <li className="nav-item dropdown">
                                         <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" title="Account dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Account

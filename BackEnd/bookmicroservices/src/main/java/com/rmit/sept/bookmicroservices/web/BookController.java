@@ -24,20 +24,13 @@ public class BookController {
         Collection<Book> books = bookService.getAllBooks();
         return books;
     }
-
     @GetMapping("/search")
-    public @ResponseBody Collection<Book> searchBooks(@RequestParam("searchString") String searchString)
+    public @ResponseBody Collection<Book> search(@RequestParam("searchString") String searchString, @RequestParam("searchType") String searchType, @RequestParam("searchCategory") String searchCategory)
     {
         searchString = searchString.toLowerCase();
-        return bookService.searchBooks(searchString);
+        return bookService.search(searchString, searchType, searchCategory);
     }
 
-    @GetMapping("/searchByAuthor")
-    public @ResponseBody Collection<Book> searchBooksByAuthor(@RequestParam("searchString") String searchString)
-    {
-        searchString = searchString.toLowerCase();
-        return bookService.searchBooksByAuthor(searchString);
-    }
     @PostMapping("/create")
     public ResponseEntity<?> createBook(@Valid @RequestBody Book book)
     {

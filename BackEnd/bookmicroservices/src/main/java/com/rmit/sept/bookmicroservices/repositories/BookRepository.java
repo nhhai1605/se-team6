@@ -11,12 +11,10 @@ import java.util.Collection;
 @Repository
 public interface BookRepository extends  CrudRepository<Book, Long>
 {
-    @Query(value = "SELECT * FROM BOOK WHERE LOWER(TITLE) LIKE %?1%", nativeQuery = true)
-    Collection<Book> searchBooks(String searchString);
+
     @Query(value="SELECT * FROM BOOK", nativeQuery = true)
     Collection<Book> getAllBooks();
-    @Query(value = "SELECT * FROM BOOK WHERE LOWER(AUTHOR) LIKE %?1%", nativeQuery = true)
-    Collection<Book> searchBooksByAuthor(String author);
+
     @Query(value = "SELECT * FROM BOOK WHERE ID = ?1", nativeQuery = true)
     Book getBook(Long id);
     @Query(value = "SELECT * FROM BOOK WHERE USERNAME=?1", nativeQuery = true)
@@ -25,4 +23,13 @@ public interface BookRepository extends  CrudRepository<Book, Long>
     @Transactional
     @Query(value="UPDATE BOOK SET DISPLAY_NAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
     void changeUserDisplayName(String username, String newName);
+
+    @Query(value = "SELECT * FROM BOOK WHERE LOWER(TITLE) LIKE %?1% AND CATEGORY LIKE %?2%", nativeQuery = true)
+    Collection<Book> searchByTitle(String searchString, String searchCategory);
+    @Query(value = "SELECT * FROM BOOK WHERE LOWER(AUTHOR) LIKE %?1% AND CATEGORY LIKE %?2%", nativeQuery = true)
+    Collection<Book> searchByAuthor(String searchString, String searchCategory);
+    @Query(value = "SELECT * FROM BOOK WHERE LOWER(ISBN) LIKE %?1% AND CATEGORY LIKE %?2%", nativeQuery = true)
+    Collection<Book> searchByISBN(String searchString, String searchCategory);
+    @Query(value = "SELECT * FROM BOOK WHERE LOWER(ID) = ?1 AND CATEGORY LIKE %?2%", nativeQuery = true)
+    Collection<Book> searchByID(String searchString, String searchCategory);
 }

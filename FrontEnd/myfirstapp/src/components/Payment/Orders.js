@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import axios from "axios";
 import { timers } from "jquery";
-
+import { formatNumber } from '../Store/utils';
 
 class Checkout extends Component {
   constructor(props) {
@@ -73,11 +73,28 @@ class Checkout extends Component {
           orders.map((order,index) => (
             <div key={order.id} style={{ border: "solid grey", borderRadius: '10px', height: '25%', width: '96%', padding: "2%", margin: "2%", wordWrap: "break-word", overflow: 'auto' }}>
               <h4>Order ID: {order.id}</h4>
-              <h4>Total: {order.total} ${order.currency}</h4>
+              <h4>Total: {formatNumber(order.total)} </h4>
               <h4>Shipping Address: {order.address}</h4>
               <h4>Order Description: {order.description}</h4>
               <h4>Created at: {order.dateString}</h4>{ }
-              <h4>Status: {order.status}</h4>
+              {
+                    order.status === 'Confirm' ?
+                    <>
+                    <h4>Status: <span style={{ color: 'green' }}>Confirm</span></h4>
+                    </>
+                    : order.status === 'Reject' ?
+                    <>
+                    <h4>Status: <span style={{ color: 'red' }}>Reject</span></h4>
+                    </>
+                    : order.status === 'Refund' ?
+                    <>
+                    <h4>Status: <span style={{ color: 'orange' }}>Refund</span></h4>
+                    </>
+                    : 
+                    <>
+                    <h4>Status: <span style={{ color: 'blue' }}>Pending</span></h4>
+                    </>      
+                }
               {
                 currentTime < Date.parse(order.dateString) + 7200000 && order.status !== 'Refund' ?
                   <>

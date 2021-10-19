@@ -11,13 +11,31 @@ public class Book {
     private String title;
     private String author;
     private int quantity;
-    private int isShareBook;
-    private int price;
+    private String type;
+    private String isbn;
+    private String category;
+    private float price;
     private Date postDate;
     private float rate;
     private String username;
     private String description;
     private String displayName;
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getDisplayName() {
         return displayName;
@@ -38,13 +56,16 @@ public class Book {
     public Book()
     {
     }
-
-    public int getIsShareBook() {
-        return isShareBook;
+    @PrePersist
+    protected void onCreate(){
+        this.postDate = new Date();
+    }
+    public String getType() {
+        return type;
     }
 
-    public void setIsShareBook(int isShareBook) {
-        this.isShareBook = isShareBook;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUsername() {
@@ -76,11 +97,8 @@ public class Book {
         return quantity;
     }
 
-    public int isShareBook() {
-        return isShareBook;
-    }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -100,11 +118,7 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public void setShareBook(int shareBook) {
-        isShareBook = shareBook;
-    }
-
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

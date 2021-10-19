@@ -139,7 +139,7 @@ class Register extends Component {
                 <select className="btn btn-outline-primary dropdown-toggle" name="userTypeRequest" style={{marginBottom:10}} onChange={this.onChange}>
                 <option value="">Normal Customer</option>
                 <option value="Publisher">Publisher</option>
-                <option value="Author">Author</option>
+                <option value="Shop Owner">Shop Owner</option>
                 <option value="Admin">Admin</option>
                 </select>
                 </div>

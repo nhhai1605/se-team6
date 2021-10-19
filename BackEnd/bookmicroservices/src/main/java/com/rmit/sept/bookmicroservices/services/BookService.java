@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 public class BookService
@@ -14,20 +13,13 @@ public class BookService
     @Autowired
     private BookRepository bookRepository;
 
-    public Collection<Book> searchBooks(String searchString)
-    {
-        return bookRepository.searchBooks(searchString);
-    }
 
     public Collection<Book> getAllBooks()
     {
         return bookRepository.getAllBooks();
     }
 
-    public Collection<Book> searchBooksByAuthor(String author)
-    {
-        return bookRepository.searchBooksByAuthor(author);
-    }
+
 
     public Book createBook(Book newBook)
     {
@@ -52,5 +44,28 @@ public class BookService
     public void changeUserDisplayName(String username, String newName)
     {
         bookRepository.changeUserDisplayName(username, newName);
+    }
+
+
+    public Collection<Book> search(String searchString, String searchType, String searchCategory)
+    {
+        Collection <Book> book = null;
+        if(searchType.equals("Title"))
+        {
+            book = bookRepository.searchByTitle(searchString, searchCategory);
+        }
+        else if(searchType.equals("Author"))
+        {
+            book = bookRepository.searchByAuthor(searchString, searchCategory);
+        }
+        else if(searchType.equals("ISBN"))
+        {
+            book = bookRepository.searchByISBN(searchString, searchCategory);
+        }
+        else if(searchType.equals("ID"))
+        {
+            book = bookRepository.searchByID(searchString, searchCategory);
+        }
+        return book;
     }
 }

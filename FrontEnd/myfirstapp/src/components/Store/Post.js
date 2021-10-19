@@ -14,7 +14,10 @@ class Post extends Component {
       quantity: 100,
       price: 100,
       description : "",
-      postImage : "",
+      postImage: "",
+      type: "Sell",
+      isbn: "",
+      category: "",
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -31,9 +34,16 @@ class Post extends Component {
       author: this.state.author,
       quantity: this.state.quantity,
       price: this.state.price,
+      isbn : this.state.isbn,
+      type: this.state.type,
+      category:this.state.category,
       description: this.state.description,
       error:{}
     };
+    if(this.state.tpye = "Share")
+    {
+      newBook.price = 0;
+    }
     axios.post("http://localhost:8081/api/books/create", newBook)
         .then(res => (console.log(res.data.id), window.location.href="/")).catch(err=>this.setState({errors : err.response.data}));
   }
@@ -51,10 +61,10 @@ class Post extends Component {
     })
     .catch(err=>console.log(err))
   }
-
-  onChange(e) {
+  onChange(e)
+  {
     this.setState({ [e.target.name]: e.target.value });
-    }
+  }
 
   onFileChange = (event) => {
     this.setState({
@@ -108,7 +118,25 @@ class Post extends Component {
                       <div className= "invalid-feedback">{errors.author}</div>
                   )}
                 </div>
-                <div class="form-group">
+                <div className="form-group">
+                <h4>ISBN: </h4>
+                <input
+                    type="text"
+                    className= {classnames("form-control form-control-lg", {
+                        "is-invalid": errors.isbn
+                    }) }
+                    placeholder="ISBN"
+                    name="isbn"
+                    value= {this.state.isbn}
+                    onChange = {this.onChange}
+                    minLength="6" maxLength="60"
+                    required
+                  />
+                  {errors.isbn && (
+                      <div className= "invalid-feedback">{errors.isbn}</div>
+                  )}
+                </div>
+                <div className="form-group">
                   <h4>Description:</h4>
                   <textarea className= {classnames("form-control form-control-lg", {"is-invalid": errors.description}) } 
                   placeholder="Description" name="description" value= {this.state.description} onChange = {this.onChange} 
@@ -132,16 +160,35 @@ class Post extends Component {
                   )}
                 </div>
                 <div className="form-group">
-                  <h4>Price: (AU$)</h4>
+                <h4>Category:</h4>
+                <select className="btn btn-outline-secondary dropdown-toggle" name="category" style={{marginBottom:10}} onChange={this.onChange}>
+                  <option value="Action and Adventure">Action and Adventure</option>
+                  <option value="Horror">Horror</option>
+                  <option value="Detective and Mystery">Detective and Mystery</option>
+                  <option value="Fantasy">Fantasy</option>
+                  <option value="Comic Book or Graphic Novel">Comic Book or Graphic Novel</option>
+                  <option value="Historical Fiction">Historical Fiction</option>
+                  <option value="Science Fiction">Science Fiction</option>
+                </select>
+                </div>
+                <div className="form-group">
+                <h4>Type: </h4>
+                <select className="btn btn-outline-secondary dropdown-toggle" name="type" style={{marginBottom:10}} onChange={this.onChange}>
+                  <option value="Sell">Sell</option>
+                  <option value="Share">Share</option>
+                </select>
+                </div>
+                <div className="form-group">
+                  <h4>Price: (AU$) (Will be 0 if you choose Share)</h4>
                   <input
                     type="number"
-                    className= {classnames("form-control form-control-lg", {
+                    className={classnames("form-control form-control-lg", {
                       "is-invalid": errors.price
-                    }) }
+                    })}
                     placeholder="Price"
                     name="price"
-                    value= {this.state.price}
-                    onChange = {this.onChange}
+                    value={this.state.price}
+                    onChange={this.onChange}
                     minLength="6" maxLength="60" required
                   />
                   {errors.price && (

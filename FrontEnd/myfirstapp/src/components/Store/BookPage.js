@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import PopUpReview from "./PopUpReview";
+import { formatNumber } from './utils';
 
 class BookPage extends Component {
   constructor(props) {
@@ -125,8 +126,10 @@ class BookPage extends Component {
               <h3>BookID: {this.state.id}</h3>
               <h3>Title: {this.state.title}</h3>
               <h3>Author: {this.state.author}</h3>
+              <h3>ISBN: {this.state.isbn}</h3>
+              <h3>Category: {this.state.category}</h3>
               <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.displayName}</a></h3>
-              <h3>Price: {this.state.price}</h3>
+              <h3>Price: {this.state.type == "Share" ? "Book for Share" : formatNumber(this.state.price)}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
               {/* <h3>Rate: {this.state.rate}</h3> */}

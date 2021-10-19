@@ -112,21 +112,21 @@ class PopUpDetail extends Component {
                         <>
                             <option disabled value="Normal Customer">Normal Customer</option>
                             <option value="Publisher">Publisher</option>
-                            <option value="Author">Author</option>
+                            <option value="Shop Owner">Shop Owner</option>
                         </>
                         :
                         this.state.userType === "Publisher" ?
                         <>
                             <option value="Normal Customer">Normal Customer</option>
                             <option disabled value="Publisher">Publisher</option>
-                            <option value="Author">Author</option>
+                            <option value="Shop Owner">Shop Owner</option>
                         </>
                         :
                         this.state.userType === "Author" ?
                         <>
                             <option value="Normal Customer">Normal Customer</option>
                             <option value="Publisher">Publisher</option>
-                            <option disabled value="Author">Author</option>
+                            <option disabled value="Shop Owner">Shop Owner</option>
                         </>
                         : null
                     }

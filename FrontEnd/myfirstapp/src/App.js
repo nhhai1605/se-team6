@@ -8,6 +8,8 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 
 import Post from "./components/Store/Post";
+import OrderManagement from "./components/Store/OrderManagement";
+
 import Homepage from "./components/Store/Homepage";
 import Cart from "./components/Store/Cart";
 import BookPage from "./components/Store/BookPage";
@@ -75,6 +77,7 @@ class App extends Component {
                 user ? 
                 <>
                   <Route exact path="/userManagement" component={UserManagement} />
+                  <Route exact path="/orderManagement" component={OrderManagement} />
                   <Route exact path="/post" component={Post} />
                 </>
                 :

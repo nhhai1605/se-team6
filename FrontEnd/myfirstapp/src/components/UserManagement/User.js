@@ -87,7 +87,7 @@ class User extends Component {
             <>
                 <h1 style={{textAlign:'center', margin:"2%"}}>User Page</h1>
                 <div style={{display: 'flex' }} >
-                    <div id ="div1" style={{border:"solid black", backgroundColor : 'rgb(242, 242, 242)', borderRadius:'10px', height: '900px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+                    <div id ="div1" style={{border:"solid black", backgroundColor : 'white', borderRadius:'10px', height: '900px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
                         <h2 style={{textAlign:'center'}}>User Detail</h2>
                         <div style={{display: 'flex',justifyContent: 'center', marginBottom:50, marginTop:50}}>
                         <img src={DefaultUserPic} alt="User's Avatar"/>

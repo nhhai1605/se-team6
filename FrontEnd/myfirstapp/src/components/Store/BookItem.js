@@ -25,23 +25,31 @@ const BookItem = ({book}) => {
             <h4 className="text-left">ID: {book.id}</h4>
             <h4 className="text-left">Title: {book.title}</h4>
             <h4 className="text-left">Author: {book.author}</h4>
+            <h4 className="text-left">ISBN: {book.isbn}</h4>
+            <h4 className="text-left">Category: {book.category}</h4>
             <h4 className="text-left">Seller: <a href={"/user/"+book.username}>{book.displayName}</a></h4>
-            <h4 className="text-left">Quantity: {book.quantity}</h4>
-            <h4 className="text-left">Price: {formatNumber(book.price)}</h4>
+            <h4 className="text-left">Quantity: {book.quantity > 0 ? book.quantity : 'Sold out'}</h4>
+            <h4 className="text-left">Price: {book.type == "Share" ? "Book for Share" : formatNumber(book.price)}</h4>
             <div className="text-right">
-                <Link to={"/book/"+book.id} className="btn btn-info m-2" title="Click to get more details about book">Details</Link>
+                <Link to={"/book/" + book.id} className="btn btn-info m-2" title="Click to get more details about book">Details</Link>
                 {
-                    isInCart(book) && 
-                    <button 
-                    onClick={() => increase(book)}
-                    className="btn btn-outline-primary m-2" title="Click to add more books">Add more</button>
-                }
-
-                {
-                    !isInCart(book) && 
-                    <button 
-                    onClick={() => addProduct(book)}
-                    className="btn btn-primary m-2" title="Click to add a book to cart">Add to cart</button>
+                    Number(book.quantity) > 0 ?
+                    <>
+                    {
+                        isInCart(book) && 
+                        <button 
+                        onClick={() => increase(book)}
+                        className="btn btn-outline-primary m-2" title="Click to add more books">Add more</button>
+                    }
+                    {
+                        !isInCart(book) && 
+                        <button 
+                        onClick={() => addProduct(book)}
+                        className="btn btn-primary m-2" title="Click to add a book to cart">Add to cart</button>
+                    }
+                    </>
+                    :
+                    <button className="btn btn-danger m-2" title="Books are out of stock" disabled>Sold out</button>
                 }
             </div>
         </div>
