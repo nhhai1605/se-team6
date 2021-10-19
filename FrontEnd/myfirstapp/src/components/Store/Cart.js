@@ -46,8 +46,8 @@ const Cart = () => {
                             }
                             <hr className="my-4"/>
                             <div className="text-center">
-                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={handleCheckout}>Checkout</button>
-                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={clearCart}>Clear</button>
+                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={handleCheckout}  title="To checkout and proceed to payment">Checkout</button>
+                                <button type="button" className="btn btn-outline-primary mb-2 ml-2" onClick={clearCart} title="To clear cart items">Clear</button>
                             </div>
 
                         </div>

@@ -102,9 +102,8 @@ class User extends Component {
                     this.state.username === localStorage.getItem("currentUsername") ?
                     <>
                     <div style={{display: 'flex', justifyContent:'initial'}}>
-
-                        <button className="btn btn-outline-secondary" onClick={this.togglePopUpDetail} style={{margin:'10px', }}>Change Details</button>
-                        <button className="btn btn-outline-secondary" onClick={this.togglePopUpPassword}style={{margin:'10px',}} >Change Password</button>
+                        <button className="btn btn-outline-secondary"  onClick={this.togglePopUpDetail} style={{margin:'10px'}} title="Click to change user details">Change Details</button>
+                        <button className="btn btn-outline-secondary" onClick={this.togglePopUpPassword}style={{margin:'10px'}}title="Click to change password" >Change Password</button>
                         </div>
                     
                     </>
@@ -113,7 +112,7 @@ class User extends Component {
                         {
                             localStorage.getItem("currentUsername") != null ?
                             <>
-                                <button className="btn btn-outline-secondary" style={{margin:10}}>Follow</button>
+                                <button className="btn btn-outline-secondary" style={{margin:10}} title="Click to follow user">Follow</button>
                             </> : null
                         }
                     </>
