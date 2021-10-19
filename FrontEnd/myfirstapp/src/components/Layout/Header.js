@@ -73,7 +73,7 @@ class Header extends Component {
             <div>
                 <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{height:100}}>
                 <div className="navbar-header">
-                    <a className="navbar-brand" style={{fontSize : 40, fontFamily : 'sans-serif', margin:'10px' }} href="/">
+                    <a className="navbar-brand" title="Press to go back homepage" style={{fontSize : 40, fontFamily : 'sans-serif', margin:'10px' }} href="/">
                         Bookeroo
                         <i className="fas fa-book" style={{marginLeft : '10px'}}></i>
                     </a>
@@ -87,24 +87,24 @@ class Header extends Component {
                                 localStorage.jwtToken ?
                                 <>
                                     <li className="nav-item">
-                                        <a className="nav-link " href="/post">
+                                        <a className="nav-link " href="/post"  title="Post a new post">
                                             Post Books
                                         </a>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" title="Account dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Account
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a className="dropdown-item"  href={"/user/" + this.state.username}>{this.state.displayName}'s Page</a>
-                                        <a className="dropdown-item"  href={"/orders"}>Orders</a>
+                                        <a className="dropdown-item"  title="User page where you can change details and password" href={"/user/" + this.state.username}>{this.state.displayName}'s Page</a>
+                                        <a className="dropdown-item"  title="Order History Page" href={"/orders"}>Orders</a>
                                         {
                                             this.state.userType==="Admin" ?
                                             <>
-                                                <a className="dropdown-item" href={"/userManagement"}>User Management</a>
-                                                <CSVLink data={this.state.userData} filename={"UserData.csv"}>UserData</CSVLink>
-                                                <CSVLink data={this.state.bookData} filename={"BookData.csv"} >BookData</CSVLink>
-                                                <CSVLink data={this.state.orderData} filename={"OrderData.csv"}>OrderData</CSVLink>
+                                                <a className="dropdown-item" title="Where you can delete and manage other users"href={"/userManagement"}>User Management</a>
+                                                <CSVLink data={this.state.userData} title="Download UserData.csv" filename={"UserData.csv"}>UserData</CSVLink>
+                                                <CSVLink data={this.state.bookData} title="Download BookData.csv" filename={"BookData.csv"} >BookData</CSVLink>
+                                                <CSVLink data={this.state.orderData} title="Download OrderData.csv" filename={"OrderData.csv"}>OrderData</CSVLink>
                                             </>:null
                                         }
                                         <div className="dropdown-divider"></div>
@@ -130,7 +130,7 @@ class Header extends Component {
                                 </>
                             }
                             <li className="nav-item">
-                                <a className="nav-link" href="/cart">
+                                <a title="Go to Cart Page" className="nav-link" href="/cart">
                                     <CartIcon/>
                                     Cart ({<ItemCount/>} items)
                                 </a>

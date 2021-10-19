@@ -129,7 +129,7 @@ class BookPage extends Component {
               <h3>Price: {this.state.price}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
-              <h3>Rate: {this.state.rate}</h3>
+              {/* <h3>Rate: {this.state.rate}</h3> */}
               
               <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}  title="To add review of book">Add Review</button>
               {
