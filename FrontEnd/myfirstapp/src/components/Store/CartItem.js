@@ -37,7 +37,7 @@ const CartItem = ({product}) => {
             <div className="col-sm-4 p-2 text-right">
                  <button 
                  onClick={() => increase(product)}
-                 className="btn btn-primary btn-sm mr-2 mb-1">
+                 className="btn btn-primary btn-sm mr-2 mb-1"  title="To add 1 book per click"> 
                      <PlusCircleIcon width={"20px"}/>
                  </button>
 
@@ -45,7 +45,7 @@ const CartItem = ({product}) => {
                      product.quantity > 1 &&
                      <button
                     onClick={() => decrease(product)}
-                    className="btn btn-danger btn-sm mb-1">
+                    className="btn btn-danger btn-sm mb-1"  title="To remove 1 book per click">
                         <MinusCircleIcon width={"20px"}/>
                     </button>
                  }
@@ -54,7 +54,7 @@ const CartItem = ({product}) => {
                      product.quantity === 1 &&
                      <button
                     onClick={() => removeProduct(product)}
-                    className="btn btn-danger btn-sm mb-1">
+                    className="btn btn-danger btn-sm mb-1" title="To remove book">
                         <TrashIcon width={"20px"}/>
                     </button>
                  }

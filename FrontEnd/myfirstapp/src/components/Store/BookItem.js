@@ -29,19 +29,19 @@ const BookItem = ({book}) => {
             <h4 className="text-left">Quantity: {book.quantity}</h4>
             <h4 className="text-left">Price: {formatNumber(book.price)}</h4>
             <div className="text-right">
-                <Link to={"/book/"+book.id} className="btn btn-info m-2">Details</Link>
+                <Link to={"/book/"+book.id} className="btn btn-info m-2" title="Click to get more details about book">Details</Link>
                 {
                     isInCart(book) && 
                     <button 
                     onClick={() => increase(book)}
-                    className="btn btn-outline-primary m-2">Add more</button>
+                    className="btn btn-outline-primary m-2" title="Click to add more books">Add more</button>
                 }
 
                 {
                     !isInCart(book) && 
                     <button 
                     onClick={() => addProduct(book)}
-                    className="btn btn-primary m-2">Add to cart</button>
+                    className="btn btn-primary m-2" title="Click to add a book to cart">Add to cart</button>
                 }
             </div>
         </div>

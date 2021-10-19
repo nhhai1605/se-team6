@@ -59,7 +59,7 @@ class Homepage extends Component {
       <div>
         <div className={styles.searchDiv}>
         <form onSubmit={this.onSubmit} className="form-inline">
-        <select className="btn btn-outline-secondary dropdown-toggle"  name="searchType"  onChange={this.onChange}>
+        <select className="btn btn-outline-secondary dropdown-toggle"  name="searchType" title="Filter Search" onChange={this.onChange}>
           <option value="Title">Title</option>
           <option value="Author">Author</option>
         </select>
@@ -74,7 +74,7 @@ class Homepage extends Component {
             value={this.state.searchString}
             onChange={this.onChange}
         />
-          <button className="btn btn-primary"  type="submit">
+          <button className="btn btn-primary"  type="submit"  title="Filter Search" >
             <i className="fas fa-search"></i>
           </button>
         </form>

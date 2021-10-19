@@ -130,7 +130,7 @@ class BookPage extends Component {
               <h3>Description: {this.state.description}</h3>
               <h3>Rate: {this.state.rate}</h3>
               
-              <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}>Post Review</button>
+              <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}  title="To add review of book">Add Review</button>
               {
                     this.state.seenPopUp ?
                     <>
@@ -141,7 +141,7 @@ class BookPage extends Component {
               {
                 this.state.username === this.state.currentUsername || this.state.currentUserType === "Admin" ?
                 <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete?')) {this.onSubmitDelete(e)}} }>
-                <button className="btn btn-danger" style={{margin:10}}>Delete Post</button>
+                <button className="btn btn-danger" style={{margin:10}} title="To delete book post">Delete Post</button>
                 </form>
                 :null
               } 
@@ -164,7 +164,7 @@ class BookPage extends Component {
                       this.state.currentUserType === "Admin" ?
                       <>
                       <form onSubmit={this.onSubmitDeleteReview}>
-                        <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}>Delete Review</button>
+                        <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}  title="To delete review">Delete Review</button>
                       </form>
                       </>
                       : null
