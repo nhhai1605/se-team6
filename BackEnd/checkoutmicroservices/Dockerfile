@@ -5,5 +5,5 @@ WORKDIR /build/
 RUN mvn package
 FROM openjdk:16
 WORKDIR /app
-COPY --from=MAVEN_BUILD /build/target/reviewmicroservices-0.0.1.jar /app/
-ENTRYPOINT ["java", "-jar", "reviewmicroservices-0.0.1.jar"]
+COPY --from=MAVEN_BUILD /build/target/checkoutmicroservices-0.0.1.jar /app/
+ENTRYPOINT ["java", "-jar", "checkoutmicroservices-0.0.1.jar"]
