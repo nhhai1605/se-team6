@@ -14,14 +14,17 @@ class BookPage extends Component {
       price : "",
       quantity : "",
       username: "",
-      displayName : "",
+      displayName: "",
+      isbn: "",
       rate : "",
       deleteReviewId : null,
-      reviews : [],
+      reviews: [],
+      type: "",
       seenPopUp : false,
       currentUsername: localStorage.getItem('currentUsername'),
       currentDisplayName : "",
       currentUserType: "",
+      category: "",
       bookExist: false,
     };
     this.onChange = this.onChange.bind(this);
@@ -42,7 +45,7 @@ class BookPage extends Component {
         {
             this.setState({bookExist : true});
         }
-        this.setState({title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate, displayName : book.displayName});
+        this.setState({category:book.category, type:book.type, isbn:book.isbn, title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate, displayName : book.displayName});
     })
     .catch(err=>console.log(err))
   }
@@ -129,10 +132,10 @@ class BookPage extends Component {
               <h3>ISBN: {this.state.isbn}</h3>
               <h3>Category: {this.state.category}</h3>
               <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.displayName}</a></h3>
-              <h3>Price: {this.state.type == "Share" ? "Book for Share" : formatNumber(this.state.price)}</h3>
+                  <h3>Price: {this.state.type == "Share" ? "Book for Share" : formatNumber(this.state.price)}{ this.state.type == "Sell Used" ? "(Used)" : "(New)"}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
-              {/* <h3>Rate: {this.state.rate}</h3> */}
+              <h3>Rate: {parseFloat(this.state.rate).toFixed(2)}/5</h3>
               
               <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}  title="To add review of book">Add Review</button>
               {
@@ -163,11 +166,12 @@ class BookPage extends Component {
                       <h5>From: {review.displayName}</h5>
                     }
                     <h5>Rate: {review.rating}/5</h5>
+                    
                     <h5>Review Content: {review.content}</h5>
                     {
                       this.state.currentUserType === "Admin" ?
                       <>
-                      <form onSubmit={this.onSubmitDeleteReview}>
+                      <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete Review?')) {this.onSubmitDelete(e)}} }>
                         <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}  title="To delete review">Delete Review</button>
                       </form>
                       </>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import axios from "axios";
-import { timers } from "jquery";
 import { formatNumber } from '../Store/utils';
 
 class Checkout extends Component {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import axios from "axios";
 import styles from '../styles/BookGrid.module.css';
 
@@ -51,15 +50,18 @@ class OrderManagement extends Component {
   render() {
       const { errors ,orders} = this.state;
     return (
+      <div>
+        <h1 className="display-4 text-center">Order Management Page</h1>
         <div className={styles.orderGrid}>
         {
             orders.map(order => (
                 <div key={order[0]} className="card card-body" style={{borderColor:'black', borderWidth: 2, backgroundColor : 'white'}}>
 
                 <h4>From Order with ID: {order[5]}</h4>
-                <h4>Buyer: {order[2]}</h4>
+                <h4>Buyer: <a href={"/user/"+order[2]} >{order[2]}</a></h4>
                 <h4>Book ID: {order[1]}</h4>
                 <h4>Quantity: {order[7]}</h4>
+                <h4>Adress: {order[9]}</h4>
                 <h4>Created At: {order[4]}</h4>
                 {
                     order[8] === 'Confirm' ?
@@ -98,6 +100,7 @@ class OrderManagement extends Component {
                 </div>
             ))
         }
+        </div>
       </div>
     );
   }

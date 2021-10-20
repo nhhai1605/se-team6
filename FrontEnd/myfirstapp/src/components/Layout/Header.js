@@ -87,7 +87,7 @@ class Header extends Component {
                                 localStorage.jwtToken ?
                                 <>
                                     {
-                                            this.state.userType !== "Normal Customer" ?
+                                        // this.state.userType !== "Normal Customer" ?
                                         <>
                                         <li className="nav-item">
                                             <a className="nav-link " href="/post"  title="Post a new post">
@@ -100,7 +100,7 @@ class Header extends Component {
                                             </a>     
                                         </li>     
                                         </>   
-                                        : null
+                                        // : null
                                     }
                                     <li className="nav-item dropdown">
                                         <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" title="Account dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

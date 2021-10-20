@@ -88,7 +88,7 @@ public class OrderService {
 
     public void createOrderForSeller(OrderForSeller order)
     {
-        orderRepository.createOrderForSeller(order.getId(), order.getBookId(), order.getOrderId(), order.getBuyer(), order.getPoster(), order.getQuantity(), order.getCreateAt(), order.getDateString());
+        orderRepository.createOrderForSeller(order.getId(), order.getBookId(), order.getOrderId(), order.getBuyer(), order.getPoster(), order.getQuantity(), order.getCreateAt(), order.getDateString(), order.getAddress());
     }
 
     public String getPoster(String bookId)

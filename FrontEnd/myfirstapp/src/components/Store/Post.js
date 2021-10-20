@@ -10,14 +10,15 @@ class Post extends Component {
       username: localStorage.getItem("currentUsername"),
       displayName: "",
       title: "",
+      userType:"",
       author: "",
       quantity: 100,
       price: 100,
       description : "",
       postImage: "",
-      type: "Sell",
+      type: "Sell Used",
       isbn: "",
-      category: "",
+      category: "Action and Adventure",
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -40,12 +41,12 @@ class Post extends Component {
       description: this.state.description,
       error:{}
     };
-    if(this.state.tpye = "Share")
+    if(this.state.type == "Share")
     {
       newBook.price = 0;
     }
     axios.post("http://localhost:8081/api/books/create", newBook)
-        .then(res => (console.log(res.data.id), window.location.href="/")).catch(err=>this.setState({errors : err.response.data}));
+        .then(res => (window.location.href="/")).catch(err=>this.setState({errors : err.response.data}));
   }
 
   componentDidMount() 
@@ -57,7 +58,7 @@ class Post extends Component {
     axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
         .then(res => {
         const user = res.data;
-        this.setState({displayName : user.displayName});
+        this.setState({displayName : user.displayName, userType:user.userType});
     })
     .catch(err=>console.log(err))
   }
@@ -161,7 +162,7 @@ class Post extends Component {
                 </div>
                 <div className="form-group">
                 <h4>Category:</h4>
-                <select className="btn btn-outline-secondary dropdown-toggle" name="category" style={{marginBottom:10}} onChange={this.onChange}>
+                <select className="btn btn-outline-secondary dropdown-toggle" defaultValue={'Action and Adventure'} name="category" style={{marginBottom:10}} onChange={this.onChange}>
                   <option value="Action and Adventure">Action and Adventure</option>
                   <option value="Horror">Horror</option>
                   <option value="Detective and Mystery">Detective and Mystery</option>
@@ -173,8 +174,15 @@ class Post extends Component {
                 </div>
                 <div className="form-group">
                 <h4>Type: </h4>
-                <select className="btn btn-outline-secondary dropdown-toggle" name="type" style={{marginBottom:10}} onChange={this.onChange}>
-                  <option value="Sell">Sell</option>
+                  <select className="btn btn-outline-secondary dropdown-toggle" defaultValue={'Sell Used'} name="type" style={{ marginBottom: 10 }} onChange={this.onChange}>
+
+                  <option value="Sell Used">Sell Used</option>
+                  {
+                    this.state.userType === 'Normal Customer' ?
+                    <option value="Sell New" disabled>Sell New</option>
+                    :
+                    <option value="Sell New">Sell New</option>
+                  }
                   <option value="Share">Share</option>
                 </select>
                 </div>
@@ -189,7 +197,7 @@ class Post extends Component {
                     name="price"
                     value={this.state.price}
                     onChange={this.onChange}
-                    minLength="6" maxLength="60" required
+                    required
                   />
                   {errors.price && (
                       <div className= "invalid-feedback">{errors.price}</div>

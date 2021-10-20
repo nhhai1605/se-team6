@@ -3,6 +3,7 @@ import axios from "axios";
 import DefaultUserPic from "../../uploads/team-male.jpg";
 import PopUpDetail from "./PopUpDetail";
 import PopUpPassword from "./PopUpPassword";
+import { formatNumber } from '../Store/utils';
 
 class User extends Component {
     constructor(props){
@@ -141,7 +142,7 @@ class User extends Component {
                         <div key={book.id} style={{border:"solid grey", borderRadius:'10px', height:'25%', width:'96%', padding:"2%",margin:"2%", wordWrap: "break-word", overflow: 'auto'}}>
                         <h5>Title:  <a href={"/book/"+book.id}>{book.title}</a></h5>
                         <h5>Author: {book.author}</h5>
-                        <h5>Price: {book.price}</h5>
+                        <h5>Price: {formatNumber(book.price)}</h5>
                         <h5>Quantity: {book.quantity}</h5>
                         </div>
                         ))

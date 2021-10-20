@@ -1,5 +1,4 @@
 import React from 'react';
-import DefaultBookPic from "../../uploads/noimage.jpg";
 
 import { useCart } from './useCart';
 import { formatNumber } from './utils';

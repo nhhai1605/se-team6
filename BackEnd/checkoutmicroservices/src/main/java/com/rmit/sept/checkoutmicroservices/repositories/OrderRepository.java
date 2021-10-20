@@ -37,8 +37,8 @@ public interface OrderRepository extends  CrudRepository<OrderDetail, Long>
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO ORDER_FOR_SELLER (ID, BOOK_ID, ORDER_ID, BUYER, POSTER, QUANTITY, STATUS, CREATE_AT, DATE_STRING) VALUES (?1, ?2, ?3, ?4, ?5, ?6, 'Pending', ?7, ?8)", nativeQuery = true)
-    void createOrderForSeller(Long id, Long bookId, Long orderId, String buyer, String poster, int quantity, Date date, String dateString);
+    @Query(value = "INSERT INTO ORDER_FOR_SELLER (ID, BOOK_ID, ORDER_ID, BUYER, POSTER, QUANTITY, STATUS, CREATE_AT, DATE_STRING, ADDRESS) VALUES (?1, ?2, ?3, ?4, ?5, ?6, 'Pending', ?7, ?8, ?9)", nativeQuery = true)
+    void createOrderForSeller(Long id, Long bookId, Long orderId, String buyer, String poster, int quantity, Date date, String dateString, String address);
 
     @Query(value="SELECT USERNAME FROM BOOK WHERE ID=?1", nativeQuery = true)
     String getPoster(String bookId);

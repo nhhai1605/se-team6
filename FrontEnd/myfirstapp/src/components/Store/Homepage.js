@@ -69,7 +69,7 @@ class Homepage extends Component {
             <button className="btn btn-primary" type="submit" title="Filter Search" style={ {marginRight: 20}} >
             <i className="fas fa-search"></i>
             </button>
-        <select className="btn btn-outline-secondary dropdown-toggle" name="searchCategory" title="Filter Category" onChange={this.onChange}>
+            <select className="btn btn-outline-secondary dropdown-toggle" defaultValue={'All'} name="searchCategory" title="Filter Category" onChange={this.onChange}>
           <option value="">All</option>
           <option value="Action and Adventure">Action and Adventure</option>
           <option value="Horror">Horror</option>

@@ -23,6 +23,7 @@ public class ReviewController {
     public ResponseEntity<?> createReview(@Valid @RequestBody Review review)
     {
         Review newReview = reviewService.createReview(review);
+        reviewService.updateRate(newReview);
         return new ResponseEntity<Review>(newReview, HttpStatus.CREATED);
     }
 

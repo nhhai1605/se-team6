@@ -1,7 +1,6 @@
 import DefaultUserPic from "../../uploads/team-male.jpg";
 import React, { Component } from "react";
 import axios from "axios";
-import styles from '../styles/BookGrid.module.css';
 
 class UserCard extends Component
 {

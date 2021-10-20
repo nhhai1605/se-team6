@@ -2,7 +2,6 @@ package com.rmit.sept.checkoutmicroservices.web;
 
 import com.rmit.sept.checkoutmicroservices.model.OrderDetail;
 import com.rmit.sept.checkoutmicroservices.model.OrderForSeller;
-import com.rmit.sept.checkoutmicroservices.repositories.OrderRepository;
 import com.rmit.sept.checkoutmicroservices.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import com.paypal.api.payments.Links;
 import com.paypal.base.rest.PayPalRESTException;
 
-import javax.validation.Valid;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 
 
 @RestController
@@ -93,6 +90,7 @@ public class OrderController
                     orderForSeller.setCreateAt(orderDetail.getCreateAt());
                     Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     orderForSeller.setDateString(formatter.format(orderDetail.getCreateAt()));
+                    orderForSeller.setAddress(orderDetail.getAddress());
                     orderService.createOrderForSeller(orderForSeller);
                     orderService.updateBookQuantity(bookId, Integer.parseInt(quantity));
                 }

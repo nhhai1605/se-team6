@@ -19,4 +19,9 @@ public interface ReviewRepository extends  CrudRepository<Review, Long>
     @Transactional
     @Query(value="UPDATE REVIEW SET DISPLAY_NAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
     void changeUserDisplayName(String username, String newName);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE BOOK SET RATE = (SELECT AVG(RATING) FROM REVIEW WHERE BOOK_ID=?1) WHERE ID=?1", nativeQuery = true)
+    void updateRate(Long bookId);
 }
