@@ -68,4 +68,9 @@ public class BookService
         }
         return book;
     }
+
+    public Collection<Book> getPopularBooks()
+    {
+        return bookRepository.getPopularBooks();
+    }
 }

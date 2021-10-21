@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import classnames from "classnames";
 import axios from "axios";
-
+import S3 from "react-aws-s3"
 class Post extends Component {
     constructor(props){
         super(props);
@@ -18,7 +18,15 @@ class Post extends Component {
       postImage: "",
       type: "Sell Used",
       isbn: "",
+      newId: "",
       category: "Action and Adventure",
+      config: {
+       bucketName: "se-team6",
+        region: "us-east-1",
+        accessKeyId: "AKIAYLQI4NSF75XPLRVA",
+        secretAccessKey: "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",
+        s3Url: 'https://se-team6.s3.amazonaws.com/'
+      },
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -46,7 +54,10 @@ class Post extends Component {
       newBook.price = 0;
     }
     axios.post("http://localhost:8081/api/books/create", newBook)
-        .then(res => (window.location.href="/")).catch(err=>this.setState({errors : err.response.data}));
+      .then(res => {
+        const ReactS3Client = new S3(this.state.config);
+        ReactS3Client.uploadFile(this.state.postImage, "book" + res.data.id + ".jpg").then(data => { console.log(data); window.location.href = "/"; }).catch(err => { console.log(err);window.location.href = "/"; });
+        }).catch(err => this.setState({ errors: err.response.data }));
   }
 
   componentDidMount() 

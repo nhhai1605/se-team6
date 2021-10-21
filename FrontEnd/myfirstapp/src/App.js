@@ -9,7 +9,7 @@ import jwt_decode from "jwt-decode";
 
 import Post from "./components/Store/Post";
 import OrderManagement from "./components/Store/OrderManagement";
-
+import Popular from "./components/Store/Popular";
 import Homepage from "./components/Store/Homepage";
 import Cart from "./components/Store/Cart";
 import BookPage from "./components/Store/BookPage";
@@ -62,6 +62,7 @@ class App extends Component {
                   //Public Routes
                 }
                 <Route exact path="/" component={Homepage} />
+                <Route exact path="/popular" component={Popular} />
                 <Switch>
                   <Route path={'/user/:usernameString'} children = {<UserPageFunc/>} />
                 </Switch>

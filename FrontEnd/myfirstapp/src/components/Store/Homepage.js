@@ -48,6 +48,7 @@ class Homepage extends Component {
     return (
       <div>
         <div className={styles.searchDiv}>
+        <a className="btn btn-secondary" style={{marginRight:20}} href="/popular">Popular Books</a>
         <form onSubmit={this.onSubmit} className="form-inline">
         <select className="btn btn-outline-secondary dropdown-toggle"  name="searchType" title="Filter Search" onChange={this.onChange}>
           <option value="Title">Title</option>

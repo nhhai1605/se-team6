@@ -1,7 +1,7 @@
 package com.rmit.sept.checkoutmicroservices.web;
 
+import com.paypal.api.payments.Order;
 import com.rmit.sept.checkoutmicroservices.model.OrderDetail;
-import com.rmit.sept.checkoutmicroservices.model.OrderForSeller;
 import com.rmit.sept.checkoutmicroservices.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +14,7 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -59,40 +60,52 @@ public class OrderController
         try
         {
             com.paypal.api.payments.Payment payment = orderService.executePayment(paymentId, PayerID);
-            OrderDetail orderDetail = new OrderDetail();
-            String address = "";
-            address += payment.getPayer().getPayerInfo().getShippingAddress().getLine1() + " ";
-            address += payment.getPayer().getPayerInfo().getShippingAddress().getCity() + " ";
-            address += payment.getPayer().getPayerInfo().getShippingAddress().getPostalCode() + " ";
-            address += payment.getPayer().getPayerInfo().getShippingAddress().getState() + " ";
-            address += payment.getPayer().getPayerInfo().getShippingAddress().getCountryCode();
-            orderDetail.setUsername(username);
-            orderDetail.setCurrency(payment.getTransactions().get(0).getAmount().getCurrency());
-            orderDetail.setTotal(Double.parseDouble(payment.getTransactions().get(0).getAmount().getTotal()));
-            orderDetail.setMethod("Paypal");
-            orderDetail.setStatus("Pending");
-            orderDetail.setDescription(description);
-            orderDetail.setAddress(address);
             if (payment.getState().equals("approved"))
             {
+                Collection <OrderDetail> orders = new ArrayList<OrderDetail>();
                 String[] items = description.split("/");
-                orderService.save(orderDetail);
                 for (String item : items)
                 {
                     String bookId = item.split(":")[0];
                     String quantity = item.split(":")[1];
-                    OrderForSeller orderForSeller = new OrderForSeller();
-                    orderForSeller.setQuantity(Integer.parseInt(quantity));
-                    orderForSeller.setBookId(Long.parseLong(bookId));
-                    orderForSeller.setOrderId(orderDetail.getId());
-                    orderForSeller.setBuyer(username);
-                    orderForSeller.setPoster(orderService.getPoster(bookId));
-                    orderForSeller.setCreateAt(orderDetail.getCreateAt());
-                    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    orderForSeller.setDateString(formatter.format(orderDetail.getCreateAt()));
-                    orderForSeller.setAddress(orderDetail.getAddress());
-                    orderService.createOrderForSeller(orderForSeller);
+                    String poster = orderService.getPoster(bookId);
+                    Boolean added = false;
+                    for (int i = 0; i < orders.size(); i++)
+                    {
+                        if(((OrderDetail)orders.toArray()[i]).getPoster().equals(poster))
+                        {
+                            added = true;
+                            ((OrderDetail)orders.toArray()[i]).setDescription(((OrderDetail)orders.toArray()[i]).getDescription() + "/" + item);
+                            float price = orderService.getPrice(bookId) * Integer.parseInt(quantity);
+                            ((OrderDetail)orders.toArray()[i]).setTotal(((OrderDetail)orders.toArray()[i]).getTotal() + price);
+                            break;
+                        }
+                    }
+                    if(added == false)
+                    {
+                        OrderDetail order = new OrderDetail ();
+                        String address = "";
+                        address += payment.getPayer().getPayerInfo().getShippingAddress().getLine1() + " ";
+                        address += payment.getPayer().getPayerInfo().getShippingAddress().getCity() + " ";
+                        address += payment.getPayer().getPayerInfo().getShippingAddress().getPostalCode() + " ";
+                        address += payment.getPayer().getPayerInfo().getShippingAddress().getState() + " ";
+                        address += payment.getPayer().getPayerInfo().getShippingAddress().getCountryCode();
+                        order.setUsername(username);
+                        order.setCurrency(payment.getTransactions().get(0).getAmount().getCurrency());
+                        float price = orderService.getPrice(bookId) * Integer.parseInt(quantity);
+                        order.setTotal(price);
+                        order.setMethod("Paypal");
+                        order.setStatus("Pending");
+                        order.setDescription(item);
+                        order.setAddress(address);
+                        order.setPoster(poster);
+                        orders.add(order);
+                    }
                     orderService.updateBookQuantity(bookId, Integer.parseInt(quantity));
+                }
+                for(OrderDetail order : orders)
+                {
+                    orderService.save(order);
                 }
                 headers.add("Location", "http://localhost:3000/checkout/success?paymentId=" + paymentId + "&PayerID=" + PayerID);
             }
@@ -115,6 +128,11 @@ public class OrderController
     {
         return orderService.getOrders(username);
     }
+    @GetMapping("/getOrdersForSeller")
+    public @ResponseBody Collection<OrderDetail> getOrdersForSeller(@RequestParam("username") String username)
+    {
+        return orderService.getOrdersForSeller(username);
+    }
     @GetMapping("/all")
     public @ResponseBody Collection<OrderDetail> getAllOrders()
     {
@@ -125,29 +143,5 @@ public class OrderController
     public void updateStatus(@PathVariable String orderId, @PathVariable String status)
     {
         orderService.updateStatus(orderId, status);
-    }
-    @PutMapping("/updateStatusForSeller/{orderId}/{status}")
-    public void updateStatusForSeller(@PathVariable String orderId, @PathVariable String status)
-    {
-        orderService.updateStatusForSeller(orderId, status);
-    }
-    @GetMapping("/getLastOrder")
-    public @ResponseBody Long getLastOrder(@RequestParam("username") String username)
-    {
-        return orderService.getLastOrder(username);
-    }
-
-    @GetMapping("/getOrderForSeller")
-    public @ResponseBody Collection<Object> getOrderForSeller(@RequestParam("username") String username)
-    {
-        Collection<Object> orders = orderService.getOrderForSeller(username);
-        return orders;
-    }
-    @DeleteMapping("/deleteOrderForSeller/{orderForSellerId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long orderForSellerId)
-    {
-        System.out.println(orderForSellerId);
-        orderService.deleteOrderForSeller(orderForSellerId);
-        return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

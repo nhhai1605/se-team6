@@ -62,4 +62,9 @@ public class BookController {
         bookService.changeUserDisplayName(username, newName);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
+    @GetMapping("/getPopularBooks")
+    public @ResponseBody Collection<Book> getPopularBooks()
+    {
+        return bookService.getPopularBooks();
+    }
 }

@@ -4,7 +4,6 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.rmit.sept.checkoutmicroservices.model.OrderDetail;
-import com.rmit.sept.checkoutmicroservices.model.OrderForSeller;
 import com.rmit.sept.checkoutmicroservices.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,28 +85,18 @@ public class OrderService {
         return orderRepository.getLastOrder(username);
     }
 
-    public void createOrderForSeller(OrderForSeller order)
-    {
-        orderRepository.createOrderForSeller(order.getId(), order.getBookId(), order.getOrderId(), order.getBuyer(), order.getPoster(), order.getQuantity(), order.getCreateAt(), order.getDateString(), order.getAddress());
-    }
 
     public String getPoster(String bookId)
     {
         return orderRepository.getPoster(bookId);
     }
-
-    public Collection<Object> getOrderForSeller(String username)
+    public float getPrice(String bookId)
     {
-        return orderRepository.getOrderForSeller(username);
+        return orderRepository.getPrice(bookId);
     }
 
-    public void deleteOrderForSeller(Long orderForSellerId)
+    public Collection<OrderDetail> getOrdersForSeller(String username)
     {
-        orderRepository.deleteOrderForSeller(orderForSellerId);
-    }
-
-    public void updateStatusForSeller(String orderId, String status)
-    {
-        orderRepository.updateStatusForSeller(orderId, status);
+        return orderRepository.getOrdersForSeller(username);
     }
 }

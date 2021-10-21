@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
+@Table(name ="ORDER_DETAIL")
 public class OrderDetail {
 
     @Id
@@ -20,6 +21,15 @@ public class OrderDetail {
     private String address;
     private Date createAt;
     private String status;
+    private String poster;
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 
     public String getDateString() {
         return dateString;

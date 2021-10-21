@@ -11,32 +11,23 @@ class OrderManagement extends Component {
         orders: [],
         status: "",
         orderId: "",
-        orderForSellerId : "",
         errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onSubmitDelete = this.onSubmitDelete.bind(this);
 
   }
 
     onSubmit(e) {
-        axios.put("http://localhost:8083/api/checkout/updateStatusForSeller/" + this.state.orderForSellerId + "/" + this.state.status)
+        axios.put("http://localhost:8083/api/checkout/updateStatus/" + this.state.orderId + "/" + this.state.status)
         .then().catch(err => this.setState({ errors: err.response.data }));
-        
-    }
-
-    onSubmitDelete(e) {
-        axios.delete("http://localhost:8083/api/checkout/deleteOrderForSeller/" + this.state.orderForSellerId)
-        .then().catch(err=>this.setState({errors : err.response.data}));
     }
 
   componentDidMount() 
   {
-    axios.get("http://localhost:8083/api/checkout/getOrderForSeller", { params: { username: this.state.username } })
+    axios.get("http://localhost:8083/api/checkout/getOrdersForSeller", { params: { username: this.state.username } })
     .then(res => {
         const orders = res.data;
-        // console.log(orders)
       this.setState({orders : orders});
     }).catch(err=>console.log(err))
   }
@@ -55,24 +46,21 @@ class OrderManagement extends Component {
         <div className={styles.orderGrid}>
         {
             orders.map(order => (
-                <div key={order[0]} className="card card-body" style={{borderColor:'black', borderWidth: 2, backgroundColor : 'white'}}>
-
-                <h4>From Order with ID: {order[5]}</h4>
-                <h4>Buyer: <a href={"/user/"+order[2]} >{order[2]}</a></h4>
-                <h4>Book ID: {order[1]}</h4>
-                <h4>Quantity: {order[7]}</h4>
-                <h4>Adress: {order[9]}</h4>
-                <h4>Created At: {order[4]}</h4>
+                <div key={order.id} className="card card-body" style={{borderColor:'black', borderWidth: 2, backgroundColor : 'white'}}>
+                <h4>Buyer: <a href={"/user/"+order.username} >{order.username}</a></h4>
+                <h4>Decription: {order.description}</h4>
+                <h4>Adress: {order.address}</h4>
+                <h4>Created At: {order.dateString}</h4>
                 {
-                    order[8] === 'Confirm' ?
+                    order.status === 'Confirm' ?
                     <>
                     <h4>Status: <span style={{ color: 'green' }}>Confirm</span></h4>
                     </>
-                    : order[8] === 'Reject' ?
+                    : order.status === 'Reject' ?
                     <>
                     <h4>Status: <span style={{ color: 'red' }}>Reject</span></h4>
                     </>
-                    : order[8] === 'Refund' ?
+                    : order.status === 'Refund' ?
                     <>
                     <h4>Status: <span style={{ color: 'orange' }}>Refund</span></h4>
                     </>
@@ -82,19 +70,15 @@ class OrderManagement extends Component {
                     </>      
                 }
                 {
-                    order[8] === "Pending" ?
+                    order.status === "Pending" ?
                     <>
                     <form onSubmit={this.onSubmit}>
-                    <button className="btn btn-success" onClick={() => this.setState({orderForSellerId : order[0],orderId: order[5],status:"Confirm"})} style={{margin:10}}>Confirm</button>
-                    <button className="btn btn-danger" onClick={() => this.setState({orderForSellerId : order[0],orderId: order[5], status: "Reject" })} style={{ margin: 10 }}>Reject</button>
+                    <button className="btn btn-success" onClick={() => this.setState({orderId : order.id, status:"Confirm"})} style={{margin:10}}>Confirm</button>
+                    <button className="btn btn-danger" onClick={() => this.setState({orderId : order.id, status: "Reject" })} style={{ margin: 10 }}>Reject</button>
                     </form>
                     </>
                     :
-                    <>
-                    <form onSubmit={this.onSubmitDelete}>
-                        <button className="btn btn-secondary" onClick={() => this.setState({orderForSellerId : order[0]})} style={{ margin: 10 }}>Delete</button>
-                    </form>
-                    </>
+                    null
                 }
 
                 </div>

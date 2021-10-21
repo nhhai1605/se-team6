@@ -3,6 +3,7 @@ package com.rmit.sept.bookmicroservices.model;
 import javax.persistence.*;
 import java.util.Date;
 @Entity
+@Table(name ="BOOK")
 public class Book {
 
     @Id

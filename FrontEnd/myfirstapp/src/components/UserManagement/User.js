@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import DefaultUserPic from "../../uploads/team-male.jpg";
 import PopUpDetail from "./PopUpDetail";
 import PopUpPassword from "./PopUpPassword";
 import { formatNumber } from '../Store/utils';
@@ -11,6 +10,7 @@ class User extends Component {
         this.state = 
         {
         username: this.props.username,
+        id: "",
         displayName: "",
         fullName: "",
         profileImage: "",
@@ -37,7 +37,7 @@ class User extends Component {
                 {
                     this.setState({userExist : true});
                 }
-                this.setState({username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
+                this.setState({id: user.id, username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
         })
         .catch(err=>console.log(err))
     }
@@ -91,7 +91,7 @@ class User extends Component {
                     <div id ="div1" style={{border:"solid black", backgroundColor : 'white', borderRadius:'10px', height: '900px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
                         <h2 style={{textAlign:'center'}}>User Detail</h2>
                         <div style={{display: 'flex',justifyContent: 'center', marginBottom:50, marginTop:50}}>
-                        <img src={DefaultUserPic} alt="User's Avatar"/>
+                        <img alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/user" + this.state.id+ ".jpg"} />
                         </div>
 
                         <h3>Email/Username: {this.state.username} </h3>

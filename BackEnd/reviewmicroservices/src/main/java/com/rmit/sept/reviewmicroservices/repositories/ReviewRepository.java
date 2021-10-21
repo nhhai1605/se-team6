@@ -12,16 +12,16 @@ import java.util.Collection;
 public interface ReviewRepository extends  CrudRepository<Review, Long>
 {
 
-    @Query(value = "SELECT * FROM REVIEW WHERE BOOK_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM REVIEW WHERE BOOKID = ?1", nativeQuery = true)
     Collection<Review> getReviewsForBook(Long bookId);
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE REVIEW SET DISPLAY_NAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
+    @Query(value="UPDATE REVIEW SET DISPLAYNAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
     void changeUserDisplayName(String username, String newName);
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE BOOK SET RATE = (SELECT AVG(RATING) FROM REVIEW WHERE BOOK_ID=?1) WHERE ID=?1", nativeQuery = true)
+    @Query(value="UPDATE BOOK SET RATE = (SELECT AVG(RATING) FROM REVIEW WHERE BOOKID=?1) WHERE ID=?1", nativeQuery = true)
     void updateRate(Long bookId);
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import PopUpReview from "./PopUpReview";
 import { formatNumber } from './utils';
+import S3 from "react-aws-s3"
 
 class BookPage extends Component {
   constructor(props) {
@@ -26,6 +27,13 @@ class BookPage extends Component {
       currentUserType: "",
       category: "",
       bookExist: false,
+      config: {
+        bucketName: "se-team6",
+         region: "us-east-1",
+         accessKeyId: "AKIAYLQI4NSF75XPLRVA",
+         secretAccessKey: "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",
+         s3Url: 'https://se-team6.s3.amazonaws.com/'
+       },
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -83,8 +91,9 @@ class BookPage extends Component {
   onSubmitDelete(e) 
   {
     e.preventDefault();
-    axios.delete("http://localhost:8081/api/books/deleteBook/" +  this.state.id)
-    .then(window.location.href="/").catch(err=>this.setState({errors : err.response.data}));
+    axios.delete("http://localhost:8081/api/books/deleteBook/" + this.state.id)
+      .then(res=>{window.location.href='/'
+        }).catch(err=>this.setState({errors : err.response.data}));
   }
 
   onSubmitDeleteReview(e) 
@@ -104,18 +113,9 @@ class BookPage extends Component {
   };
 
   render() {
-    var url = "";
-    try
-    {
-        url = require("../../BookCover/"+this.state.id+".jpg");
-    }
-    catch
-    {
-        url = require("../../uploads/noimage.jpg");
-    }
     const reviews = this.state.reviews;
     return (
-  
+
       <div>
       {
         this.state.bookExist ?
@@ -125,7 +125,7 @@ class BookPage extends Component {
           <div style={{display: 'flex'}}>
             <div style={{border:"solid black", borderRadius:'10px', height: '900px',width:'30%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
               <h2 style={{textAlign:'center'}}>Detail</h2>
-              <img style={{display: "block", margin: "5% auto 5%", width:"auto", maxWidth:"400px"}} src={url}  alt={this.state.id}/>
+                  <img style={{ display: "block", margin: "5% auto 5%", width: "auto", maxWidth: "400px" }} alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/book" + this.state.id+ ".jpg"} />
               <h3>BookID: {this.state.id}</h3>
               <h3>Title: {this.state.title}</h3>
               <h3>Author: {this.state.author}</h3>
@@ -135,7 +135,7 @@ class BookPage extends Component {
                   <h3>Price: {this.state.type == "Share" ? "Book for Share" : formatNumber(this.state.price)}{ this.state.type == "Sell Used" ? "(Used)" : "(New)"}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
-              <h3>Rate: {parseFloat(this.state.rate).toFixed(2)}/5</h3>
+              <h3>Rate: {parseFloat(this.state.rate).toFixed(1)}/5</h3>
               
               <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}  title="To add review of book">Add Review</button>
               {

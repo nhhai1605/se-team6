@@ -12,16 +12,16 @@ import java.util.Collection;
 public interface BookRepository extends  CrudRepository<Book, Long>
 {
 
-    @Query(value="SELECT * FROM BOOK", nativeQuery = true)
+    @Query(value="SELECT * FROM BOOK ORDER BY POSTDATE DESC", nativeQuery = true)
     Collection<Book> getAllBooks();
 
-    @Query(value = "SELECT * FROM BOOK WHERE ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM BOOK WHERE ID = ?1 ", nativeQuery = true)
     Book getBook(Long id);
     @Query(value = "SELECT * FROM BOOK WHERE USERNAME=?1", nativeQuery = true)
     Collection<Book> getBooksByUsername(String username);
     @Modifying
     @Transactional
-    @Query(value="UPDATE BOOK SET DISPLAY_NAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
+    @Query(value="UPDATE BOOK SET DISPLAYNAME = ?2 WHERE USERNAME=?1", nativeQuery = true)
     void changeUserDisplayName(String username, String newName);
 
     @Query(value = "SELECT * FROM BOOK WHERE LOWER(TITLE) LIKE %?1% AND CATEGORY LIKE %?2%", nativeQuery = true)
@@ -32,4 +32,7 @@ public interface BookRepository extends  CrudRepository<Book, Long>
     Collection<Book> searchByISBN(String searchString, String searchCategory);
     @Query(value = "SELECT * FROM BOOK WHERE LOWER(ID) = ?1 AND CATEGORY LIKE %?2%", nativeQuery = true)
     Collection<Book> searchByID(String searchString, String searchCategory);
+
+    @Query(value = "SELECT * FROM BOOK ORDER BY RATE DESC LIMIT 10", nativeQuery = true)
+    Collection<Book> getPopularBooks();
 }

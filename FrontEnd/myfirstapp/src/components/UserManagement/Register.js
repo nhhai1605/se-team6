@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import classnames from "classnames";
 import axios from "axios";
+import S3 from "react-aws-s3"
 
 class Register extends Component {
     constructor(){
@@ -16,12 +15,25 @@ class Register extends Component {
       confirmPassword: "",
       userType: "Normal Customer",
       userTypeRequest: "None",
-      errors: {}
+      errors: {},
+      userImage: "",
+      config: {
+        bucketName: "se-team6",
+         region: "us-east-1",
+         accessKeyId: "AKIAYLQI4NSF75XPLRVA",
+         secretAccessKey: "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",
+         s3Url: 'https://se-team6.s3.amazonaws.com/'
+       },
     };
     this.onChange = this.onChange.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
+  onFileChange = (event) => {
+    this.setState({
+      userImage: event.target.files[0]
+    });
+  }
   onSubmit(e) {
     e.preventDefault();
     const newUser = {
@@ -34,13 +46,15 @@ class Register extends Component {
       userTypeRequest: this.state.userTypeRequest
     };
     axios.post("http://localhost:8080/api/users/register", newUser)
-        .then(res => {window.location.href="/login"}).catch(err=>this.setState({errors : err.response.data}));
+      .then(res => { const ReactS3Client = new S3(this.state.config);
+        ReactS3Client.uploadFile(this.state.userImage, "user" + res.data.id + ".jpg").then(data => { console.log(data); window.location.href = "/login"; }).catch(err => { console.log(err); window.location.href = "/login"; })
+      }).catch(err => this.setState({ errors: err.response.data }));
   }
 
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    }
+  }
 
 
   render() {
@@ -142,6 +156,10 @@ class Register extends Component {
                 <option value="Shop Owner">Shop Owner</option>
                 <option value="Admin">Admin</option>
                 </select>
+                </div>
+                <div className="form-group">
+                  <h4>Avatar:</h4>
+                  <input type="file" accept="image/*" name="userImage" onChange = {this.onFileChange}/>
                 </div>
                 If you already have an account, please <a href = "/login">login</a> here! Other types of user beside Normal Customer will require admin to approve!
                 <input type="submit" className="btn btn-primary btn-block mt-4" />
