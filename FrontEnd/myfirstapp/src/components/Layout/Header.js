@@ -1,5 +1,5 @@
-import React, { Component, Link, useContext } from 'react'
-import {CSVLink, CSVDownload} from 'react-csv';
+import React, { Component, useContext } from 'react'
+import {CSVLink} from 'react-csv';
 import setJWTToken from "../../securityUtils/setJWTToken";
 import styles from '../styles/Header.module.css';
 import { CartContext } from '../Store/Context/CartContext';
@@ -41,7 +41,7 @@ class Header extends Component {
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({username : user.username, displayName : user.displayName, userType:user.userType, userTypeRequest:user.userTypeRequest});
@@ -51,17 +51,17 @@ class Header extends Component {
     componentDidMount() 
     {
         this.getUserDetails(this.state.username);
-        axios.get("http://localhost:8080/api/users/all")
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/all`)
         .then(res => {
             const users = res.data;
             this.setState({userData : users});
         }).catch(err => console.log(err))
-        axios.get("http://localhost:8081/api/books/all")
+        axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/all`)
         .then(res => {
           const books = res.data;
           this.setState({bookData : books});
         }).catch(err => console.log(err))
-        axios.get("http://localhost:8083/api/checkout/all")
+        axios.get(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/all`)
         .then(res => {
           const orders = res.data;
           this.setState({orderData : orders});

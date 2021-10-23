@@ -21,7 +21,7 @@ class Checkout extends Component {
   }
 
   getUserDetails=(username)=>{
-    axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+    axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
         .then(res => {
         const user = res.data;
         this.setState({displayName : user.displayName, fullName : user.fullName, userType : user.userType, userId: user.id});
@@ -31,7 +31,7 @@ class Checkout extends Component {
     
   getOrders=(username)=>
   {
-      axios.get("http://localhost:8083/api/checkout/getOrders", {params : {username : username}})
+      axios.get(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/getOrders`, {params : {username : username}})
       .then(res => {
       const orders = res.data;
         this.setState({orders:orders});
@@ -54,7 +54,7 @@ class Checkout extends Component {
 
   onSubmit(e)
   {
-    axios.put("http://localhost:8083/api/checkout/updateStatus/" + this.state.orderId + "/Refund")
+    axios.put(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/updateStatus/` + this.state.orderId + "/Refund")
     .then().catch(err=>this.setState({errors : err.response.data}));
   }
 
@@ -63,7 +63,7 @@ class Checkout extends Component {
   }
 
   render() {
-    const { errors, orders, bookStrings , currentTime} = this.state;
+    const {  orders , currentTime} = this.state;
     return ( 
       <div className="checkout">
         <h1 className="display-4 text-center mt-4">Order History</h1>

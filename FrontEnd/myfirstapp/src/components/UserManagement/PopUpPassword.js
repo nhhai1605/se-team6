@@ -32,7 +32,7 @@ class PopUpPassword extends Component {
             newPassword: this.state.newPassword,
             confirmPassword: this.state.confirmPassword
         }; 
-        axios.post("http://localhost:8080/api/users/changePassword", changePasswordRequest)
+        axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changePassword`, changePasswordRequest)
         .then().catch(err=>this.setState({errors : err.response.data}));
     }
 

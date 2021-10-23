@@ -46,7 +46,7 @@ class PopUpReview extends Component {
                 rating: this.state.rating,
                 content:this.state.content,
             }; 
-            axios.post("http://localhost:8082/api/reviews/create", newReview)
+            axios.post(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/create`, newReview)
             .then(window.location.href="/book/" + this.state.bookId).catch(err=>this.setState({errors : err.response.data}));
         }
     }

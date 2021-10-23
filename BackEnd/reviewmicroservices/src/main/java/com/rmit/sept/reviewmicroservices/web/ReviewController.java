@@ -12,7 +12,7 @@ import java.util.Collection;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://sept-team6.us-east-1.elasticbeanstalk.com", "http://localhost" })
 @RequestMapping("/api/reviews")
 public class ReviewController {
 

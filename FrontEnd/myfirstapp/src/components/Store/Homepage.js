@@ -25,7 +25,7 @@ class Homepage extends Component {
 
   componentDidMount() 
   {
-    axios.get("http://localhost:8081/api/books/all")
+    axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/all`)
       .then(res => {
         const books = res.data;
         this.setState({books : books});
@@ -35,7 +35,7 @@ class Homepage extends Component {
   onSubmit(e) 
   {
     e.preventDefault();
-    axios.get("http://localhost:8081/api/books/search", {params : {searchString : this.state.searchString, searchType: this.state.searchType, searchCategory: this.state.searchCategory}})
+    axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/search`, {params : {searchString : this.state.searchString, searchType: this.state.searchType, searchCategory: this.state.searchCategory}})
       .then(res => {
         const books = res.data;
         this.setState({books : books});

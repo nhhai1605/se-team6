@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import PopUpReview from "./PopUpReview";
 import { formatNumber } from './utils';
-import S3 from "react-aws-s3"
 
 class BookPage extends Component {
   constructor(props) {
@@ -42,7 +41,7 @@ class BookPage extends Component {
   }
 
   getBook=(id)=>{
-    axios.get("http://localhost:8081/api/books/getBook", {params : {id : id}})
+    axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/getBook`, {params : {id : id}})
         .then(res => {
         const book = res.data;
         if(book.id == null)
@@ -59,7 +58,7 @@ class BookPage extends Component {
   }
 
   getUserDetails=(username)=>{
-      axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+      axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
           .then(res => {
           const user = res.data;
           this.setState({currentUserType : user.userType, currentDisplayName: user.displayName});
@@ -68,7 +67,7 @@ class BookPage extends Component {
   }
 
   getReviews=(bookId)=>{
-    axios.get("http://localhost:8082/api/reviews/getReviewsForBook", {params : {bookId : bookId}})
+    axios.get(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/getReviewsForBook`, {params : {bookId : bookId}})
     .then(res => {
       const reviews = res.data;
       this.setState({reviews : reviews});
@@ -91,14 +90,14 @@ class BookPage extends Component {
   onSubmitDelete(e) 
   {
     e.preventDefault();
-    axios.delete("http://localhost:8081/api/books/deleteBook/" + this.state.id)
+    axios.delete(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/deleteBook/` + this.state.id)
       .then(res=>{window.location.href='/'
         }).catch(err=>this.setState({errors : err.response.data}));
   }
 
   onSubmitDeleteReview(e) 
   {
-    axios.delete("http://localhost:8082/api/reviews/deleteReview/" + this.state.deleteReviewId)
+    axios.delete(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/deleteReview/` + this.state.deleteReviewId)
     .then().catch(err=>this.setState({errors : err.response.data}));
     this.setState({deleteReviewId : null});
   }
@@ -132,7 +131,7 @@ class BookPage extends Component {
               <h3>ISBN: {this.state.isbn}</h3>
               <h3>Category: {this.state.category}</h3>
               <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.displayName}</a></h3>
-                  <h3>Price: {this.state.type == "Share" ? "Book for Share" : formatNumber(this.state.price)}{ this.state.type == "Sell Used" ? "(Used)" : "(New)"}</h3>
+                  <h3>Price: {this.state.type === "Share" ? "Book for Share" : formatNumber(this.state.price)}{ this.state.type === "Sell Used" ? "(Used)" : "(New)"}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
               <h3>Rate: {parseFloat(this.state.rate).toFixed(1)}/5</h3>
@@ -171,7 +170,7 @@ class BookPage extends Component {
                     {
                       this.state.currentUserType === "Admin" ?
                       <>
-                      <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete Review?')) {this.onSubmitDelete(e)}} }>
+                      <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete Review?')) {this.onSubmitDeleteReview(e)}} }>
                         <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}  title="To delete review">Delete Review</button>
                       </form>
                       </>

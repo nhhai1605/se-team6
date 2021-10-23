@@ -27,7 +27,7 @@ class PopUpDetail extends Component {
     };
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest, currentOption: user.userTypeRequest});
@@ -49,9 +49,9 @@ class PopUpDetail extends Component {
             userType: this.state.userType,
             userTypeRequest: this.state.currentOption
         }; 
-        axios.post("http://localhost:8080/api/users/changeDetail", changeDetailRequest).then().catch(err => this.setState({ errors: err.response.data }));
-        axios.put("http://localhost:8082/api/reviews/changeUserDisplayName/" + this.state.username + "/" + this.state.displayName).then().catch(err=>this.setState({errors : err.response.data}));
-        axios.put("http://localhost:8081/api/books/changeUserDisplayName/" + this.state.username + "/" + this.state.displayName).then().catch(err=>this.setState({errors : err.response.data}));
+        axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changeDetail`, changeDetailRequest).then().catch(err => this.setState({ errors: err.response.data }));
+        axios.put(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/changeUserDisplayName/` + this.state.username + "/" + this.state.displayName).then().catch(err=>this.setState({errors : err.response.data}));
+        axios.put(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/changeUserDisplayName/` + this.state.username + "/" + this.state.displayName).then().catch(err=>this.setState({errors : err.response.data}));
     }
 
     onChange(e) 

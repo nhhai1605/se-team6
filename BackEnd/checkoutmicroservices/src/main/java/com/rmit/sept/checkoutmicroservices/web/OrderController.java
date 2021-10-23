@@ -19,7 +19,7 @@ import java.util.Collection;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://sept-team6.us-east-1.elasticbeanstalk.com", "http://localhost" })
 @RequestMapping("/api/checkout")
 public class OrderController
 {
@@ -44,13 +44,13 @@ public class OrderController
 
             e.printStackTrace();
         }
-        return "http://localhost:3000/checkout/fail";
+        return "http://sept-team6.us-east-1.elasticbeanstalk.com/checkout/fail";
     }
 
     @GetMapping("/cancel")
     public String cancelPay()
     {
-        return "http://localhost:3000/checkout/fail";
+        return "http://sept-team6.us-east-1.elasticbeanstalk.com/checkout/fail";
     }
 
     @GetMapping("/success")

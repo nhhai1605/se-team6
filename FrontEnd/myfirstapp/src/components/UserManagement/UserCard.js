@@ -22,7 +22,7 @@ class UserCard extends Component
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({id:user.id, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
@@ -52,12 +52,12 @@ class UserCard extends Component
                 userTypeRequest: this.state.userTypeRequest,
                 status : this.state.status,
             }
-            axios.post("http://localhost:8080/api/users/changeUserType", userRequest)
+            axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changeUserType`, userRequest)
             .then(window.location.reload(false)).catch(err=>this.setState({errors : err.response.data}));
         }
         else if(this.state.status === "Delete")
         {
-            axios.delete("http://localhost:8080/api/users/deleteUser/" + this.state.id)
+            axios.delete(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/deleteUser/` + this.state.id)
             .then(window.location.reload(false)).catch(err=>this.setState({errors : err.response.data}));
         }
         else

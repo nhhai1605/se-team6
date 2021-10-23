@@ -35,7 +35,7 @@ class Checkout extends Component {
       }
     }
     this.setState({ itemsString: string })
-    if (this.state.total == 0)
+    if (this.state.total === 0)
     {
       this.setState({total : 0.1})
     }
@@ -52,7 +52,7 @@ class Checkout extends Component {
         method: this.state.method,
         description: this.state.itemsString,
     }
-    axios.post("http://localhost:8083/api/checkout/payment", order)
+    axios.post(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/payment`, order)
       .then(res => {
         window.location.href = res.data;
       }).catch(err => this.setState({ errors: err.response.data }));
@@ -63,7 +63,6 @@ class Checkout extends Component {
   }
 
   render() {
-    const { errors } = this.state;
     return (
       <div className="checkout">
         <div className="container">

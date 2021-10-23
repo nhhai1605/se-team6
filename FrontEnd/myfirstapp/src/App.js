@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route, useRouteMatch, useParams, Switch, useLocation} from "react-router-dom";
+import { BrowserRouter as Router, Route, useParams, Switch} from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";

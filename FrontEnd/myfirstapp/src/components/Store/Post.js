@@ -1,4 +1,4 @@
-import React, { Component, useRef } from "react";
+import React, { Component } from "react";
 import classnames from "classnames";
 import axios from "axios";
 import S3 from "react-aws-s3"
@@ -49,11 +49,11 @@ class Post extends Component {
       description: this.state.description,
       error:{}
     };
-    if(this.state.type == "Share")
+    if(this.state.type === "Share")
     {
       newBook.price = 0;
     }
-    axios.post("http://localhost:8081/api/books/create", newBook)
+    axios.post(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/create`, newBook)
       .then(res => {
         const ReactS3Client = new S3(this.state.config);
         ReactS3Client.uploadFile(this.state.postImage, "book" + res.data.id + ".jpg").then(data => { console.log(data); window.location.href = "/"; }).catch(err => { console.log(err);window.location.href = "/"; });
@@ -66,7 +66,7 @@ class Post extends Component {
   }
 
   getUserDetails=(username)=>{
-    axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+    axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
         .then(res => {
         const user = res.data;
         this.setState({displayName : user.displayName, userType:user.userType});

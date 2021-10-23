@@ -19,13 +19,13 @@ class OrderManagement extends Component {
   }
 
     onSubmit(e) {
-        axios.put("http://localhost:8083/api/checkout/updateStatus/" + this.state.orderId + "/" + this.state.status)
+        axios.put(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/updateStatus/` + this.state.orderId + "/" + this.state.status)
         .then().catch(err => this.setState({ errors: err.response.data }));
     }
 
   componentDidMount() 
   {
-    axios.get("http://localhost:8083/api/checkout/getOrdersForSeller", { params: { username: this.state.username } })
+    axios.get(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/getOrdersForSeller`, { params: { username: this.state.username } })
     .then(res => {
         const orders = res.data;
       this.setState({orders : orders});
@@ -39,7 +39,7 @@ class OrderManagement extends Component {
   }
 
   render() {
-      const { errors ,orders} = this.state;
+    const orders = this.state.orders;
     return (
       <div>
         <h1 className="display-4 text-center">Order Management Page</h1>

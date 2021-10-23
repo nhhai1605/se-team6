@@ -45,7 +45,7 @@ class Register extends Component {
       userType: this.state.userType,
       userTypeRequest: this.state.userTypeRequest
     };
-    axios.post("http://localhost:8080/api/users/register", newUser)
+    axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/register`, newUser)
       .then(res => { const ReactS3Client = new S3(this.state.config);
         ReactS3Client.uploadFile(this.state.userImage, "user" + res.data.id + ".jpg").then(data => { console.log(data); window.location.href = "/login"; }).catch(err => { console.log(err); window.location.href = "/login"; })
       }).catch(err => this.setState({ errors: err.response.data }));

@@ -19,7 +19,7 @@ const BookItem = ({book}) => {
             <h4 className="text-left">Category: {book.category}</h4>
             <h4 className="text-left">Seller: <a href={"/user/"+book.username}>{book.displayName}</a></h4>
             <h4 className="text-left">Quantity: {book.quantity > 0 ? book.quantity : 'Sold out'}</h4>
-            <h4 className="text-left">Price: {book.type == "Share" ? "Book for Share" : formatNumber(book.price)}</h4>
+            <h4 className="text-left">Price: {book.type === "Share" ? "Book for Share" : formatNumber(book.price)}</h4>
             <div className="text-right">
                 <Link to={"/book/" + book.id} className="btn btn-info m-2" title="Click to get more details about book">Details</Link>
                 {

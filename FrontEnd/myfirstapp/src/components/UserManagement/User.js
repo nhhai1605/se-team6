@@ -26,7 +26,7 @@ class User extends Component {
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
                 const user = res.data;
                 if(user.id == null)
@@ -43,7 +43,7 @@ class User extends Component {
     }
 
     getBooks=(username)=>{
-        axios.get("http://localhost:8081/api/books/getBooksFromUsername", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/getBooksFromUsername`, {params : {username : username}})
             .then(res => {
                 const books = res.data;
                 this.setState({books : books});

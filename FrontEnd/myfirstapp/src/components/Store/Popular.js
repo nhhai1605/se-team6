@@ -17,7 +17,7 @@ class Popular extends Component {
 
   componentDidMount() 
   {
-    axios.get("http://localhost:8081/api/books/getPopularBooks")
+    axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/getPopularBooks`)
       .then(res => {
         const books = res.data;
         this.setState({books : books});
