@@ -11,7 +11,9 @@
 ## Records
 
 * Github repository :https://github.com/nhhai1605/se-team6/
-* jira Board : https://se-team6.atlassian.net/
+* jira Board : https://se-team6.atlassian.net/jira/software/projects/ST/boards/1
+* AWS deployment: http://sept-team6.us-east-1.elasticbeanstalk.com/
+* CircleCI: https://app.circleci.com/pipelines/github/nhhai1605/se-team6/44/workflows/d0b0d84e-188b-49fb-a97a-dbae8587c15c/jobs/44
 * Google Docs : Docs file included in Jira board.
   
 
