@@ -26,7 +26,7 @@ import static com.rmit.sept.usermicroservices.security.SecurityConstant.TOKEN_PR
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://sept-team6.us-east-1.elasticbeanstalk.com")
 @RequestMapping("/api/users")
 public class UserController {
 

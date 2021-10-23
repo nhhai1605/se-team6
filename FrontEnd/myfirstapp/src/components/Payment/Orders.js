@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import axios from "axios";
-import { timers } from "jquery";
-
+import { formatNumber } from '../Store/utils';
 
 class Checkout extends Component {
   constructor(props) {
@@ -23,7 +21,7 @@ class Checkout extends Component {
   }
 
   getUserDetails=(username)=>{
-    axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+    axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
         .then(res => {
         const user = res.data;
         this.setState({displayName : user.displayName, fullName : user.fullName, userType : user.userType, userId: user.id});
@@ -33,7 +31,7 @@ class Checkout extends Component {
     
   getOrders=(username)=>
   {
-      axios.get("http://localhost:8083/api/checkout/getOrders", {params : {username : username}})
+      axios.get(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/getOrders`, {params : {username : username}})
       .then(res => {
       const orders = res.data;
         this.setState({orders:orders});
@@ -56,7 +54,7 @@ class Checkout extends Component {
 
   onSubmit(e)
   {
-    axios.put("http://localhost:8083/api/checkout/updateStatus/" + this.state.orderId + "/Refund")
+    axios.put(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/updateStatus/` + this.state.orderId + "/Refund")
     .then().catch(err=>this.setState({errors : err.response.data}));
   }
 
@@ -65,7 +63,7 @@ class Checkout extends Component {
   }
 
   render() {
-    const { errors, orders, bookStrings , currentTime} = this.state;
+    const {  orders , currentTime} = this.state;
     return ( 
       <div className="checkout">
         <h1 className="display-4 text-center mt-4">Order History</h1>
@@ -73,11 +71,28 @@ class Checkout extends Component {
           orders.map((order,index) => (
             <div key={order.id} style={{ border: "solid grey", borderRadius: '10px', height: '25%', width: '96%', padding: "2%", margin: "2%", wordWrap: "break-word", overflow: 'auto' }}>
               <h4>Order ID: {order.id}</h4>
-              <h4>Total: {order.total} ${order.currency}</h4>
+              <h4>Total: {formatNumber(order.total)} </h4>
               <h4>Shipping Address: {order.address}</h4>
               <h4>Order Description: {order.description}</h4>
               <h4>Created at: {order.dateString}</h4>{ }
-              <h4>Status: {order.status}</h4>
+              {
+                    order.status === 'Confirm' ?
+                    <>
+                    <h4>Status: <span style={{ color: 'green' }}>Confirm</span></h4>
+                    </>
+                    : order.status === 'Reject' ?
+                    <>
+                    <h4>Status: <span style={{ color: 'red' }}>Reject</span></h4>
+                    </>
+                    : order.status === 'Refund' ?
+                    <>
+                    <h4>Status: <span style={{ color: 'orange' }}>Refund</span></h4>
+                    </>
+                    : 
+                    <>
+                    <h4>Status: <span style={{ color: 'blue' }}>Pending</span></h4>
+                    </>      
+                }
               {
                 currentTime < Date.parse(order.dateString) + 7200000 && order.status !== 'Refund' ?
                   <>

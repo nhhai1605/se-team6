@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import classnames from "classnames";
-import axios from "axios";
+import React from "react";
+
 import { Link } from 'react-router-dom';
-import { useCart } from '../Store/useCart';
 
 const Fail = () =>
 {

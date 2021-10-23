@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { login } from "../../actions/securityActions";
-import { Redirect, Link } from "react-router-dom";
 
 
 class Login extends Component {

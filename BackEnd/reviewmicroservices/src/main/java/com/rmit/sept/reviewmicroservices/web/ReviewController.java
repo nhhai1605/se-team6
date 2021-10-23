@@ -12,7 +12,7 @@ import java.util.Collection;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://sept-team6.us-east-1.elasticbeanstalk.com", "http://localhost" })
 @RequestMapping("/api/reviews")
 public class ReviewController {
 
@@ -23,6 +23,7 @@ public class ReviewController {
     public ResponseEntity<?> createReview(@Valid @RequestBody Review review)
     {
         Review newReview = reviewService.createReview(review);
+        reviewService.updateRate(newReview);
         return new ResponseEntity<Review>(newReview, HttpStatus.CREATED);
     }
 
@@ -36,6 +37,13 @@ public class ReviewController {
     public ResponseEntity<?> deleteReview(@PathVariable Long id)
     {
         reviewService.deleteReview(id);
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
+
+    @PutMapping("/changeUserDisplayName/{username}/{newName}")
+    public ResponseEntity<?> changeUserDisplayName(@PathVariable String username, @PathVariable String newName)
+    {
+        reviewService.changeUserDisplayName(username, newName);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

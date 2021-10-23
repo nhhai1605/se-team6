@@ -25,11 +25,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE USER SET USER_TYPE=?2, USER_TYPE_REQUEST='None' WHERE USERNAME=?1", nativeQuery = true)
+    @Query(value="UPDATE USER SET USERTYPE=?2, USERTYPEREQUEST='None' WHERE USERNAME=?1", nativeQuery = true)
     void changeUserType(String username, String newUserType);
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE USER SET USER_TYPE_REQUEST=?4, DISPLAY_NAME=?2, FULL_NAME=?3 WHERE USERNAME=?1", nativeQuery = true)
+    @Query(value="UPDATE USER SET USERTYPEREQUEST=?4, DISPLAYNAME=?2, FULLNAME=?3 WHERE USERNAME=?1", nativeQuery = true)
     void changeDetail(String username, String displayName, String fullName, String userTypeRequest);
 }

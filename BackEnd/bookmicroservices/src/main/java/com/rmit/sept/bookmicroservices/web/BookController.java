@@ -12,7 +12,7 @@ import java.util.Collection;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://sept-team6.us-east-1.elasticbeanstalk.com", "http://localhost" })
 @RequestMapping("/api/books")
 public class BookController {
 
@@ -24,20 +24,13 @@ public class BookController {
         Collection<Book> books = bookService.getAllBooks();
         return books;
     }
-
     @GetMapping("/search")
-    public @ResponseBody Collection<Book> searchBooks(@RequestParam("searchString") String searchString)
+    public @ResponseBody Collection<Book> search(@RequestParam("searchString") String searchString, @RequestParam("searchType") String searchType, @RequestParam("searchCategory") String searchCategory)
     {
         searchString = searchString.toLowerCase();
-        return bookService.searchBooks(searchString);
+        return bookService.search(searchString, searchType, searchCategory);
     }
 
-    @GetMapping("/searchByAuthor")
-    public @ResponseBody Collection<Book> searchBooksByAuthor(@RequestParam("searchString") String searchString)
-    {
-        searchString = searchString.toLowerCase();
-        return bookService.searchBooksByAuthor(searchString);
-    }
     @PostMapping("/create")
     public ResponseEntity<?> createBook(@Valid @RequestBody Book book)
     {
@@ -58,4 +51,20 @@ public class BookController {
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 
+    @GetMapping("/getBooksFromUsername")
+    public @ResponseBody Collection<Book> getBooksFromUsername(@RequestParam("username") String username)
+    {
+        return bookService.getBooksByUsername(username);
+    }
+    @PutMapping("/changeUserDisplayName/{username}/{newName}")
+    public ResponseEntity<?> changeUserDisplayName(@PathVariable String username, @PathVariable String newName)
+    {
+        bookService.changeUserDisplayName(username, newName);
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
+    @GetMapping("/getPopularBooks")
+    public @ResponseBody Collection<Book> getPopularBooks()
+    {
+        return bookService.getPopularBooks();
+    }
 }

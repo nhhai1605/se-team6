@@ -7,12 +7,12 @@ jobs:
       - checkout 
       - setup_remote_docker
       - run:
-          command: docker-compose up --no-start
+          command: docker-compose build
       - persist_to_workspace:
           root: .
           paths:
             - ./docker-compose.yml
-            
+           
 workflows:
   build:
     jobs:

@@ -15,6 +15,7 @@
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
+    "react-aws-s3": "^1.5.0",
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-native-viewport-units": "0.0.5",
@@ -25,7 +26,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

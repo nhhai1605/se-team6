@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import axios from "axios";
 
 
@@ -13,7 +12,8 @@ class Checkout extends Component {
         itemsString: "",
         method: "Paypal",
         currency: "AUD",
-        errors: {},
+      errors: {},
+        orderId : "",
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -34,7 +34,11 @@ class Checkout extends Component {
         string += "/";
       }
     }
-    this.setState({itemsString:string})
+    this.setState({ itemsString: string })
+    if (this.state.total === 0)
+    {
+      this.setState({total : 0.1})
+    }
   }  
 
 
@@ -48,8 +52,10 @@ class Checkout extends Component {
         method: this.state.method,
         description: this.state.itemsString,
     }
-    axios.post("http://localhost:8083/api/checkout/payment", order)
-    .then(res=>{window.location.href=res.data}).catch(err=>this.setState({errors : err.response.data}));
+    axios.post(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/payment`, order)
+      .then(res => {
+        window.location.href = res.data;
+      }).catch(err => this.setState({ errors: err.response.data }));
   }
 
   onChange(e) {
@@ -57,7 +63,6 @@ class Checkout extends Component {
   }
 
   render() {
-    const { errors } = this.state;
     return (
       <div className="checkout">
         <div className="container">

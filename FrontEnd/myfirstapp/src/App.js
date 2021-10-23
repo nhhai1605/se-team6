@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route, useRouteMatch, useParams, Switch, useLocation} from "react-router-dom";
+import { BrowserRouter as Router, Route, useParams, Switch} from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 
 import Post from "./components/Store/Post";
+import OrderManagement from "./components/Store/OrderManagement";
+import Popular from "./components/Store/Popular";
 import Homepage from "./components/Store/Homepage";
 import Cart from "./components/Store/Cart";
 import BookPage from "./components/Store/BookPage";
@@ -39,12 +41,12 @@ if (jwtToken) {
     payload: decoded_jwtToken
   });
 
-  // const currentTime = Date.now() / 1000;
-  // if (decoded_jwtToken.exp < currentTime) {
-  //   store.dispatch(logout());
-  //   localStorage.clear();
-  //   window.location.href = "/";
-  // }
+  const currentTime = Date.now() / 1000;
+  if (decoded_jwtToken.exp < currentTime) {
+    store.dispatch(logout());
+    localStorage.clear();
+    window.location.href = "/";
+  }
 }
 const user = localStorage.getItem("currentUsername");
 class App extends Component {
@@ -60,6 +62,7 @@ class App extends Component {
                   //Public Routes
                 }
                 <Route exact path="/" component={Homepage} />
+                <Route exact path="/popular" component={Popular} />
                 <Switch>
                   <Route path={'/user/:usernameString'} children = {<UserPageFunc/>} />
                 </Switch>
@@ -75,6 +78,7 @@ class App extends Component {
                 user ? 
                 <>
                   <Route exact path="/userManagement" component={UserManagement} />
+                  <Route exact path="/orderManagement" component={OrderManagement} />
                   <Route exact path="/post" component={Post} />
                 </>
                 :

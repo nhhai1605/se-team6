@@ -1,11 +1,6 @@
 package com.rmit.sept.checkoutmicroservices.services;
 
-import com.paypal.api.payments.Amount;
-import com.paypal.api.payments.Payer;
-import com.paypal.api.payments.Payment;
-import com.paypal.api.payments.PaymentExecution;
-import com.paypal.api.payments.RedirectUrls;
-import com.paypal.api.payments.Transaction;
+import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.rmit.sept.checkoutmicroservices.model.OrderDetail;
@@ -83,5 +78,25 @@ public class OrderService {
     public Collection<OrderDetail> getAllOrders()
     {
         return (Collection<OrderDetail>)orderRepository.findAll();
+    }
+
+    public Long getLastOrder(String username)
+    {
+        return orderRepository.getLastOrder(username);
+    }
+
+
+    public String getPoster(String bookId)
+    {
+        return orderRepository.getPoster(bookId);
+    }
+    public float getPrice(String bookId)
+    {
+        return orderRepository.getPrice(bookId);
+    }
+
+    public Collection<OrderDetail> getOrdersForSeller(String username)
+    {
+        return orderRepository.getOrdersForSeller(username);
     }
 }

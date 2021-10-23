@@ -27,7 +27,7 @@ class PopUpDetail extends Component {
     };
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest, currentOption: user.userTypeRequest});
@@ -49,8 +49,9 @@ class PopUpDetail extends Component {
             userType: this.state.userType,
             userTypeRequest: this.state.currentOption
         }; 
-        axios.post("http://localhost:8080/api/users/changeDetail", changeDetailRequest)
-        .then().catch(err=>this.setState({errors : err.response.data}));
+        axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changeDetail`, changeDetailRequest).then().catch(err => this.setState({ errors: err.response.data }));
+        axios.put(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/changeUserDisplayName/` + this.state.username + "/" + this.state.displayName).then().catch(err=>this.setState({errors : err.response.data}));
+        axios.put(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/changeUserDisplayName/` + this.state.username + "/" + this.state.displayName).then().catch(err=>this.setState({errors : err.response.data}));
     }
 
     onChange(e) 
@@ -111,21 +112,21 @@ class PopUpDetail extends Component {
                         <>
                             <option disabled value="Normal Customer">Normal Customer</option>
                             <option value="Publisher">Publisher</option>
-                            <option value="Author">Author</option>
+                            <option value="Shop Owner">Shop Owner</option>
                         </>
                         :
                         this.state.userType === "Publisher" ?
                         <>
                             <option value="Normal Customer">Normal Customer</option>
                             <option disabled value="Publisher">Publisher</option>
-                            <option value="Author">Author</option>
+                            <option value="Shop Owner">Shop Owner</option>
                         </>
                         :
                         this.state.userType === "Author" ?
                         <>
                             <option value="Normal Customer">Normal Customer</option>
                             <option value="Publisher">Publisher</option>
-                            <option disabled value="Author">Author</option>
+                            <option disabled value="Shop Owner">Shop Owner</option>
                         </>
                         : null
                     }

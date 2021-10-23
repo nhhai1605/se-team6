@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import PopUpReview from "./PopUpReview";
+import { formatNumber } from './utils';
 
 class BookPage extends Component {
   constructor(props) {
@@ -12,15 +13,26 @@ class BookPage extends Component {
       description : "",
       price : "",
       quantity : "",
-      username : "",
+      username: "",
+      displayName: "",
+      isbn: "",
       rate : "",
       deleteReviewId : null,
-      reviews : [],
+      reviews: [],
+      type: "",
       seenPopUp : false,
       currentUsername: localStorage.getItem('currentUsername'),
       currentDisplayName : "",
       currentUserType: "",
+      category: "",
       bookExist: false,
+      config: {
+        bucketName: "se-team6",
+         region: "us-east-1",
+         accessKeyId: "AKIAYLQI4NSF75XPLRVA",
+         secretAccessKey: "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",
+         s3Url: 'https://se-team6.s3.amazonaws.com/'
+       },
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -29,7 +41,7 @@ class BookPage extends Component {
   }
 
   getBook=(id)=>{
-    axios.get("http://localhost:8081/api/books/getBook", {params : {id : id}})
+    axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/getBook`, {params : {id : id}})
         .then(res => {
         const book = res.data;
         if(book.id == null)
@@ -40,13 +52,13 @@ class BookPage extends Component {
         {
             this.setState({bookExist : true});
         }
-        this.setState({title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate});
+        this.setState({category:book.category, type:book.type, isbn:book.isbn, title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate, displayName : book.displayName});
     })
     .catch(err=>console.log(err))
   }
 
   getUserDetails=(username)=>{
-      axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+      axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
           .then(res => {
           const user = res.data;
           this.setState({currentUserType : user.userType, currentDisplayName: user.displayName});
@@ -55,7 +67,7 @@ class BookPage extends Component {
   }
 
   getReviews=(bookId)=>{
-    axios.get("http://localhost:8082/api/reviews/getReviewsForBook", {params : {bookId : bookId}})
+    axios.get(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/getReviewsForBook`, {params : {bookId : bookId}})
     .then(res => {
       const reviews = res.data;
       this.setState({reviews : reviews});
@@ -78,13 +90,14 @@ class BookPage extends Component {
   onSubmitDelete(e) 
   {
     e.preventDefault();
-    axios.delete("http://localhost:8081/api/books/deleteBook/" +  this.state.id)
-    .then(window.location.href="/").catch(err=>this.setState({errors : err.response.data}));
+    axios.delete(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/deleteBook/` + this.state.id)
+      .then(res=>{window.location.href='/'
+        }).catch(err=>this.setState({errors : err.response.data}));
   }
 
   onSubmitDeleteReview(e) 
   {
-    axios.delete("http://localhost:8082/api/reviews/deleteReview/" + this.state.deleteReviewId)
+    axios.delete(`${process.env.REACT_APP_REVIEWS_ENDPOINT}/api/reviews/deleteReview/` + this.state.deleteReviewId)
     .then().catch(err=>this.setState({errors : err.response.data}));
     this.setState({deleteReviewId : null});
   }
@@ -99,18 +112,9 @@ class BookPage extends Component {
   };
 
   render() {
-    var url = "";
-    try
-    {
-        url = require("../../BookCover/"+this.state.id+".jpg");
-    }
-    catch
-    {
-        url = require("../../uploads/noimage.jpg");
-    }
     const reviews = this.state.reviews;
     return (
-  
+
       <div>
       {
         this.state.bookExist ?
@@ -120,17 +124,19 @@ class BookPage extends Component {
           <div style={{display: 'flex'}}>
             <div style={{border:"solid black", borderRadius:'10px', height: '900px',width:'30%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
               <h2 style={{textAlign:'center'}}>Detail</h2>
-              <img style={{display: "block", margin: "5% auto 5%", width:"auto", maxWidth:"400px"}} src={url}  alt={this.state.id}/>
+                  <img style={{ display: "block", margin: "5% auto 5%", width: "auto", maxWidth: "400px" }} alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/book" + this.state.id+ ".jpg"} />
               <h3>BookID: {this.state.id}</h3>
               <h3>Title: {this.state.title}</h3>
               <h3>Author: {this.state.author}</h3>
-              <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.username}</a></h3>
-              <h3>Price: {this.state.price}</h3>
+              <h3>ISBN: {this.state.isbn}</h3>
+              <h3>Category: {this.state.category}</h3>
+              <h3>Poster: <a href={"/user/"+this.state.username}>{this.state.displayName}</a></h3>
+                  <h3>Price: {this.state.type === "Share" ? "Book for Share" : formatNumber(this.state.price)}{ this.state.type === "Sell Used" ? "(Used)" : "(New)"}</h3>
               <h3>Quantity: {this.state.quantity}</h3>
               <h3>Description: {this.state.description}</h3>
-              <h3>Rate: {this.state.rate}</h3>
+              <h3>Rate: {parseFloat(this.state.rate).toFixed(1)}/5</h3>
               
-              <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}>Post Review</button>
+              <button className="btn btn-primary" onClick={this.togglePopUpReview}  style={{margin:10}}  title="To add review of book">Add Review</button>
               {
                     this.state.seenPopUp ?
                     <>
@@ -140,14 +146,14 @@ class BookPage extends Component {
                 }
               {
                 this.state.username === this.state.currentUsername || this.state.currentUserType === "Admin" ?
-                <form onSubmit={this.onSubmitDelete}>
-                <button className="btn btn-danger" style={{margin:10}}>Delete Post</button>
+                <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete?')) {this.onSubmitDelete(e)}} }>
+                <button className="btn btn-danger" style={{margin:10}} title="To delete book post">Delete Post</button>
                 </form>
                 :null
               } 
             </div>
 
-            <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'62%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+            <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'52%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
               <h2 style={{textAlign:'center'}}>Review</h2>
               {
                 reviews.map(review => (
@@ -159,12 +165,13 @@ class BookPage extends Component {
                       <h5>From: {review.displayName}</h5>
                     }
                     <h5>Rate: {review.rating}/5</h5>
+                    
                     <h5>Review Content: {review.content}</h5>
                     {
                       this.state.currentUserType === "Admin" ?
                       <>
-                      <form onSubmit={this.onSubmitDeleteReview}>
-                        <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}>Delete Review</button>
+                      <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete Review?')) {this.onSubmitDeleteReview(e)}} }>
+                        <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}  title="To delete review">Delete Review</button>
                       </form>
                       </>
                       : null

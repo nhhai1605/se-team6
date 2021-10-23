@@ -1,7 +1,5 @@
-import DefaultUserPic from "../../uploads/team-male.jpg";
 import React, { Component } from "react";
 import axios from "axios";
-import styles from '../styles/BookGrid.module.css';
 
 class UserCard extends Component
 {
@@ -24,7 +22,7 @@ class UserCard extends Component
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
             const user = res.data;
             this.setState({id:user.id, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
@@ -54,12 +52,12 @@ class UserCard extends Component
                 userTypeRequest: this.state.userTypeRequest,
                 status : this.state.status,
             }
-            axios.post("http://localhost:8080/api/users/changeUserType", userRequest)
+            axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changeUserType`, userRequest)
             .then(window.location.reload(false)).catch(err=>this.setState({errors : err.response.data}));
         }
         else if(this.state.status === "Delete")
         {
-            axios.delete("http://localhost:8080/api/users/deleteUser/" + this.state.id)
+            axios.delete(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/deleteUser/` + this.state.id)
             .then(window.location.reload(false)).catch(err=>this.setState({errors : err.response.data}));
         }
         else
@@ -71,7 +69,7 @@ class UserCard extends Component
     {
         return(
                 <div className="card card-body" style={{borderColor:'grey', borderWidth: 2, wordWrap: "break-word"}}>
-                    <img style={{display: "block", margin: "5% auto 5%", maxHeight: "400px"}} className="img-fluid" src={DefaultUserPic} alt=""/><br />
+                <img style={{ display: "block", margin: "5% auto 5%", maxHeight: "400px" }} className="img-fluid" src={"https://se-team6.s3.amazonaws.com/user" + this.state.id + ".jpg"} alt={this.state.id}/><br />
                     <h5 className="text-left">ID: {this.state.id}</h5>
                     <h5 className="text-left">Username: {this.state.username}</h5>
                     <h5 className="text-left">Display Name: {this.state.displayName}</h5>

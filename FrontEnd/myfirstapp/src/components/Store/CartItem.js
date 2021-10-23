@@ -1,5 +1,4 @@
 import React from 'react';
-import DefaultBookPic from "../../uploads/noimage.jpg";
 
 import { useCart } from './useCart';
 import { formatNumber } from './utils';
@@ -8,22 +7,14 @@ import { PlusCircleIcon, MinusCircleIcon, TrashIcon } from '../icons';
 const CartItem = ({product}) => {
 
     const { increase, decrease, removeProduct } = useCart();
-    var url = "";
-    try
-    {
-        url = require("../../BookCover/"+product.id+".jpg");
-    }
-    catch
-    {
-        url = require("../../uploads/noimage.jpg");
-    }
     return ( 
         <div className="row no-gutters py-2" styles={{border:5, borderColor:'black', backgroundColor: 'black'}}>
             <div className="col-sm-2 p-2">
                 <img
-                alt={product.id}
+                    alt={product.id}
+                    src={"https://se-team6.s3.amazonaws.com/book" + product.id+ ".jpg"}  
                 style={{margin: "auto", maxHeight: "100px"}} 
-                src={url} className="img-fluid d-block"/>
+                 className="img-fluid d-block"/>
             </div>
             <div className="col-sm-4 p-2">
                 <h5 className="mb-1">Title: {product.title}</h5>
@@ -37,7 +28,7 @@ const CartItem = ({product}) => {
             <div className="col-sm-4 p-2 text-right">
                  <button 
                  onClick={() => increase(product)}
-                 className="btn btn-primary btn-sm mr-2 mb-1">
+                 className="btn btn-primary btn-sm mr-2 mb-1"  title="To add 1 book per click"> 
                      <PlusCircleIcon width={"20px"}/>
                  </button>
 
@@ -45,7 +36,7 @@ const CartItem = ({product}) => {
                      product.quantity > 1 &&
                      <button
                     onClick={() => decrease(product)}
-                    className="btn btn-danger btn-sm mb-1">
+                    className="btn btn-danger btn-sm mb-1"  title="To remove 1 book per click">
                         <MinusCircleIcon width={"20px"}/>
                     </button>
                  }
@@ -54,7 +45,7 @@ const CartItem = ({product}) => {
                      product.quantity === 1 &&
                      <button
                     onClick={() => removeProduct(product)}
-                    className="btn btn-danger btn-sm mb-1">
+                    className="btn btn-danger btn-sm mb-1" title="To remove book">
                         <TrashIcon width={"20px"}/>
                     </button>
                  }

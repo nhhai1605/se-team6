@@ -30,7 +30,7 @@ class UserManagement extends Component {
         }
         else
         {
-            axios.get("http://localhost:8080/api/users/all")
+            axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/all`)
             .then(res => {
                 const users = res.data;
                 this.setState({users : users});

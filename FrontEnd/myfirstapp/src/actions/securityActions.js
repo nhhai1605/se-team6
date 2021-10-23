@@ -3,11 +3,10 @@ import {GET_ERRORS, SET_CURRENT_USER} from "./types";
 import setJWTToken from "../securityUtils/setJWTToken";
 import jwt_decode from "jwt-decode";
 
-
 export const login = LoginRequest => async dispatch => {
   try {
     // post => Login Request
-    const res = await axios.post("http://localhost:8080/api/users/login", LoginRequest);
+    const res = await axios.post(`http://localhost:8080/api/users/login`, LoginRequest);
     // extract token from res.data
     const  {token}  = res.data;
     // store the token0 in the localStorage

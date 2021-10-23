@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import DefaultUserPic from "../../uploads/team-male.jpg";
 import PopUpDetail from "./PopUpDetail";
 import PopUpPassword from "./PopUpPassword";
+import { formatNumber } from '../Store/utils';
 
 class User extends Component {
     constructor(props){
@@ -10,6 +10,7 @@ class User extends Component {
         this.state = 
         {
         username: this.props.username,
+        id: "",
         displayName: "",
         fullName: "",
         profileImage: "",
@@ -18,13 +19,14 @@ class User extends Component {
         userExist : true,
         seenPassword : false,
         seenDetail: false,
+        books : [],
         errors: {}
         };
         this.onChange = this.onChange.bind(this);
     }
 
     getUserDetails=(username)=>{
-        axios.get("http://localhost:8080/api/users/getUser", {params : {username : username}})
+        axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
                 const user = res.data;
                 if(user.id == null)
@@ -35,7 +37,16 @@ class User extends Component {
                 {
                     this.setState({userExist : true});
                 }
-                this.setState({username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
+                this.setState({id: user.id, username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
+        })
+        .catch(err=>console.log(err))
+    }
+
+    getBooks=(username)=>{
+        axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/getBooksFromUsername`, {params : {username : username}})
+            .then(res => {
+                const books = res.data;
+                this.setState({books : books});
         })
         .catch(err=>console.log(err))
     }
@@ -64,9 +75,12 @@ class User extends Component {
     componentDidMount()
     {
         this.getUserDetails(this.state.username);
+
+        this.getBooks(this.state.username);
     };
 
     render() {
+        const { books } = this.state;
         return (
         <div >
         {   
@@ -74,11 +88,12 @@ class User extends Component {
             <>
                 <h1 style={{textAlign:'center', margin:"2%"}}>User Page</h1>
                 <div style={{display: 'flex' }} >
-                    <div id ="div1" style={{border:"solid black", backgroundColor : 'rgb(242, 242, 242)', borderRadius:'10px', height: '800px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+                    <div id ="div1" style={{border:"solid black", backgroundColor : 'white', borderRadius:'10px', height: '900px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
                         <h2 style={{textAlign:'center'}}>User Detail</h2>
-                        <div style={{display: 'flex',justifyContent: 'center'}}>
-                        <img src={DefaultUserPic} alt="User's Avatar"/>
-                        </div >
+                        <div style={{display: 'flex',justifyContent: 'center', marginBottom:50, marginTop:50}}>
+                        <img alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/user" + this.state.id+ ".jpg"} />
+                        </div>
+
                         <h3>Email/Username: {this.state.username} </h3>
                         <h3>Display Name: {this.state.displayName}</h3>
                         <h3>Full Name: {this.state.fullName}</h3>
@@ -88,9 +103,8 @@ class User extends Component {
                     this.state.username === localStorage.getItem("currentUsername") ?
                     <>
                     <div style={{display: 'flex', justifyContent:'initial'}}>
-
-                        <button className="btn btn-secondary" onClick={this.togglePopUpDetail} style={{margin:'10px', }}>Change Details</button>
-                        <button className="btn btn-outline-secondary" onClick={this.togglePopUpPassword}style={{margin:'10px',}} >Change Password</button>
+                        <button className="btn btn-outline-secondary"  onClick={this.togglePopUpDetail} style={{margin:'10px'}} title="Click to change user details">Change Details</button>
+                        <button className="btn btn-outline-secondary" onClick={this.togglePopUpPassword}style={{margin:'10px'}}title="Click to change password" >Change Password</button>
                         </div>
                     
                     </>
@@ -99,7 +113,7 @@ class User extends Component {
                         {
                             localStorage.getItem("currentUsername") != null ?
                             <>
-                                <button className="btn btn-outline-primary" style={{margin:10}}>Follow</button>
+                                <button className="btn btn-outline-secondary" style={{margin:10}} title="Click to follow user">Follow</button>
                             </> : null
                         }
                     </>
@@ -121,9 +135,19 @@ class User extends Component {
                     </>
                     : null
                 }
-                <div style={{border:"solid black", borderRadius:'10px', height: '800px', width:'60%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
-                    <h2 style={{textAlign:'center'}}>User Post</h2>
-                    </div>
+                <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'62%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
+                    <h2 style={{ textAlign: 'center' }}>User Post</h2>
+                    {
+                        books.map(book => (
+                        <div key={book.id} style={{border:"solid grey", borderRadius:'10px', height:'25%', width:'96%', padding:"2%",margin:"2%", wordWrap: "break-word", overflow: 'auto'}}>
+                        <h5>Title:  <a href={"/book/"+book.id}>{book.title}</a></h5>
+                        <h5>Author: {book.author}</h5>
+                        <h5>Price: {formatNumber(book.price)}</h5>
+                        <h5>Quantity: {book.quantity}</h5>
+                        </div>
+                        ))
+                    }
+                </div>
                 </div>
                 
             </>

@@ -16,9 +16,13 @@ public class ReviewService
 
     public Review createReview(Review review)
     {
-        return reviewRepository.save(review);
+        Review newReview = reviewRepository.save(review);
+        return newReview;
     }
-
+    public void updateRate(Review review)
+    {
+        reviewRepository.updateRate(review.getBookId());
+    }
     public Collection<Review> getReviewsForBook(Long bookId)
     {
         return reviewRepository.getReviewsForBook(bookId);
@@ -27,5 +31,10 @@ public class ReviewService
     public void deleteReview(Long id)
     {
         reviewRepository.deleteById(id);
+    }
+
+    public void changeUserDisplayName(String username, String newName)
+    {
+        reviewRepository.changeUserDisplayName(username, newName);
     }
 }
