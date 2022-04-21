@@ -69,7 +69,7 @@ class UserCard extends Component
     {
         return(
                 <div className="card card-body" style={{borderColor:'grey', borderWidth: 2, wordWrap: "break-word"}}>
-                <img style={{ display: "block", margin: "5% auto 5%", maxHeight: "400px" }} className="img-fluid" src={"https://se-team6.s3.amazonaws.com/user" + this.state.id + ".jpg"} alt={this.state.id}/><br />
+                <img style={{display: "block", margin: "5% auto 5%", height: "400px",  width: "auto", maxWidth:"300px", wordWrap: "break-word"}} className="img-fluid" src={"https://se-team6.s3.amazonaws.com/user" + this.state.id + ".jpg"} alt={this.state.id}/><br />
                     <h5 className="text-left">ID: {this.state.id}</h5>
                     <h5 className="text-left">Username: {this.state.username}</h5>
                     <h5 className="text-left">Display Name: {this.state.displayName}</h5>

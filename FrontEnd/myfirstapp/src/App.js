@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, useParams, Switch} from "react-router-d
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 import Post from "./components/Store/Post";
 import OrderManagement from "./components/Store/OrderManagement";
@@ -42,7 +43,7 @@ if (jwtToken) {
   });
 
   const currentTime = Date.now() / 1000;
-  if (decoded_jwtToken.exp < currentTime) {
+  if (decoded_jwtToken.exp + 300000 < currentTime) {
     store.dispatch(logout());
     localStorage.clear();
     window.location.href = "/";
@@ -50,6 +51,7 @@ if (jwtToken) {
 }
 const user = localStorage.getItem("currentUsername");
 class App extends Component {
+
   render() {
     return (
       <Provider store={store}>

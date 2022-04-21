@@ -80,12 +80,6 @@ public class OrderService {
         return (Collection<OrderDetail>)orderRepository.findAll();
     }
 
-    public Long getLastOrder(String username)
-    {
-        return orderRepository.getLastOrder(username);
-    }
-
-
     public String getPoster(String bookId)
     {
         return orderRepository.getPoster(bookId);

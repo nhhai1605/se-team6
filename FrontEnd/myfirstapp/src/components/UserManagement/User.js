@@ -9,18 +9,18 @@ class User extends Component {
         super(props);
         this.state = 
         {
-        username: this.props.username,
-        id: "",
-        displayName: "",
-        fullName: "",
-        profileImage: "",
-        userType: "",
-        userTypeRequest: "",
-        userExist : true,
-        seenPassword : false,
-        seenDetail: false,
-        books : [],
-        errors: {}
+            username: this.props.username,
+            id: "",
+            displayName: "",
+            fullName: "",
+            profileImage: "",
+            userType: "",
+            userTypeRequest: "",
+            userExist : true,
+            seenPassword : false,
+            seenDetail: false,
+            books : [],
+            errors: {}
         };
         this.onChange = this.onChange.bind(this);
     }
@@ -39,7 +39,7 @@ class User extends Component {
                 }
                 this.setState({id: user.id, username : user.username, displayName : user.displayName, fullName : user.fullName, userType : user.userType, userTypeRequest : user.userTypeRequest});
         })
-        .catch(err=>console.log(err))
+            .catch(err => console.log(err))
     }
 
     getBooks=(username)=>{
@@ -72,7 +72,7 @@ class User extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    componentDidMount()
+    componentDidMount() 
     {
         this.getUserDetails(this.state.username);
 
@@ -91,7 +91,7 @@ class User extends Component {
                     <div id ="div1" style={{border:"solid black", backgroundColor : 'white', borderRadius:'10px', height: '900px',width:'40%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
                         <h2 style={{textAlign:'center'}}>User Detail</h2>
                         <div style={{display: 'flex',justifyContent: 'center', marginBottom:50, marginTop:50}}>
-                        <img alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/user" + this.state.id+ ".jpg"} />
+                        <img style={{display: "block", margin: "5% auto 5%", height: "400px",  width: "auto", maxWidth:"300px", wordWrap: "break-word"}} alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/user" + this.state.id+ ".jpg"} />
                         </div>
 
                         <h3>Email/Username: {this.state.username} </h3>
@@ -138,11 +138,19 @@ class User extends Component {
                 <div style={{border:"solid black", borderRadius:'10px', height: '900px', width:'62%',padding:"2%",margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
                     <h2 style={{ textAlign: 'center' }}>User Post</h2>
                     {
+                        // for book in books: render book            
                         books.map(book => (
                         <div key={book.id} style={{border:"solid grey", borderRadius:'10px', height:'25%', width:'96%', padding:"2%",margin:"2%", wordWrap: "break-word", overflow: 'auto'}}>
                         <h5>Title:  <a href={"/book/"+book.id}>{book.title}</a></h5>
                         <h5>Author: {book.author}</h5>
-                        <h5>Price: {formatNumber(book.price)}</h5>
+                        {
+                            book.type === "Share" ?
+                            <h5>Price: Book for share</h5>                       
+                            : book.type === "Sell New" ?             
+                            <h5> Price: {formatNumber(book.price)} (New)</h5>
+                            :
+                            <h5> Price: {formatNumber(book.price)} (Used)</h5>                       
+                        }
                         <h5>Quantity: {book.quantity}</h5>
                         </div>
                         ))

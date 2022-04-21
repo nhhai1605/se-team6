@@ -6,8 +6,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Collection;
+import java.util.TimeZone;
 
 
 @Entity
@@ -27,7 +29,7 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
-    private Date createAt;
+    private String createAt;
 
     private String userType;
     private String userTypeRequest;
@@ -102,18 +104,22 @@ public class User implements UserDetails {
         this.confirmPassword = confirmPassword;
     }
 
-    public Date getCreateAt() {
+    public String getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(String createAt) {
         this.createAt = createAt;
     }
 
     @PrePersist
     protected void onCreate(){
-        this.createAt = new Date();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
+        formatter.setTimeZone(TimeZone.getTimeZone("Australia/Melbourne"));
+        this.createAt = formatter.format(date);
     }
+
 
     /*
     UserDetails interface methods

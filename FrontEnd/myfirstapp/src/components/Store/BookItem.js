@@ -23,6 +23,9 @@ const BookItem = ({book}) => {
             <div className="text-right">
                 <Link to={"/book/" + book.id} className="btn btn-info m-2" title="Click to get more details about book">Details</Link>
                 {
+                    book.username !== localStorage.getItem("currentUsername") ?
+                    <>
+                    {
                     Number(book.quantity) > 0 ?
                     <>
                     {
@@ -39,7 +42,10 @@ const BookItem = ({book}) => {
                     }
                     </>
                     :
-                    <button className="btn btn-danger m-2" title="Books are out of stock" disabled>Sold out</button>
+                            <button className="btn btn-danger m-2" title="Books are out of stock" disabled>Sold out</button>
+                    }
+                    </>
+                    : null
                 }
             </div>
         </div>

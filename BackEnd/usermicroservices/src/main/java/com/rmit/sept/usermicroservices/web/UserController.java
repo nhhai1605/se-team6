@@ -20,13 +20,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Date;
+import java.util.TimeZone;
 
 import static com.rmit.sept.usermicroservices.security.SecurityConstant.TOKEN_PREFIX;
 
 
 @RestController
-@CrossOrigin(origins = "http://sept-team6.us-east-1.elasticbeanstalk.com")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -52,7 +59,7 @@ public class UserController {
         if(user.getUserTypeRequest().equals("Admin"))
         {
             user.setUserType("Admin");
-            user.setUserTypeRequest("");
+            user.setUserTypeRequest("None");
         }
         User newUser = userService.saveUser(user);
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
@@ -110,9 +117,8 @@ public class UserController {
     }
 
     @GetMapping("/getUser")
-    public ResponseEntity<?> getUser(@RequestParam("username") String username){
-        User newUser = userService.getUser(username);
-        return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+    public @ResponseBody User getUser(@RequestParam("username") String username){
+        return userService.getUser(username);
     }
 
     @GetMapping("/all")
@@ -122,6 +128,7 @@ public class UserController {
         return users;
     }
 
+    //This can change to PUT
     @PostMapping("/changeUserType")
     public ResponseEntity<?> changeUserType(@Valid @RequestBody UserTypeRequest typeRequest){
         if(typeRequest.getStatus().equals("Approve"))

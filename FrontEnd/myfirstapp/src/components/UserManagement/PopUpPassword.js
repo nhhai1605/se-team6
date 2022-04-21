@@ -14,7 +14,7 @@ class PopUpPassword extends Component {
         password: '',
         newPassword: '',
         confirmPassword: '',
-        errors: {}
+        errors: {},
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -26,14 +26,14 @@ class PopUpPassword extends Component {
 
     onSubmit(e) 
     {
+        e.preventDefault();
         const changePasswordRequest = {
             username: this.state.username,
             password: this.state.password,
             newPassword: this.state.newPassword,
             confirmPassword: this.state.confirmPassword
         }; 
-        axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changePassword`, changePasswordRequest)
-        .then().catch(err=>this.setState({errors : err.response.data}));
+        axios.post(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/changePassword`, changePasswordRequest).then(res => { window.location.reload() }).catch(err => this.setState({errors: err.response.data}));
     }
 
     onChange(e) 

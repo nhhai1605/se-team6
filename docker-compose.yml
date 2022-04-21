@@ -1,19 +1,30 @@
 version: '3'
 services:
-  # backend:
-    # build: ./BackEnd
-    # ports:
-      # - "8080:8080"
-      # - "8081:8081"
-      # - "8082:8082"
-      # - "8083:8083"
-    # volumes:
-  #    - .:/code
-
   usermicroservices:
     build: ./BackEnd/usermicroservices
     ports:
      - "8080:8080"
+    volumes:
+     - .:/code
+
+  bookmicroservices:
+    build: ./BackEnd/bookmicroservices
+    ports:
+      - "8081:8081"
+    volumes:
+     - .:/code
+
+  reviewmicroservices:
+    build: ./BackEnd/reviewmicroservices
+    ports:
+      - "8082:8082"
+    volumes:
+     - .:/code
+
+  checkoutmicroservices:
+    build: ./BackEnd/checkoutmicroservices
+    ports:
+      - "8083:8083"
     volumes:
      - .:/code
 
@@ -27,21 +38,3 @@ services:
     stdin_open: true
     command: npm start
     
-  # bookmicroservices:
-  #   build: ./BackEnd/bookmicroservices
-  #   ports:
-  #     - "8081:8081"
-  #   volumes:
-  #    - .:/code
-  # reviewmicroservices:
-  #   build: ./BackEnd/reviewmicroservices
-  #   ports:
-  #     - "8082:8082"
-  #   volumes:
-  #    - .:/code
-  # checkoutmicroservices:
-  #   build: ./BackEnd/checkoutmicroservices
-  #   ports:
-  #     - "8083:8083"
-  #   volumes:
-  #    - .:/code

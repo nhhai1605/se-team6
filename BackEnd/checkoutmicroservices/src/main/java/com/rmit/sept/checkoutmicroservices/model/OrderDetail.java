@@ -3,7 +3,11 @@ package com.rmit.sept.checkoutmicroservices.model;
 import javax.persistence.*;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Entity
 @Table(name ="ORDER_DETAIL")
@@ -19,7 +23,7 @@ public class OrderDetail {
     private String method;
     private String description;
     private String address;
-    private Date createAt;
+    private String createAt;
     private String status;
     private String poster;
 
@@ -31,20 +35,11 @@ public class OrderDetail {
         this.poster = poster;
     }
 
-    public String getDateString() {
-        return dateString;
-    }
-
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
-    }
-
-    private String dateString;
-    public Date getCreateAt() {
+    public String getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(String createAt) {
         this.createAt = createAt;
     }
 
@@ -98,9 +93,10 @@ public class OrderDetail {
 
     @PrePersist
     protected void onCreate(){
-        this.createAt = new Date();
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.setDateString(formatter.format(this.createAt));
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
+        formatter.setTimeZone(TimeZone.getTimeZone("Australia/Melbourne"));
+        this.createAt = formatter.format(date);
     }
 
     public String getCurrency() {

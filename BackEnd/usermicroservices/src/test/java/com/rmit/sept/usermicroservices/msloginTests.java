@@ -5,7 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 
-
 @SpringBootTest
 class msloginTests {
 
@@ -14,3 +13,4 @@ class msloginTests {
     }
 
 }
+

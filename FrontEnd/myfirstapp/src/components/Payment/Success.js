@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Link } from 'react-router-dom';
 import { useCart } from '../Store/useCart';
 
+//class is harder to understand theory but easier to implement
 
 const Success = () =>
 {
+    
     const { clearCart } = useCart();
     useEffect(()=>{
         clearCart();

@@ -45,7 +45,10 @@ class UserManagement extends Component {
     render() {
         const {users} = this.state;
         return (
-            <div className={styles.userGrid}>
+            <div>
+                <h1 className="display-4 text-center">User Management Page</h1>
+            
+                <div className={styles.userGrid}>
                 {
                     users.map(user => (
                         
@@ -53,6 +56,7 @@ class UserManagement extends Component {
                         
                     ))
                 }
+                </div>
             </div>
         );
     }

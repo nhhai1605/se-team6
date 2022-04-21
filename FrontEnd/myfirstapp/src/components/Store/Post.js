@@ -165,7 +165,7 @@ class Post extends Component {
                     name="quantity"
                     value= {this.state.quantity}
                     onChange = {this.onChange}
-                    minLength="6" maxLength="60" required
+                    required
                   />
                   {errors.quantity && (
                       <div className= "invalid-feedback">{errors.quantity}</div>

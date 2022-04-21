@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
-
-
 @RestController
-@CrossOrigin(origins = { "http://sept-team6.us-east-1.elasticbeanstalk.com", "http://localhost" })
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/books")
 public class BookController {
 

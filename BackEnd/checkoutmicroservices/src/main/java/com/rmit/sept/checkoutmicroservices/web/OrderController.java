@@ -19,14 +19,14 @@ import java.util.Collection;
 
 
 @RestController
-@CrossOrigin(origins = { "http://sept-team6.us-east-1.elasticbeanstalk.com", "http://localhost" })
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/checkout")
 public class OrderController
 {
     @Autowired
     OrderService orderService;
-    public static final String SUCCESS_URL = "http://localhost:8083/api/checkout/success";
-    public static final String CANCEL_URL = "http://localhost:8083/api/checkout/cancel";
+    public static final String SUCCESS_URL = "http://3.220.230.89:8083/api/checkout/success";
+    public static final String CANCEL_URL = "http://3.220.230.89:8083/api/checkout/cancel";
 
     @PostMapping("/payment")
     public String payment(@RequestBody OrderDetail orderDetail) {
@@ -107,11 +107,11 @@ public class OrderController
                 {
                     orderService.save(order);
                 }
-                headers.add("Location", "http://localhost:3000/checkout/success?paymentId=" + paymentId + "&PayerID=" + PayerID);
+                headers.add("Location", "http://sept-team6.us-east-1.elasticbeanstalk.com/checkout/success?paymentId=" + paymentId + "&PayerID=" + PayerID);
             }
             else
             {
-                headers.add("Location", "http://localhost:3000/checkout/fail/");
+                headers.add("Location", "http://sept-team6.us-east-1.elasticbeanstalk.com/checkout/fail/");
             }
             return new ResponseEntity(headers,HttpStatus.FOUND);
         }
@@ -119,7 +119,7 @@ public class OrderController
         {
             System.out.println(e.getMessage());
         }
-        headers.add("Location", "http://localhost:3000/checkout/fail/");
+        headers.add("Location", "http://sept-team6.us-east-1.elasticbeanstalk.com/checkout/fail/");
         return new ResponseEntity(headers, HttpStatus.FOUND);
     }
 
