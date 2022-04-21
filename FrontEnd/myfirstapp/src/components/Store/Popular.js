@@ -30,7 +30,7 @@ class Popular extends Component {
     return (
         <div>
         <h1 className="display-4 text-center">Popular Books</h1>
-        <a className="btn btn-secondary" style={{marginLeft:20}} href="/Homepage">Homepage</a>
+        <a className="btn btn-secondary" style={{marginLeft:20}} href="/">Homepage</a>
         <div className={styles.bookGrid}>
             {
               books.map(book => (

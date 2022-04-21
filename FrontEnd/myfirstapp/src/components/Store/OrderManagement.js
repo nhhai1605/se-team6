@@ -50,7 +50,7 @@ class OrderManagement extends Component {
                 <h4>Buyer: <a href={"/user/"+order.username} >{order.username}</a></h4>
                 <h4>Decription: {order.description}</h4>
                 <h4>Adress: {order.address}</h4>
-                <h4>Created At: {order.dateString}</h4>
+                <h4>Created At: {order.createAt}</h4>
                 {
                     order.status === 'Confirm' ?
                     <>

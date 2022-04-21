@@ -7,7 +7,7 @@ import {CartIcon} from '../icons';
 import axios from "axios";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
+// import 'bootstrap/dist/js/bootstrap.js';
 const ItemCount = () => {
     const {itemCount} = useContext(CartContext);
     return itemCount;
@@ -24,7 +24,7 @@ class Header extends Component {
             errors: {},
             userData : [[]],
             bookData : [[]],
-            orderData : [[]],
+            orderData: [[]],
         };
         this.onChange = this.onChange.bind(this);
       }
@@ -43,8 +43,10 @@ class Header extends Component {
     getUserDetails=(username)=>{
         axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/getUser`, {params : {username : username}})
             .then(res => {
-            const user = res.data;
-            this.setState({username : user.username, displayName : user.displayName, userType:user.userType, userTypeRequest:user.userTypeRequest});
+                const user = res.data;
+                // console.log(user);
+                this.setState({ username: user.username, displayName: user.displayName, userType: user.userType, userTypeRequest: user.userTypeRequest });
+                // console.log(this.state.displayName)
         })
         .catch(err=>console.log(err))
     }
@@ -52,20 +54,20 @@ class Header extends Component {
     {
         this.getUserDetails(this.state.username);
         axios.get(`${process.env.REACT_APP_USERS_ENDPOINT}/api/users/all`)
-        .then(res => {
-            const users = res.data;
-            this.setState({userData : users});
-        }).catch(err => console.log(err))
+            .then(res => {
+                const users = res.data;
+                this.setState({ userData: users });
+            }).catch(err => console.log(err));
         axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/all`)
-        .then(res => {
-          const books = res.data;
-          this.setState({bookData : books});
-        }).catch(err => console.log(err))
+            .then(res => {
+                const books = res.data;
+                this.setState({ bookData: books });
+            }).catch(err => console.log(err));
         axios.get(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/all`)
-        .then(res => {
-          const orders = res.data;
-          this.setState({orderData : orders});
-        }).catch(err=>console.log(err))
+            .then(res => {
+                const orders = res.data;
+                this.setState({ orderData: orders });
+            }).catch(err => console.log(err));
     }
   
     render() {

@@ -5,6 +5,10 @@ import classnames from "classnames";
 
 import axios from "axios";
 
+//(constructor => willMount => render => didMount) ===> deprecated so ===> (render => didMount => set new State => update)
+//Answer: it is a step in the life cycle of reactjs. So, componentDidmount will update the state of the class, then the render will show these data to the app.
+// Actually, render are called first but the componentDidMount will setState and the render will refresh/update the components. There is componenetWillMount that
+// are called before render, but it is deprecated.
 class PopUpReview extends Component {
     constructor(props){
         super(props);
@@ -52,7 +56,6 @@ class PopUpReview extends Component {
     }
     componentDidMount() 
     {
-        console.log(this.state.displayName);
         if(this.state.username === null)
         {
             this.setState({username : "Anonymous", displayName: "Anonymous"});
@@ -64,6 +67,7 @@ class PopUpReview extends Component {
     };
 
     render() {
+        
         const { errors } = this.state;
         return (
             <div className={styles.modal_content_preview}>

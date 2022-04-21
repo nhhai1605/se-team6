@@ -1,7 +1,13 @@
 package com.rmit.sept.bookmicroservices.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.TimeZone;
+
 @Entity
 @Table(name ="BOOK")
 public class Book {
@@ -16,7 +22,7 @@ public class Book {
     private String isbn;
     private String category;
     private float price;
-    private Date postDate;
+    private String postDate;
     private float rate;
     private String username;
     private String description;
@@ -59,7 +65,10 @@ public class Book {
     }
     @PrePersist
     protected void onCreate(){
-        this.postDate = new Date();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        this.postDate = formatter.format(date);
     }
     public String getType() {
         return type;
@@ -103,7 +112,7 @@ public class Book {
         return price;
     }
 
-    public Date getPostDate() {
+    public String getPostDate() {
         return postDate;
     }
 
@@ -123,7 +132,7 @@ public class Book {
         this.price = price;
     }
 
-    public void setPostDate(Date postDate) {
+    public void setPostDate(String postDate) {
         this.postDate = postDate;
     }
 

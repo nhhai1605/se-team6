@@ -33,7 +33,7 @@ class Checkout extends Component {
   {
       axios.get(`${process.env.REACT_APP_CHECKOUT_ENDPOINT}/api/checkout/getOrders`, {params : {username : username}})
       .then(res => {
-      const orders = res.data;
+        const orders = res.data;
         this.setState({orders:orders});
       })
       .catch(err => console.log(err))
@@ -46,6 +46,13 @@ class Checkout extends Component {
     }
     else 
     {
+      // var d = new Date();
+      // var c = d.toLocaleString('en-US', {timeZone: 'Australia/Melbourne'});
+      // var sensibleFormat = new Date(c)
+      // var milliseconds = sensibleFormat.getTime()
+      // this.setState({ currentTime: milliseconds });
+      console.log(new Date());
+      console.log(this.state.currentTime);
       this.getUserDetails(this.state.username);
       this.getOrders(this.state.username); 
     }
@@ -62,6 +69,7 @@ class Checkout extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  
   render() {
     const {  orders , currentTime} = this.state;
     return ( 
@@ -74,7 +82,7 @@ class Checkout extends Component {
               <h4>Total: {formatNumber(order.total)} </h4>
               <h4>Shipping Address: {order.address}</h4>
               <h4>Order Description: {order.description}</h4>
-              <h4>Created at: {order.dateString}</h4>{ }
+              <h4>Created at: {order.createAt}</h4>{ }
               {
                     order.status === 'Confirm' ?
                     <>
@@ -94,7 +102,7 @@ class Checkout extends Component {
                     </>      
                 }
               {
-                currentTime < Date.parse(order.dateString) + 7200000 && order.status !== 'Refund' ?
+                currentTime < Date.parse(order.createAt) + 7200000 && order.status !== 'Refund' ?
                   <>
                     <form onSubmit={this.onSubmit}>
                     <button className="btn btn-danger" onClick={() => this.setState({orderId: order.id})} style={{ margin: 10 }}>Refund</button>

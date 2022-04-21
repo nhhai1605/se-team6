@@ -72,6 +72,10 @@ public class UserService {
 
     public void deleteUser(Long id)
     {
+        User user = userRepository.getUserById(id);
+        userRepository.deleteBooks(user.getUsername());
+        userRepository.deleteReviews(user.getUsername());
+        userRepository.deleteOrders(user.getUsername());
         userRepository.deleteById(id);
     }
 }

@@ -25,7 +25,6 @@ class BookPage extends Component {
       currentDisplayName : "",
       currentUserType: "",
       category: "",
-      bookExist: false,
       config: {
         bucketName: "se-team6",
          region: "us-east-1",
@@ -35,7 +34,6 @@ class BookPage extends Component {
        },
     };
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.onSubmitDelete = this.onSubmitDelete.bind(this);
     this.onSubmitDeleteReview = this.onSubmitDeleteReview.bind(this);
   }
@@ -44,14 +42,6 @@ class BookPage extends Component {
     axios.get(`${process.env.REACT_APP_BOOKS_ENDPOINT}/api/books/getBook`, {params : {id : id}})
         .then(res => {
         const book = res.data;
-        if(book.id == null)
-        {
-            this.setState({bookExist : false});
-        }
-        else
-        {
-            this.setState({bookExist : true});
-        }
         this.setState({category:book.category, type:book.type, isbn:book.isbn, title:book.title, author:book.author, description:book.description, price:book.price, quantity:book.quantity, username:book.username, rate:book.rate, displayName : book.displayName});
     })
     .catch(err=>console.log(err))
@@ -83,10 +73,6 @@ class BookPage extends Component {
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-  }
-
   onSubmitDelete(e) 
   {
     e.preventDefault();
@@ -112,19 +98,16 @@ class BookPage extends Component {
   };
 
   render() {
-    const reviews = this.state.reviews;
+    const { reviews } = this.state;
     return (
 
       <div>
-      {
-        this.state.bookExist ?
-        <>
-
+      
           <h1 style={{textAlign:'center', margin:"2%"}}>Book Page</h1>
           <div style={{display: 'flex'}}>
             <div style={{border:"solid black", borderRadius:'10px', height: '900px',width:'30%', padding:"2%", margin:"2% 2% 2%", wordWrap: "break-word", display: 'inline-block', overflow: 'auto'}}>
               <h2 style={{textAlign:'center'}}>Detail</h2>
-                  <img style={{ display: "block", margin: "5% auto 5%", width: "auto", maxWidth: "400px" }} alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/book" + this.state.id+ ".jpg"} />
+                  <img style={{display: "block", margin: "5% auto 5%", height: "400px",  width: "auto", maxWidth:"300px", wordWrap: "break-word"}} alt={this.state.id} src={"https://se-team6.s3.amazonaws.com/book" + this.state.id+ ".jpg"} />
               <h3>BookID: {this.state.id}</h3>
               <h3>Title: {this.state.title}</h3>
               <h3>Author: {this.state.author}</h3>
@@ -144,7 +127,8 @@ class BookPage extends Component {
                     </>
                     : null
                 }
-              {
+            {
+                //username is poster, currentUsername is the one who is login
                 this.state.username === this.state.currentUsername || this.state.currentUserType === "Admin" ?
                 <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete?')) {this.onSubmitDelete(e)}} }>
                 <button className="btn btn-danger" style={{margin:10}} title="To delete book post">Delete Post</button>
@@ -168,10 +152,10 @@ class BookPage extends Component {
                     
                     <h5>Review Content: {review.content}</h5>
                     {
-                      this.state.currentUserType === "Admin" ?
+                      this.state.currentUserType === "Admin" || this.state.currentUsername == review.username ?
                       <>
                       <form onSubmit={ e => {if(window.confirm('Are You Sure You Want To Delete Review?')) {this.onSubmitDeleteReview(e)}} }>
-                        <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}}style={{margin:10}}  title="To delete review">Delete Review</button>
+                        <button className="btn btn-danger" onClick={()=>{this.setState({deleteReviewId : review.id})}} style={{margin:10}}  title="To delete review">Delete Review</button>
                       </form>
                       </>
                       : null
@@ -182,12 +166,8 @@ class BookPage extends Component {
               
             </div>
           </div>
-        </>
-        : 
-        <>
-            <h1>Error 404 - Book doesn't exist!</h1>
-        </>
-      }
+      
+      
       </div>
     );
   }
